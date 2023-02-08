@@ -1,8 +1,47 @@
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { useRef } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
 import CopyHero from "./images/copytext-banner-hero.png";
+import Collection1Img1 from "./images/collection-1-img-1.png";
+import Collection1Img2 from "./images/collection-1-img-2.png";
+import Collection1Img3 from "./images/collection-1-img-3.png";
+import Collection1Img4 from "./images/collection-1-img-4.png";
+import Collection1Img5 from "./images/collection-1-img-5.png";
+import Collection2Img1 from "./images/collection-2-img-1.png";
+import Collection2Img2 from "./images/collection-2-img-2.png";
+import Collection2Img3 from "./images/collection-2-img-3.png";
+import Collection2Img4 from "./images/collection-2-img-4.png";
+import Collection2Img5 from "./images/collection-2-img-5.png";
+import Collection3Img1 from "./images/collection-3-img-1.png";
+import Collection3Img2 from "./images/collection-3-img-2.png";
+import Collection3Img3 from "./images/collection-3-img-3.png";
+import Collection3Img4 from "./images/collection-3-img-4.png";
+import Collection3Img5 from "./images/collection-3-img-5.png";
+
+const imgCollections = [
+  [
+    Collection1Img1,
+    Collection1Img2,
+    Collection1Img3,
+    Collection1Img4,
+    Collection1Img5,
+  ],
+  [
+    Collection2Img1,
+    Collection2Img2,
+    Collection2Img3,
+    Collection2Img4,
+    Collection2Img5,
+  ],
+  [
+    Collection3Img1,
+    Collection3Img2,
+    Collection3Img3,
+    Collection3Img4,
+    Collection3Img5,
+  ],
+];
 
 const Text = styled.h1`
   font-size: 50px;
@@ -15,15 +54,54 @@ const url = (name, wrap = false) =>
     wrap ? ")" : ""
   }`;
 
-const BoxVideo = styled.div`
-  &::after {
-    content: '"',
-    position: absolute;
-    top: 20px;
-    width: 100px;
-    height: 320px;
-    border: 1px solid red;
-    background: red;
+const moveRightToLeft = keyframes`
+  0% {
+    transform: translateX(-15%);
+  }
+  50% {
+    transform: translateX(15%);
+  }
+  100% {
+    transform: translateX(-15%);
+  }
+`;
+
+const moveLeftToRight = keyframes`
+  0% {
+    transform: translateX(15%);
+  }
+
+  50% {
+    transform: translateX(-15%);
+  }
+
+  100% {
+    transform: translateX(15%);
+  }
+`;
+
+const CollectionList = styled.div`
+  margin-top: 30px;
+  white-space: nowrap;
+  animation: ${moveRightToLeft} 15s ease-in-out infinite;
+  position: relative;
+  display: flex;
+  gap: 30px;
+
+  &.reverse {
+    animation: ${moveLeftToRight} 15s ease-in-out infinite;
+  }
+
+  & .card {
+    width: 25vw;
+    overflow: hidden;
+    border-radius: 15%;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+    }
   }
 `;
 
@@ -88,9 +166,138 @@ const Homepage = () => {
           they were meant to be together.
         </p>
 
-        <div className="w-full h-[300px] relative mt-16">
+        <div className="w-full h-[400px] relative mt-16">
           <div className="w-full h-full relative bg-slate-100 z-10"></div>
           <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
+        </div>
+      </div>
+
+      {/* Digital looks */}
+      <div className="w-full my-20 flex flex-col relative items-center">
+        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
+          Our one of a kind
+        </h3>
+        <h2 className="text-5xl font-Petit-Formal-Script mb-8">
+          Rare Digital Looks
+        </h2>
+
+        <CollectionList>
+          {imgCollections[0].map((item, index) => (
+            <div key={index} className="card">
+              <img src={item} alt="nft" />
+            </div>
+          ))}
+        </CollectionList>
+        <CollectionList className="reverse">
+          {imgCollections[1].map((item, index) => (
+            <div key={index} className="card">
+              <img src={item} alt="nft" />
+            </div>
+          ))}
+        </CollectionList>
+        <CollectionList>
+          {imgCollections[2].map((item, index) => (
+            <div key={index} className="card">
+              <img src={item} alt="nft" />
+            </div>
+          ))}
+        </CollectionList>
+      </div>
+
+      {/* Big day When/Where/How + maps */}
+      <div className="w-full my-20 flex flex-col relative items-center container">
+        <h2 className="text-5xl font-Petit-Formal-Script mb-16">
+          When & Where ?
+        </h2>
+        <div className="w-full flex flex-row gap-10 justify-center">
+          <div className="w-[400px] h-[180px] border-2 flex flex-col items-center justify-center">
+            <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-3">
+              Wedding Date
+            </h3>
+            <p className="font-Petit-Formal-Script text-4xl -rotate-3">
+              20 May 2023
+            </p>
+          </div>
+          <div className="w-[400px] h-[180px] border-2 flex flex-col items-center justify-center">
+            <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-3">
+              Akad Nikah
+            </h3>
+            <p className="text-xl font-Italiana">08.00 - 10.00 WIB</p>
+            <p className="text-xl font-Italiana">Masjid Raya Bani Umar</p>
+          </div>
+          <div className="w-[400px] h-[180px] border-2 flex flex-col items-center justify-center">
+            <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-3">
+              Resepsi Nikah
+            </h3>
+            <p className="text-xl font-Italiana">11.00 - 13.00 WIB</p>
+            <p className="text-xl font-Italiana">Masjid Raya Bani Umar</p>
+          </div>
+        </div>
+        <div className="w-full h-[400px] relative mt-16">
+          <div className="w-full h-full relative bg-slate-100 z-10 flex justify-center items-center">
+            Hover to view map
+          </div>
+          <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
+        </div>
+      </div>
+
+      {/* Photo Gallery */}
+      <div className="w-full my-20 flex flex-col relative items-center container">
+        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
+          Our one of a kind
+        </h3>
+        <h2 className="text-5xl font-Petit-Formal-Script mb-16">
+          Gallery Photo
+        </h2>
+        <div className="w-full">
+          <div className="flex flex-wrap -m-1 md:-m-2">
+            <div className="flex flex-wrap w-1/2">
+              <div className="w-1/2 p-1 md:p-2">
+                <img
+                  alt="gallery"
+                  className="block object-cover object-center w-full h-full rounded-lg"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp"
+                />
+              </div>
+              <div className="w-1/2 p-1 md:p-2">
+                <img
+                  alt="gallery"
+                  className="block object-cover object-center w-full h-full rounded-lg"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp"
+                />
+              </div>
+              <div className="w-full p-1 md:p-2">
+                <img
+                  alt="gallery"
+                  className="block object-cover object-center w-full h-full rounded-lg"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap w-1/2">
+              <div className="w-full p-1 md:p-2">
+                <img
+                  alt="gallery"
+                  className="block object-cover object-center w-full h-full rounded-lg"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp"
+                />
+              </div>
+              <div className="w-1/2 p-1 md:p-2">
+                <img
+                  alt="gallery"
+                  className="block object-cover object-center w-full h-full rounded-lg"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp"
+                />
+              </div>
+              <div className="w-1/2 p-1 md:p-2">
+                <img
+                  alt="gallery"
+                  className="block object-cover object-center w-full h-full rounded-lg"
+                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(77).webp"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
