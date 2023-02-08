@@ -1,7 +1,9 @@
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
+import FlowerTop from "./images/flower-top.png";
+import FlowerBottom from "./images/flower-bottom.png";
 import CopyHero from "./images/copytext-banner-hero.png";
 import Collection1Img1 from "./images/collection-1-img-1.png";
 import Collection1Img2 from "./images/collection-1-img-2.png";
@@ -105,8 +107,32 @@ const CollectionList = styled.div`
   }
 `;
 
+const initialRsvp = {
+  name: "",
+  status: "accept",
+  personCount: 1,
+  message: "",
+};
 const Homepage = () => {
   const parallaxRef = useRef(null);
+
+  const [rsvp, setRsvp] = useState(initialRsvp);
+
+  const toggleStatus = (status) => {
+    const { status: statusOld, ...restRsvp } = rsvp;
+    setRsvp({
+      ...restRsvp,
+      status,
+    });
+  };
+
+  const activeStatusClass = (status) => {
+    // console.log(status);
+    if (rsvp.status === status) return "border-red-400";
+    else return "border-gray-400";
+  };
+
+  // console.log(rsvp);
 
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
@@ -298,6 +324,97 @@ const Homepage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* RSVP section */}
+      <div className="w-full my-20 flex flex-col relative container">
+        <div className="w-full shadow-2xl bg-white flex flex-col items-center relative">
+          <img src={FlowerTop} alt="Flower Top" className="mb-8 -mt-28" />
+
+          <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-2">
+            R.S.V.P
+          </h3>
+          <h2 className="text-4xl font-Petit-Formal-Script mb-8">
+            Will you attend to our special day?
+          </h2>
+
+          <form className="w-[50%] flex flex-col gap-4 mb-8">
+            <label className="flex flex-col gap-2">
+              <span className="block text-sm uppercase text-slate-700">
+                Your Name
+              </span>
+              <input
+                type="text"
+                onChange={() => {}}
+                className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                placeholder="Full Name"
+              />
+            </label>
+            <label className="flex flex-col gap-2">
+              <span className="block text-sm uppercase text-slate-700">
+                Your Response
+              </span>
+              <div className="w-full flex flex-row gap-3">
+                <div className="w-1/2 flex flex-col items-center justify-center">
+                  <input
+                    type="radio"
+                    name="your_response"
+                    value="accept"
+                    checked={rsvp.status === "accept"}
+                    onChange={(event) => {
+                      toggleStatus("accept");
+                    }}
+                    className="hidden"
+                  />
+                  <label
+                    className={`w-full flex flex-col items-center justify-center border-2 ${
+                      rsvp.status === "accept" && "border-red-400"
+                    }`}
+                    onClick={() => {
+                      toggleStatus("accept");
+                    }}
+                  >
+                    <span className="text-lg">Accept</span>
+                  </label>
+                </div>
+                <div className="w-1/2 flex flex-col items-center justify-center">
+                  <input
+                    type="radio"
+                    name="your_response"
+                    value="not_accept"
+                    checked={rsvp.status === "not_accept"}
+                    onChange={(event) => {
+                      toggleStatus("not_accept");
+                    }}
+                    className="hidden"
+                  />
+                  <label
+                    className={`w-full flex flex-col items-center justify-center border-2 ${
+                      rsvp.status === "not_accept" && "border-red-400"
+                    }`}
+                    onClick={() => {
+                      toggleStatus("not_accept");
+                    }}
+                  >
+                    <span className="text-lg">Not Accept</span>
+                  </label>
+                </div>
+              </div>
+            </label>
+            <label className="flex flex-col gap-2">
+              <span className="block text-sm uppercase text-slate-700">
+                Your Name
+              </span>
+              <input
+                type="text"
+                className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                placeholder="Full Name"
+              />
+            </label>
+          </form>
+
+          <img src={FlowerBottom} alt="Flower Bottom" className="-mb-28" />
         </div>
       </div>
     </div>
