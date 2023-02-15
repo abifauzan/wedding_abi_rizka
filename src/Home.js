@@ -329,8 +329,8 @@ const Homepage = () => {
 
       {/* RSVP section */}
       <div className="w-full my-20 flex flex-col relative container">
-        <div className="w-full shadow-2xl bg-white flex flex-col items-center relative">
-          <img src={FlowerTop} alt="Flower Top" className="mb-8 -mt-28" />
+        <div className="w-full shadow-2xl bg-white flex flex-col items-center relative py-24">
+          <img src={FlowerTop} alt="Flower Top" className="absolute -top-32" />
 
           <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-2">
             R.S.V.P
@@ -404,17 +404,37 @@ const Homepage = () => {
             </label>
             <label className="flex flex-col gap-2">
               <span className="block text-sm uppercase text-slate-700">
-                Your Name
+                Your Message to us
               </span>
-              <input
-                type="text"
+              <textarea
                 className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-                placeholder="Full Name"
+                placeholder="Message"
               />
             </label>
           </form>
 
-          <img src={FlowerBottom} alt="Flower Bottom" className="-mb-28" />
+          <img
+            src={FlowerBottom}
+            alt="Flower Bottom"
+            className="absolute -bottom-40"
+          />
+        </div>
+      </div>
+
+      {/* Testimonial */}
+      <div className="w-full mb-20 mt-40 flex flex-col relative items-center container">
+        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
+          Testimonial
+        </h3>
+        <h2 className="text-5xl font-Petit-Formal-Script mb-16">
+          Happy message from our friends
+        </h2>
+        <div className="w-full flex items-center justify-center">
+          <div className="w-[400px] h-[400px] bg-gradient-to-r from-fuchsia-500 to-cyan-500 flex justify-center items-center rounded-lg">
+            <div className="flex justify-center items-center bg-white w-[99%] h-[99%] rounded-md">
+              Testimonial
+            </div>
+          </div>
         </div>
       </div>
     </div>
