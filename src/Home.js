@@ -278,14 +278,14 @@ const Homepage = () => {
       </div>
 
       {/* Our Story */}
-      <div className="w-full my-20 flex flex-col items-center container">
-        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
+      <div className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container">
+        <h3 className="font-Fjalla-One uppercase text-lg xl:text-xl tracking-widest mb-5 xl:mb-8">
           Our Story
         </h3>
-        <h2 className="text-5xl font-Petit-Formal-Script mb-8">
+        <h2 className="text-4xl xl:text-5xl font-Petit-Formal-Script mb-5 xl:mb-8">
           Dance, Dance, Dance
         </h2>
-        <p className="text-2xl text-center">
+        <p className="text-xl xl:text-2xl text-center px-2 sm:px-0">
           As a pair of determined designers, Daniela and Moe first got to know
           each other working late nights in design studio during grad school—
           brewing that third pot of coffee, sharing tasty treats, and exchanging
@@ -294,14 +294,14 @@ const Homepage = () => {
           they were meant to be together.
         </p>
 
-        <div className="w-full h-[400px] relative mt-16">
+        <div className="w-[90%] md:w-full h-[400px] relative mt-16">
           <div className="w-full h-full relative bg-slate-100 z-10"></div>
           <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
         </div>
       </div>
 
       {/* Digital looks */}
-      <div className="w-full my-20 flex flex-col relative items-center">
+      <div className="w-full py-20 flex flex-col relative items-center">
         <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
           Our one of a kind
         </h3>
@@ -333,7 +333,7 @@ const Homepage = () => {
       </div>
 
       {/* Big day When/Where/How + maps */}
-      <div className="w-full my-20 flex flex-col relative items-center container">
+      <div className="w-full py-20 flex flex-col relative items-center container">
         <h2 className="text-5xl font-Petit-Formal-Script mb-16">
           When & Where ?
         </h2>
@@ -370,7 +370,7 @@ const Homepage = () => {
       </div>
 
       {/* Photo Gallery */}
-      <div className="w-full my-20 flex flex-col relative items-center container">
+      <div className="w-full py-20 flex flex-col relative items-center container">
         <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
           Our one of a kind
         </h3>
@@ -430,7 +430,7 @@ const Homepage = () => {
       </div>
 
       {/* RSVP section */}
-      <div className="w-full my-20 flex flex-col relative container">
+      <div className="w-full py-20 flex flex-col relative container">
         <div className="w-full shadow-2xl bg-white flex flex-col items-center relative py-24">
           <img src={FlowerTop} alt="Flower Top" className="absolute -top-32" />
 
@@ -524,7 +524,7 @@ const Homepage = () => {
       </div>
 
       {/* Testimonial */}
-      <div className="w-full mb-20 mt-40 flex flex-col relative items-center container">
+      <div className="w-full pb-20 pt-40 flex flex-col relative items-center container">
         <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
           Testimonial
         </h3>
