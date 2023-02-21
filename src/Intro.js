@@ -129,7 +129,7 @@ const Intro = () => {
       {/* body */}
       <div className="w-full h-full relative flex justify-center items-center">
         <div className="w-full md:w-[700px] h-full md:h-[540px] backdrop-blur-md bg-white/20 p-3 md:p-7 md:rounded-md">
-          <div className="w-full h-full bg-transparent border-white/50 border-2 flex flex-col rounded-md justify-between items-center px-8 py-40 md:px-24 md:py-14">
+          <div className="w-full h-full bg-transparent border-white/50 border-2 flex flex-col rounded-md justify-between items-center px-8 pt-40 pb-24 md:px-24 md:py-14">
             <div className="w-full flex flex-col items-center">
               <img src={TextWeddingInvitation} alt="Wedding Invitation" />
             </div>

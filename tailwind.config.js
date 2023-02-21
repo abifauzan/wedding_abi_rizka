@@ -12,16 +12,16 @@ module.exports = {
       backgroundImage: {
         "banner-pattern": "url('./images/banner-pattern.jpg')",
         "banner-invitation": "url('./images/banner-invitation.jpg')",
-        "banner-flower": "url('./images/banner-flower.jpg')",
+        "banner-home": "url('./images/home_hero.jpg')",
       },
       container: {
         center: true,
         padding: {
           DEFAULT: "1rem",
           sm: "0",
-          lg: "0",
-          xl: "0",
-          "2xl": "0",
+          lg: "4rem",
+          xl: "5rem",
+          "2xl": "6rem",
         },
         screens: {
           sm: "600px",
@@ -36,6 +36,9 @@ module.exports = {
         "Fjalla-One": ['"Fjalla One"', "sans-serif"],
         "Petit-Formal-Script": ['"Petit Formal Script"', "cursive"],
         Italiana: ['"Italiana"', "serif"],
+        "Alex-Brush": ['"Alex Brush"', "cursive"],
+        "Playfair-Display": ['"Playfair Display"', "serif"],
+        Oswald: ['"Oswald"', "sans-serif"],
       },
     },
   },

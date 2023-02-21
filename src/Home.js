@@ -1,10 +1,17 @@
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
 import FlowerTop from "./images/flower-top.png";
 import FlowerBottom from "./images/flower-bottom.png";
+import LoveArt from "./images/love-art.png";
 import CopyHero from "./images/copytext-banner-hero.png";
+import FloatingFlower1 from "./images/floating_image-1.png";
+import FloatingFlower2 from "./images/floating_image-2.png";
+import IDFlag from "./images/indonesia.svg";
+import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
+import { VscMenu } from "react-icons/vsc";
 import Collection1Img1 from "./images/collection-1-img-1.png";
 import Collection1Img2 from "./images/collection-1-img-2.png";
 import Collection1Img3 from "./images/collection-1-img-3.png";
@@ -140,39 +147,134 @@ const Homepage = () => {
         <div className="w-full h-[100vh] bg-banner-pattern bg-no-repeat bg-cover"></div>
       </Parallax> */}
 
+      {/* header */}
+      <header className="w-full absolute h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent">
+        <div className="container w-full h-full flex justify-center items-center relative">
+          <Link
+            to="/"
+            className="w-full text-center lg:text-left uppercase text-2xl md:text-3xl font-Playfair-Display tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0"
+          >
+            Abi & Rizka
+          </Link>
+
+          {/* nav desktop */}
+          <nav className="hidden lg:flex h-full items-center justify-center text-lg">
+            <Link
+              to="/"
+              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+            >
+              Homepage
+            </Link>
+            <Link
+              to="/"
+              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+            >
+              Our Story
+            </Link>
+            <Link
+              to="/"
+              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+            >
+              Digital Looks
+            </Link>
+            <Link
+              to="/"
+              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+            >
+              When & Where
+            </Link>
+            <Link
+              to="/"
+              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+            >
+              RSVP
+            </Link>
+          </nav>
+
+          {/* right item nav desktop */}
+          <div className="hidden absolute right-0 xl:flex justify-center items-center">
+            <button className="inline-flex h-8 px-2 justify-center items-center gap-1 bg-transparent rounded-sm text-white hover:bg-gradient-to-r from-cyan-500 to-blue-500">
+              <BsFillPauseFill size="1.1em" />
+              <span className="tracking-wide">His song</span>
+            </button>
+            <button className="inline-flex h-8 px-2 justify-center items-center gap-1 bg-transparent rounded-sm text-white hover:bg-gradient-to-r from-rose-400 to-red-500">
+              <BsMusicNote size="1.1em" />
+              <span className="tracking-wide">Her song</span>
+            </button>
+            <button className="flex items-center justify-center h-6 md:h-8 px-2 md:px-3 bg-transparent border border-white rounded-sm focus:outline-none transition-all md:ml-2">
+              <img src={IDFlag} alt="Indonesia Flag" className="w-4" />
+
+              <span className="ml-3 text-sm md:text-md tracking-wide">
+                Bahasa
+              </span>
+              <svg
+                className="w-4 h-4 mt-px ml-2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* righht item nav mobile */}
+          <div className="absolute right-[1rem] md:right-0 flex xl:hidden">
+            <BsMusicNote size="1.2em" className="cursor-pointer lg:mr-5" />
+            <VscMenu size="1.2em" className="cursor-pointer hidden lg:block" />
+          </div>
+          <div className="absolute left-[1rem] md:left-0 flex lg:hidden">
+            <VscMenu size="1.2em" className="cursor-pointer" />
+          </div>
+        </div>
+      </header>
+
       {/* Banner */}
-      <div className="w-[100vw] h-[100vh] bg-banner-flower bg-cover bg-center bg-no-repeat flex justify-center items-center">
-        <div className="flex flex-col items-center relative">
-          <h2 className="text-5xl tracking-[1rem] font-Italiana relative -top-10">
+      <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat flex justify-center items-center">
+        <div className="flex flex-col items-center justify-center text-center relative text-white">
+          <h2 className="text-5xl md:text-9xl tracking-widest font-Alex-Brush relative">
             Abi & Rizka
           </h2>
-          <img src={CopyHero} alt="Copytext Hero" className="w-full" />
-          <h2 className="text-2xl tracking-[0.6rem] font-Petit-Formal-Script self-end -mt-3">
-            20.05.2023
+          <h2 className=" text-2xl md:text-4xl tracking-widest italic mt-2 md:mt-4">
+            Are getting married
           </h2>
         </div>
       </div>
 
       {/* Welcome text */}
-      <div className="w-full flex container gap-5 my-20">
-        <div className="w-3/4 p-8 bg-white">
-          <p className="m-0 text-2xl tracking-wide">
-            ¡Hola! Welcome to the digital casa of the Pittmans, or I guess we
-            should say future Pittmans. We can’t wait to celebrate our wedding
-            on Cinco de Mayo with everyone! Until then, take some time exploring
-            our site. Don't forget to RSVP! — C & B
+      <div className="w-full flex flex-col md:flex-row items-center md:items-stretch container gap-4 py-20 px-5 sm:px-24 md:px-0 relative">
+        <div className="w-full md:w-3/4 p-8 xl:p-10 bg-white z-10">
+          <p className="m-0 text-xl xl:text-2xl tracking-wide">
+            ¡Hola! Together with our families, we invite you to our wedding
+            ceremony and celebration this spring in Barcelona. Our wedding will
+            begin at 5pm on May 18th at 158 Road, Berry Francues Vineyards. — A
+            & R
           </p>
         </div>
-        <div className="w-1/4 flex flex-col gap-1">
-          <div className="w-full bg-red-500 text-white p-3 text-center text-xl font-Fjalla-One inline-flex justify-center items-center">
+        <div className="w-full md:w-1/4 flex flex-col gap-1 md:gap-2 z-10">
+          <div className="w-full bg-red-500 text-white p-2 md:p-3 text-center text-xl lg:text-xl font-Fjalla-One tracking-wide inline-flex justify-center items-center">
             The Big Day :
           </div>
-          <div className="w-full h-full bg-red-500 text-white text-center text-4xl flex items-center justify-center font-Fjalla-One">
+          <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
             <div className="flex items-center justify-center">
               20 . 05 . 2023
             </div>
           </div>
         </div>
+        <img
+          src={FloatingFlower1}
+          alt="Floating Flower at Top"
+          className="absolute -top-10 left-0 md:-left-20"
+        />
+        <img
+          src={FloatingFlower2}
+          alt="Floating Flower at Bottom"
+          className="hidden sm:flex absolute -bottom-5 -right-10 md:-right-24"
+        />
       </div>
 
       {/* Our Story */}
