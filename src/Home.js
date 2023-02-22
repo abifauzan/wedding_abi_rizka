@@ -10,6 +10,9 @@ import CopyHero from "./images/copytext-banner-hero.png";
 import FloatingFlower1 from "./images/floating_image-1.png";
 import FloatingFlower2 from "./images/floating_image-2.png";
 import IDFlag from "./images/indonesia.svg";
+import BaniUmarImg from "./images/masjid-bani-umar-bintaro.jpg";
+import AkadNikahImg from "./images/akad-nikah.jpg";
+import ResepsiNikahImg from "./images/resepsi-nikah.jpg";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
 import Collection1Img1 from "./images/collection-1-img-1.png";
@@ -27,6 +30,7 @@ import Collection3Img2 from "./images/collection-3-img-2.png";
 import Collection3Img3 from "./images/collection-3-img-3.png";
 import Collection3Img4 from "./images/collection-3-img-4.png";
 import Collection3Img5 from "./images/collection-3-img-5.png";
+import Heading from "./components/heading";
 
 const imgCollections = [
   [
@@ -90,19 +94,16 @@ const moveLeftToRight = keyframes`
 `;
 
 const CollectionList = styled.div`
-  margin-top: 30px;
   white-space: nowrap;
   animation: ${moveRightToLeft} 15s ease-in-out infinite;
   position: relative;
   display: flex;
-  gap: 30px;
 
   &.reverse {
     animation: ${moveLeftToRight} 15s ease-in-out infinite;
   }
 
   & .card {
-    width: 25vw;
     overflow: hidden;
     border-radius: 15%;
 
@@ -120,6 +121,33 @@ const initialRsvp = {
   personCount: 1,
   message: "",
 };
+
+const listMenu = [
+  {
+    slug: "#welcome",
+    title: "Welcome",
+  },
+  {
+    slug: "#our-drama",
+    title: "Our Drama",
+  },
+  {
+    slug: "#our-drama",
+    title: "The Big Day",
+  },
+  {
+    slug: "#big-day",
+    title: "The Big Day",
+  },
+  {
+    slug: "#gallery",
+    title: "Gallery",
+  },
+  {
+    slug: "#your-reply",
+    title: "Your reply",
+  },
+];
 const Homepage = () => {
   const parallaxRef = useRef(null);
 
@@ -159,36 +187,15 @@ const Homepage = () => {
 
           {/* nav desktop */}
           <nav className="hidden lg:flex h-full items-center justify-center text-lg">
-            <Link
-              to="/"
-              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
-            >
-              Homepage
-            </Link>
-            <Link
-              to="/"
-              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
-            >
-              Our Story
-            </Link>
-            <Link
-              to="/"
-              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
-            >
-              Digital Looks
-            </Link>
-            <Link
-              to="/"
-              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
-            >
-              When & Where
-            </Link>
-            <Link
-              to="/"
-              className="h-full px-4 inline-flex justify-center items-center tracking-wide"
-            >
-              RSVP
-            </Link>
+            {listMenu.map((item) => (
+              <Link
+                key={item.slug}
+                to={item.slug}
+                className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+              >
+                {item.title}
+              </Link>
+            ))}
           </nav>
 
           {/* right item nav desktop */}
@@ -279,12 +286,8 @@ const Homepage = () => {
 
       {/* Our Story */}
       <div className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container">
-        <h3 className="font-Fjalla-One uppercase text-lg xl:text-xl tracking-widest mb-5 xl:mb-8">
-          Our Story
-        </h3>
-        <h2 className="text-4xl xl:text-5xl font-Petit-Formal-Script mb-5 xl:mb-8">
-          Dance, Dance, Dance
-        </h2>
+        <Heading title="Our Drama" subtitle="Dance, Dance, Dance" />
+
         <p className="text-xl xl:text-2xl text-center px-2 sm:px-0">
           As a pair of determined designers, Daniela and Moe first got to know
           each other working late nights in design studio during grad school—
@@ -301,31 +304,24 @@ const Homepage = () => {
       </div>
 
       {/* Digital looks */}
-      <div className="w-full py-20 flex flex-col relative items-center">
-        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
-          Our one of a kind
-        </h3>
-        <h2 className="text-5xl font-Petit-Formal-Script mb-8">
-          Rare Digital Looks
-        </h2>
-
-        <CollectionList>
+      <div className="w-full flex flex-col relative items-center">
+        <CollectionList className="mt-5 md:mt-8 gap-5 md:gap-8">
           {imgCollections[0].map((item, index) => (
-            <div key={index} className="card">
+            <div key={index} className="card w-[40vw] md:w-[25vw]">
               <img src={item} alt="nft" />
             </div>
           ))}
         </CollectionList>
-        <CollectionList className="reverse">
+        <CollectionList className="reverse mt-5 md:mt-8 gap-5 md:gap-8">
           {imgCollections[1].map((item, index) => (
-            <div key={index} className="card">
+            <div key={index} className="card w-[40vw] md:w-[25vw]">
               <img src={item} alt="nft" />
             </div>
           ))}
         </CollectionList>
-        <CollectionList>
+        <CollectionList className="mt-5 md:mt-8 gap-5 md:gap-8">
           {imgCollections[2].map((item, index) => (
-            <div key={index} className="card">
+            <div key={index} className="card w-[40vw] md:w-[25vw]">
               <img src={item} alt="nft" />
             </div>
           ))}
@@ -334,31 +330,70 @@ const Homepage = () => {
 
       {/* Big day When/Where/How + maps */}
       <div className="w-full py-20 flex flex-col relative items-center container">
-        <h2 className="text-5xl font-Petit-Formal-Script mb-16">
-          When & Where ?
-        </h2>
-        <div className="w-full flex flex-row gap-10 justify-center">
-          <div className="w-[400px] h-[180px] border-2 flex flex-col items-center justify-center">
-            <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-3">
-              Wedding Date
-            </h3>
-            <p className="font-Petit-Formal-Script text-4xl -rotate-3">
-              20 May 2023
-            </p>
+        <Heading title="The Big Day" subtitle="When & Where ?" />
+
+        <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
+          <div className="w-[400px] h-[400px] rounded-md flex flex-col items-center justify-center shadow-md">
+            <div className="w-full h-3/5 rounded-t-md">
+              <img
+                src={BaniUmarImg}
+                alt="Masjid Raya Bani Umar"
+                className="object-cover w-full h-full rounded-t-md"
+              />
+            </div>
+            <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
+              <span className="text-2xl font-Oswald font-light tracking-wide">
+                The Venue
+              </span>
+              <div className="inline-flex flex-col">
+                <span className="font-Italiana font-bold mb-1">
+                  Masjid Raya Bani Umar
+                </span>
+                <span className="font-Italiana text-gray-500">
+                  Bintaro, Tangerang Selatan
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="w-[400px] h-[180px] border-2 flex flex-col items-center justify-center">
-            <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-3">
-              Akad Nikah
-            </h3>
-            <p className="text-xl font-Italiana">08.00 - 10.00 WIB</p>
-            <p className="text-xl font-Italiana">Masjid Raya Bani Umar</p>
+          <div className="w-[400px] h-[400px] rounded-md flex flex-col items-center justify-center shadow-md">
+            <div className="w-full h-3/5 rounded-t-md">
+              <img
+                src={AkadNikahImg}
+                alt="Akad Nikah"
+                className="object-cover w-full h-full rounded-t-md"
+              />
+            </div>
+            <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
+              <span className="text-2xl font-Oswald font-light tracking-wide">
+                Akad Nikah
+              </span>
+              <div className="inline-flex flex-col">
+                <span className="font-Italiana font-bold mb-1">
+                  08.00 - 10.00 WIB
+                </span>
+                <span className="font-Italiana text-gray-500">20 May 2023</span>
+              </div>
+            </div>
           </div>
-          <div className="w-[400px] h-[180px] border-2 flex flex-col items-center justify-center">
-            <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-3">
-              Resepsi Nikah
-            </h3>
-            <p className="text-xl font-Italiana">11.00 - 13.00 WIB</p>
-            <p className="text-xl font-Italiana">Masjid Raya Bani Umar</p>
+          <div className="w-[400px] h-[400px] rounded-md flex flex-col items-center justify-center shadow-md">
+            <div className="w-full h-3/5 rounded-t-md">
+              <img
+                src={ResepsiNikahImg}
+                alt="Resepsi Pernikahan"
+                className="object-cover w-full h-full rounded-t-md"
+              />
+            </div>
+            <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
+              <span className="text-2xl font-Oswald font-light tracking-wide">
+                Resepsi Pernikahan
+              </span>
+              <div className="inline-flex flex-col">
+                <span className="font-Italiana font-bold mb-1">
+                  11.00 - 13.00 WIB
+                </span>
+                <span className="font-Italiana text-gray-500">20 May 2023</span>
+              </div>
+            </div>
           </div>
         </div>
         <div className="w-full h-[400px] relative mt-16">
@@ -371,12 +406,8 @@ const Homepage = () => {
 
       {/* Photo Gallery */}
       <div className="w-full py-20 flex flex-col relative items-center container">
-        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
-          Our one of a kind
-        </h3>
-        <h2 className="text-5xl font-Petit-Formal-Script mb-16">
-          Gallery Photo
-        </h2>
+        <Heading title="Our one of a kind" subtitle="Gallery" />
+
         <div className="w-full">
           <div className="flex flex-wrap -m-1 md:-m-2">
             <div className="flex flex-wrap w-1/2">
