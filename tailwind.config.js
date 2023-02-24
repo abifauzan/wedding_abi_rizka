@@ -13,6 +13,7 @@ module.exports = {
         "banner-pattern": "url('./images/banner-pattern.jpg')",
         "banner-invitation": "url('./images/banner-invitation.jpg')",
         "banner-home": "url('./images/home_hero.jpg')",
+        "banner-testimonial": "url('./images/bg-testimonial.jpg')",
       },
       container: {
         center: true,

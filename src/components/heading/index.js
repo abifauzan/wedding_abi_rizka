@@ -1,4 +1,4 @@
-const Heading = ({ title, subtitle, className = "" }) => {
+const Heading = ({ title, subtitle, className = "", subtitleClass = "" }) => {
   return (
     <div className={`w-full mb-5 xl:mb-8 text-center ${className}`}>
       {title && (
@@ -8,7 +8,9 @@ const Heading = ({ title, subtitle, className = "" }) => {
       )}
 
       {subtitle && (
-        <h2 className="text-4xl text-center xl:text-5xl font-Petit-Formal-Script">
+        <h2
+          className={`text-4xl text-center xl:text-5xl font-Petit-Formal-Script ${subtitleClass}`}
+        >
           {subtitle}
         </h2>
       )}

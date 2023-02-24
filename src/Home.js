@@ -1,4 +1,9 @@
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import { Autoplay, Pagination, Navigation } from "swiper";
+
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
@@ -148,6 +153,15 @@ const listMenu = [
     title: "Your reply",
   },
 ];
+
+const listGallery = [
+  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp",
+  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(71).webp",
+  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp",
+  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp",
+  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp",
+];
+
 const Homepage = () => {
   const parallaxRef = useRef(null);
 
@@ -405,91 +419,100 @@ const Homepage = () => {
       </div>
 
       {/* Photo Gallery */}
-      <div className="w-full py-20 flex flex-col relative items-center container">
+      <div className="w-full py-20 flex flex-col relative items-center">
         <Heading title="Our one of a kind" subtitle="Gallery" />
 
-        <div className="w-full">
-          <div className="flex flex-wrap -m-1 md:-m-2">
-            <div className="flex flex-wrap w-1/2">
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block object-cover object-center w-full h-full rounded-lg"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp"
-                />
-              </div>
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block object-cover object-center w-full h-full rounded-lg"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp"
-                />
-              </div>
-              <div className="w-full p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block object-cover object-center w-full h-full rounded-lg"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp"
-                />
-              </div>
-            </div>
-            <div className="flex flex-wrap w-1/2">
-              <div className="w-full p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block object-cover object-center w-full h-full rounded-lg"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp"
-                />
-              </div>
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block object-cover object-center w-full h-full rounded-lg"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp"
-                />
-              </div>
-              <div className="w-1/2 p-1 md:p-2">
-                <img
-                  alt="gallery"
-                  className="block object-cover object-center w-full h-full rounded-lg"
-                  src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(77).webp"
-                />
-              </div>
-            </div>
+        <div className="w-full mt-10 flex flex-col gap-3">
+          <div className="w-full">
+            <Swiper
+              spaceBetween={10}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
+              slidesPerView={"auto"}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+                reverseDirection: false,
+              }}
+              modules={[Autoplay]}
+            >
+              {listGallery.map((item, index) => (
+                <SwiperSlide
+                  key={index}
+                  className="w-[400px] h-[400px] first:ml-3 last:mr-3"
+                >
+                  <img
+                    src={item}
+                    alt={`Item ${index}`}
+                    className="w-full h-full object-cover"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          <div className="w-full">
+            <Swiper
+              spaceBetween={10}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
+              slidesPerView={"auto"}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+                reverseDirection: true,
+                // pauseOnMouseEnter: true,
+              }}
+              modules={[Autoplay]}
+            >
+              {listGallery.map((item, index) => (
+                <SwiperSlide
+                  key={index}
+                  className="w-[400px] h-[400px] first:ml-3 last:mr-3"
+                >
+                  <img
+                    src={item}
+                    alt={`Item ${index}`}
+                    className="w-full h-full object-cover"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </div>
 
       {/* RSVP section */}
-      <div className="w-full py-20 flex flex-col relative container">
-        <div className="w-full shadow-2xl bg-white flex flex-col items-center relative py-24">
-          <img src={FlowerTop} alt="Flower Top" className="absolute -top-32" />
+      <div className="w-full pt-32 pb-48 flex flex-col relative container">
+        <div className="w-full shadow-2xl flex flex-col items-center relative">
+          <img
+            src={FlowerTop}
+            alt="Flower Top"
+            className="relative -mt-20 sm:-mt-24 object-cover"
+          />
 
-          <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-2">
-            R.S.V.P
-          </h3>
-          <h2 className="text-4xl font-Petit-Formal-Script mb-8">
-            Will you attend to our special day?
+          <h2 className="w-full text-3xl sm:text-4xl text-center font-Italiana py-6 sm:py-10 px-10">
+            Will you attend to <br className="hidden sm:block" /> our special
+            day?
           </h2>
 
-          <form className="w-[50%] flex flex-col gap-4 mb-8">
+          <form className="w-full sm:w-2/3 lg:w-1/2 px-3 md:px-0 flex flex-col gap-6 pb-10 sm:pb-18">
             <label className="flex flex-col gap-2">
-              <span className="block text-sm uppercase text-slate-700">
+              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
                 Your Name
               </span>
               <input
                 type="text"
                 onChange={() => {}}
-                className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                className="block w-full px-5 py-4 text-md bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                 placeholder="Full Name"
               />
             </label>
             <label className="flex flex-col gap-2">
-              <span className="block text-sm uppercase text-slate-700">
+              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
                 Your Response
               </span>
-              <div className="w-full flex flex-row gap-3">
-                <div className="w-1/2 flex flex-col items-center justify-center">
+              <div className="w-full flex flex-col sm:flex-row gap-3">
+                <div className="w-full sm:w-1/2 h-20 flex flex-col items-center justify-center">
                   <input
                     type="radio"
                     name="your_response"
@@ -501,17 +524,17 @@ const Homepage = () => {
                     className="hidden"
                   />
                   <label
-                    className={`w-full flex flex-col items-center justify-center border-2 ${
+                    className={`w-full h-full flex flex-col items-center justify-center text-center border-2 bg-white ${
                       rsvp.status === "accept" && "border-red-400"
                     }`}
                     onClick={() => {
                       toggleStatus("accept");
                     }}
                   >
-                    <span className="text-lg">Accept</span>
+                    <span className="text-lg">Joyfully Accepts</span>
                   </label>
                 </div>
-                <div className="w-1/2 flex flex-col items-center justify-center">
+                <div className="w-full sm:w-1/2 h-20 flex flex-col items-center justify-center">
                   <input
                     type="radio"
                     name="your_response"
@@ -523,53 +546,163 @@ const Homepage = () => {
                     className="hidden"
                   />
                   <label
-                    className={`w-full flex flex-col items-center justify-center border-2 ${
+                    className={`w-full h-full flex flex-col items-center justify-center text-center border-2 bg-white ${
                       rsvp.status === "not_accept" && "border-red-400"
                     }`}
                     onClick={() => {
                       toggleStatus("not_accept");
                     }}
                   >
-                    <span className="text-lg">Not Accept</span>
+                    <span className="text-lg">Respecfully Declines</span>
                   </label>
                 </div>
               </div>
             </label>
             <label className="flex flex-col gap-2">
-              <span className="block text-sm uppercase text-slate-700">
+              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
+                Number of guests
+              </span>
+              <select
+                name="guest_number"
+                onChange={() => {}}
+                className="block w-full px-5 py-4 text-lg bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </label>
+            <label className="flex flex-col gap-2">
+              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
                 Your Message to us
               </span>
               <textarea
-                className="block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                className="block w-full px-5 py-4 bg-white border border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
                 placeholder="Message"
+                rows={5}
               />
             </label>
+            <button
+              type="submit"
+              className="self-center bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-md px-10 py-3 uppercase tracking-widest text-md"
+            >
+              Reply
+            </button>
           </form>
 
           <img
             src={FlowerBottom}
             alt="Flower Bottom"
-            className="absolute -bottom-40"
+            className="relative -mb-20 sm:-mb-32 object-cover"
           />
         </div>
       </div>
 
       {/* Testimonial */}
-      <div className="w-full pb-20 pt-40 flex flex-col relative items-center container">
-        <h3 className="font-Fjalla-One uppercase text-xl tracking-widest mb-8">
-          Testimonial
-        </h3>
-        <h2 className="text-5xl font-Petit-Formal-Script mb-16">
-          Happy message from our friends
-        </h2>
-        <div className="w-full flex items-center justify-center">
-          <div className="w-[400px] h-[400px] bg-gradient-to-r from-fuchsia-500 to-cyan-500 flex justify-center items-center rounded-lg">
-            <div className="flex justify-center items-center bg-white w-[99%] h-[99%] rounded-md">
-              Testimonial
-            </div>
+      <div className="w-full relative bg-banner-testimonial bg-cover bg-no-repeat text-white">
+        <div className="w-full h-full bg-black/20 py-16 md:py-20 flex flex-col items-center">
+          <h2 className="w-full md:1/3 lg:w-1/3 !leading-normal text-4xl sm:text-5xl font-Petit-Formal-Script mb-16  text-center px-2 md:px-0">
+            Happy message from our friends
+          </h2>
+          <div className="w-full">
+            <Swiper
+              spaceBetween={10}
+              onSlideChange={() => console.log("slide change")}
+              onSwiper={(swiper) => console.log(swiper)}
+              slidesPerView={1.3}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1.5,
+                },
+                768: {
+                  slidesPerView: 2.3,
+                },
+                1024: {
+                  slidesPerView: 3,
+                },
+                1240: {
+                  slidesPerView: 3.4,
+                },
+                1496: {
+                  slidesPerView: 3.8,
+                },
+              }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+                reverseDirection: false,
+              }}
+              modules={[Autoplay]}
+            >
+              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-6 md:p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
+                <span className="text-lg font-Oswald font-light tracking-widest">
+                  Abi Fauzan
+                </span>
+                <span className="text-lg leading-normal">
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                </span>
+              </SwiperSlide>
+              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
+                <span className="text-lg font-Oswald font-light tracking-widest">
+                  Abi Fauzan
+                </span>
+                <span className="text-lg leading-normal">
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                </span>
+              </SwiperSlide>
+              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
+                <span className="text-lg font-Oswald font-light tracking-widest">
+                  Abi Fauzan
+                </span>
+                <span className="text-lg leading-normal">
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                </span>
+              </SwiperSlide>
+              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
+                <span className="text-lg font-Oswald font-light tracking-widest">
+                  Abi Fauzan
+                </span>
+                <span className="text-lg leading-normal">
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                </span>
+              </SwiperSlide>
+              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
+                <span className="text-lg font-Oswald font-light tracking-widest">
+                  Abi Fauzan
+                </span>
+                <span className="text-lg leading-normal">
+                  We’re lucky enough to have nearly everything we need for our
+                  home already. And since neither of us has ever been outside of
+                  North America, we want our honeymoon to be extra special!{" "}
+                </span>
+              </SwiperSlide>
+            </Swiper>
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="w-full h-[100vh] flex items-center justify-center">
+        Footer
+      </footer>
     </div>
   );
 };
