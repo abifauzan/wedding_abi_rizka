@@ -141,10 +141,6 @@ const listMenu = [
     title: "The Big Day",
   },
   {
-    slug: "#big-day",
-    title: "The Big Day",
-  },
-  {
     slug: "#gallery",
     title: "Gallery",
   },
@@ -700,8 +696,42 @@ const Homepage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="w-full h-[100vh] flex items-center justify-center">
-        Footer
+      <footer className="w-full flex flex-col items-center justify-center">
+        <div className="w-full h-1/2 flex flex-col py-14 items-center justify-start text-center container">
+          <img src={LoveArt} alt="Love Sign" className="w-32" />
+          <img
+            src={LogoCouple}
+            alt="Abi & Rizka"
+            className="w-42 md:w-60 mt-4"
+          />
+          <span className="text-xl mt-4">We can't wait to see you</span>
+          <div className="w-full flex flex-col items-center text-center pt-10 pb-4 border-b-2 ">
+            <span className="text-2xl font-Oswald font-light tracking-widest uppercase">
+              Follow Us
+            </span>
+            <span className="text-xl mt-4">
+              His Instagram{" "}
+              <Link to="/" className="text-red-500">
+                @abifauzn
+              </Link>
+            </span>
+            <span className="text-xl mt-1">
+              Her Instagram{" "}
+              <Link to="/" className="text-red-500">
+                @rizkajuliant20
+              </Link>
+            </span>
+          </div>
+          <span className="text-xl mt-4">
+            Want to make your digital invitation looks fancy ?
+          </span>
+          <Link to="/tes" className="text-xl mt-1 text-red-500">
+            Let's have a chat and brew some coffee
+          </Link>
+        </div>
+        <div className="w-full h-[50vh] bg-banner-home relative">
+          <div className="w-full h-32 bg-gradient-to-b from-main to-transparent absolute top-0" />
+        </div>
       </footer>
     </div>
   );

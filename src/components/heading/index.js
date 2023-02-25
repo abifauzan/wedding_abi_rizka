@@ -2,7 +2,7 @@ const Heading = ({ title, subtitle, className = "", subtitleClass = "" }) => {
   return (
     <div className={`w-full mb-5 xl:mb-8 text-center ${className}`}>
       {title && (
-        <h3 className="font-Fjalla-One uppercase text-lg xl:text-xl tracking-widest mb-5 xl:mb-8">
+        <h3 className="font-Oswald font-normal uppercase text-lg xl:text-xl tracking-widest mb-5 xl:mb-8">
           {title}
         </h3>
       )}
