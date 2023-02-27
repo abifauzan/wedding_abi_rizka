@@ -1,4 +1,3 @@
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { useRef } from "react";
 import styled from "styled-components";
 import LogoCouple from "./images/logo-couple.png";

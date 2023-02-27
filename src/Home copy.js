@@ -1,8 +1,8 @@
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Autoplay, Pagination, Navigation } from "swiper";
-import { Parallax } from "react-scroll-parallax";
-import Countdown from "react-countdown";
 
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -36,12 +36,6 @@ import Collection3Img3 from "./images/collection-3-img-3.png";
 import Collection3Img4 from "./images/collection-3-img-4.png";
 import Collection3Img5 from "./images/collection-3-img-5.png";
 import Heading from "./components/heading";
-
-const Completionist = () => (
-  <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
-    <div className="flex items-center justify-center">20 . 05 . 2023</div>
-  </div>
-);
 
 const imgCollections = [
   [
@@ -183,48 +177,11 @@ const Homepage = () => {
     else return "border-gray-400";
   };
 
-  // Renderer callback with condition
-  const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if (completed) {
-      // Render a complete state
-      return <Completionist />;
-    } else {
-      // Render a countdown
-      return (
-        <>
-          <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
-              days
-            </span>
-            <span className="font-Oswald text-3xl">{days}</span>
-          </div>
-          <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
-              hours
-            </span>
-            <span className="font-Oswald text-3xl">{hours}</span>
-          </div>
-          <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
-              minutes
-            </span>
-            <span className="font-Oswald text-3xl">{minutes}</span>
-          </div>
-          <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
-              seconds
-            </span>
-            <span className="font-Oswald text-3xl">{seconds}</span>
-          </div>
-        </>
-      );
-    }
-  };
-
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
+      {/* <Parallax ref={parallaxRef} pages={7}> */}
       {/* header */}
-      <header className="w-full fixed h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent z-20">
+      <header className="w-full absolute h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent">
         <div className="container w-full h-full flex justify-center items-center relative">
           <Link
             to="/"
@@ -290,16 +247,14 @@ const Homepage = () => {
 
       {/* Banner */}
       <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat flex justify-center items-center">
-        <Parallax speed={-20}>
-          <div className="flex flex-col items-center justify-center text-center relative text-white">
-            <h2 className="text-5xl md:text-9xl tracking-widest font-Alex-Brush relative">
-              Abi & Rizka
-            </h2>
-            <h2 className=" text-2xl md:text-4xl tracking-widest italic mt-2 md:mt-4">
-              Are getting married
-            </h2>
-          </div>
-        </Parallax>
+        <div className="flex flex-col items-center justify-center text-center relative text-white">
+          <h2 className="text-5xl md:text-9xl tracking-widest font-Alex-Brush relative">
+            Abi & Rizka
+          </h2>
+          <h2 className=" text-2xl md:text-4xl tracking-widest italic mt-2 md:mt-4">
+            Are getting married
+          </h2>
+        </div>
       </div>
 
       {/* Welcome text */}
@@ -307,21 +262,19 @@ const Homepage = () => {
         <div className="w-full md:w-3/4 p-8 xl:p-10 bg-white z-10">
           <p className="m-0 text-xl xl:text-2xl tracking-wide">
             ¡Hola! Together with our families, we invite you to our wedding
-            ceremony and celebration. Our wedding will begin at 8am until 1pm on
-            May 20th 2023 at Masjid Raya Bani Umar, Bintaro, Tangerang Selatan.
-            — A & R
+            ceremony and celebration this spring in Barcelona. Our wedding will
+            begin at 5pm on May 18th at 158 Road, Berry Francues Vineyards. — A
+            & R
           </p>
         </div>
         <div className="w-full md:w-1/4 flex flex-col gap-1 md:gap-2 z-10">
           <div className="w-full bg-red-500 text-white p-2 md:p-3 text-center text-xl lg:text-xl font-Fjalla-One tracking-wide inline-flex justify-center items-center">
             The Big Day :
           </div>
-          <div className="w-full h-full bg-red-500 text-white text-center flex items-center justify-center font-Fjalla-One gap-4">
-            <Countdown date={new Date("2023/05/20")} renderer={renderer} />
-
-            {/* <div className="flex items-center justify-center">
+          <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
+            <div className="flex items-center justify-center">
               20 . 05 . 2023
-            </div> */}
+            </div>
           </div>
         </div>
         <img
