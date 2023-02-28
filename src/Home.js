@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import { Parallax } from "react-scroll-parallax";
 import Countdown from "react-countdown";
+import { motion, Variants } from "framer-motion";
 
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -42,6 +43,20 @@ const Completionist = () => (
     <div className="flex items-center justify-center">20 . 05 . 2023</div>
   </div>
 );
+
+const cardVariants = {
+  offscreen: {
+    x: 300,
+  },
+  onscreen: {
+    x: 0,
+    transition: {
+      type: "spring",
+      bounce: 0.4,
+      duration: 0.8,
+    },
+  },
+};
 
 const imgCollections = [
   [
@@ -191,32 +206,32 @@ const Homepage = () => {
     } else {
       // Render a countdown
       return (
-        <>
+        <div className="flex gap-5 py-3 px-6">
           <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
+            <span className="font-Oswald tracking-wide text-lg font-light">
               days
             </span>
-            <span className="font-Oswald text-3xl">{days}</span>
+            <span className="font-Oswald font-light text-3xl">{days}</span>
           </div>
           <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
+            <span className="font-Oswald tracking-wide text-lg font-light">
               hours
             </span>
-            <span className="font-Oswald text-3xl">{hours}</span>
+            <span className="font-Oswald font-light text-3xl">{hours}</span>
           </div>
           <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
+            <span className="font-Oswald tracking-wide text-lg font-light">
               minutes
             </span>
-            <span className="font-Oswald text-3xl">{minutes}</span>
+            <span className="font-Oswald font-light text-3xl">{minutes}</span>
           </div>
           <div className="flex flex-col text-center items-center justify-between gap-2">
-            <span className="font-Oswald tracking-wide text-lg font-extralight">
+            <span className="font-Oswald tracking-wide text-lg font-light">
               seconds
             </span>
-            <span className="font-Oswald text-3xl">{seconds}</span>
+            <span className="font-Oswald font-light text-3xl">{seconds}</span>
           </div>
-        </>
+        </div>
       );
     }
   };
@@ -289,7 +304,7 @@ const Homepage = () => {
       </header>
 
       {/* Banner */}
-      <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat flex justify-center items-center">
+      <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed flex justify-center items-center">
         <Parallax speed={-20}>
           <div className="flex flex-col items-center justify-center text-center relative text-white">
             <h2 className="text-5xl md:text-9xl tracking-widest font-Alex-Brush relative">
@@ -303,8 +318,8 @@ const Homepage = () => {
       </div>
 
       {/* Welcome text */}
-      <div className="w-full flex flex-col md:flex-row items-center md:items-stretch container gap-4 py-20 px-5 sm:px-24 md:px-0 relative">
-        <div className="w-full md:w-3/4 p-8 xl:p-10 bg-white z-10">
+      <div className="w-full flex flex-col lg:flex-row items-center lg:items-stretch container gap-4 py-20 lg:py-24  px-5 sm:px-24 lg:px-0 relative">
+        <div className="w-full lg:w-3/4 p-8 xl:p-10 bg-white z-10">
           <p className="m-0 text-xl xl:text-2xl tracking-wide">
             ¡Hola! Together with our families, we invite you to our wedding
             ceremony and celebration. Our wedding will begin at 8am until 1pm on
@@ -312,11 +327,11 @@ const Homepage = () => {
             — A & R
           </p>
         </div>
-        <div className="w-full md:w-1/4 flex flex-col gap-1 md:gap-2 z-10">
-          <div className="w-full bg-red-500 text-white p-2 md:p-3 text-center text-xl lg:text-xl font-Fjalla-One tracking-wide inline-flex justify-center items-center">
+        <div className="w-full lg:w-1/4 flex flex-col gap-1 lg:gap-2 z-10">
+          <div className="w-full bg-red-500 text-white p-2 lg:p-3 text-center text-xl lg:text-xl font-Fjalla-One tracking-wide inline-flex justify-center items-center">
             The Big Day :
           </div>
-          <div className="w-full h-full bg-red-500 text-white text-center flex items-center justify-center font-Fjalla-One gap-4">
+          <div className="w-full h-full bg-red-500 text-white text-center flex items-center justify-center font-Fjalla-One">
             <Countdown date={new Date("2023/05/20")} renderer={renderer} />
 
             {/* <div className="flex items-center justify-center">
