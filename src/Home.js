@@ -4,8 +4,12 @@ import { Autoplay, Pagination, Navigation } from "swiper";
 import { Parallax } from "react-scroll-parallax";
 import Countdown from "react-countdown";
 import { motion, Variants } from "framer-motion";
+import useSound from "use-sound";
 
-import { useRef, useState } from "react";
+import abiSong from "./sounds/youre_the_inspiration.mp3";
+import ikaSong from "./sounds/you_and_me.mp3";
+
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
@@ -183,6 +187,36 @@ const Homepage = () => {
   const parallaxRef = useRef(null);
 
   const [rsvp, setRsvp] = useState(initialRsvp);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [headerExpand, setHeaderExpand] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playStatus, setPlayStatus] = useState("");
+
+  const [playAbi, { pause: pauseAbi, duration: durationAbi, sound: soundAbi }] =
+    useSound(abiSong);
+  const [playIka, { pause: pauseIka, duration: durationIka, sound: soundIka }] =
+    useSound(ikaSong);
+
+  const playingButton = (player) => {
+    if (isPlaying === false) {
+      if (player === "abi") {
+        playAbi();
+        setPlayStatus("abi");
+      } else {
+        playIka();
+        setPlayStatus("ika");
+      }
+      setIsPlaying(true);
+    } else {
+      if (player === "abi") {
+        pauseAbi();
+      } else {
+        pauseIka();
+      }
+      setIsPlaying(false);
+      setPlayStatus("");
+    }
+  };
 
   const toggleStatus = (status) => {
     const { status: statusOld, ...restRsvp } = rsvp;
@@ -192,11 +226,44 @@ const Homepage = () => {
     });
   };
 
+  const toggleMenu = () => {
+    setMobileMenu(!mobileMenu);
+  };
+
   const activeStatusClass = (status) => {
     // console.log(status);
     if (rsvp.status === status) return "border-red-400";
     else return "border-gray-400";
   };
+
+  const triggerHeaderScroll = () => {
+    const triggered = window.scrollY > 600 ? true : false;
+    setHeaderExpand(triggered);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", triggerHeaderScroll);
+
+    return () => {
+      window.removeEventListener("scroll", triggerHeaderScroll);
+    };
+  }, []);
+
+  const headerStyle = useMemo(() => {
+    if (headerExpand) {
+      return {
+        nav: "h-[50px] md:h-[60px] bg-white text-black",
+        logo: "text-xl md:text-2xl",
+        btnSong: "h-8 px-2 text-black",
+      };
+    }
+
+    return {
+      nav: "h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent",
+      logo: "text-2xl md:text-3xl",
+      btnSong: "h-8 px-2 text-white",
+    };
+  }, [headerExpand]);
 
   // Renderer callback with condition
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -236,14 +303,55 @@ const Homepage = () => {
     }
   };
 
+  if (mobileMenu) {
+    return (
+      <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-home relative">
+        <div className="w-full h-full flex flex-col bg-black/30">
+          <div className="w-full flex items-center justify-between text-white p-6">
+            <Link to="/" className="text-xl font-Playfair-Display uppercase">
+              Abi & Rizka
+            </Link>
+            <div
+              onClick={toggleMenu}
+              className="inline-flex gap-2 items-center"
+            >
+              <span className="w-5 h-[2px] bg-white" />
+              Back
+            </div>
+          </div>
+          <div className="w-full px-6 mt-10 flex items-center gap-4 text-white">
+            <span className="uppercase tracking-widest border-b-2 cursor-pointer">
+              ID
+            </span>
+            <span className="uppercase tracking-widest cursor-pointer">EN</span>
+          </div>
+          <nav className="w-full px-6 mt-10 flex flex-col justify-start text-white gap-3">
+            <Link to="/" className="text-4xl">
+              Welcome
+            </Link>
+            <Link to="/" className="text-4xl">
+              Our Drama
+            </Link>
+            <Link to="/" className="text-4xl">
+              The Big Day
+            </Link>
+            <Link to="/" className="text-4xl">
+              Galery
+            </Link>
+          </nav>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
       {/* header */}
-      <header className="w-full fixed h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent z-20">
+      <header className={`${headerStyle.nav} w-full fixed z-20`}>
         <div className="container w-full h-full flex justify-center items-center relative">
           <Link
             to="/"
-            className="w-full text-center lg:text-left uppercase text-2xl md:text-3xl font-Playfair-Display tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0"
+            className={`${headerStyle.logo} w-full text-center lg:text-left uppercase font-Playfair-Display tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0`}
           >
             Abi & Rizka
           </Link>
@@ -263,12 +371,26 @@ const Homepage = () => {
 
           {/* right item nav desktop */}
           <div className="hidden absolute right-0 xl:flex justify-center items-center">
-            <button className="inline-flex h-8 px-2 justify-center items-center gap-1 bg-transparent rounded-sm text-white hover:bg-gradient-to-r from-cyan-500 to-blue-500">
-              <BsFillPauseFill size="1.1em" />
+            <button
+              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 bg-transparent rounded-sm hover:bg-gradient-to-r from-cyan-500 to-blue-500`}
+              onClick={() => playingButton("abi")}
+            >
+              {isPlaying && playStatus === "abi" ? (
+                <BsFillPauseFill size="1.1em" />
+              ) : (
+                <BsMusicNote size="1.1em" />
+              )}
               <span className="tracking-wide">His song</span>
             </button>
-            <button className="inline-flex h-8 px-2 justify-center items-center gap-1 bg-transparent rounded-sm text-white hover:bg-gradient-to-r from-rose-400 to-red-500">
-              <BsMusicNote size="1.1em" />
+            <button
+              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 bg-transparent rounded-sm hover:bg-gradient-to-r from-rose-400 to-red-500`}
+              onClick={() => playingButton("ika")}
+            >
+              {isPlaying && playStatus === "ika" ? (
+                <BsFillPauseFill size="1.1em" />
+              ) : (
+                <BsMusicNote size="1.1em" />
+              )}
               <span className="tracking-wide">Her song</span>
             </button>
             <button className="flex items-center justify-center h-6 md:h-8 px-2 md:px-3 bg-transparent border border-white rounded-sm focus:outline-none transition-all md:ml-2">
@@ -295,10 +417,18 @@ const Homepage = () => {
           {/* righht item nav mobile */}
           <div className="absolute right-[1rem] md:right-0 flex xl:hidden">
             <BsMusicNote size="1.2em" className="cursor-pointer lg:mr-5" />
-            <VscMenu size="1.2em" className="cursor-pointer hidden lg:block" />
+            <VscMenu
+              size="1.2em"
+              className="cursor-pointer hidden lg:block"
+              onClick={toggleMenu}
+            />
           </div>
           <div className="absolute left-[1rem] md:left-0 flex lg:hidden">
-            <VscMenu size="1.2em" className="cursor-pointer" />
+            <VscMenu
+              size="1.2em"
+              className="cursor-pointer"
+              onClick={toggleMenu}
+            />
           </div>
         </div>
       </header>
