@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
 import { Parallax } from "react-scroll-parallax";
 import Countdown from "react-countdown";
-import { motion, Variants } from "framer-motion";
+import { AnimatePresence, motion, Variants } from "framer-motion";
 import useSound from "use-sound";
 
 import abiSong from "./sounds/youre_the_inspiration.mp3";
@@ -40,6 +40,7 @@ import Collection3Img2 from "./images/collection-3-img-2.png";
 import Collection3Img3 from "./images/collection-3-img-3.png";
 import Collection3Img4 from "./images/collection-3-img-4.png";
 import Collection3Img5 from "./images/collection-3-img-5.png";
+import ElementFlowers from "./images/element_flowers.png";
 import Heading from "./components/heading";
 
 const Completionist = () => (
@@ -198,23 +199,36 @@ const Homepage = () => {
     useSound(ikaSong);
 
   const playingButton = (player) => {
-    if (isPlaying === false) {
-      if (player === "abi") {
+    // setPlayStatus(player);
+    if (player === "abi") {
+      if (playStatus === "") {
+        setIsPlaying(true);
         playAbi();
         setPlayStatus("abi");
-      } else {
+      } else if (playStatus === "abi") {
+        setIsPlaying(false);
+        pauseAbi();
+        setPlayStatus("");
+      } else if (playStatus === "ika") {
+        pauseIka();
+        playAbi();
+        setPlayStatus("abi");
+      }
+    } else {
+      // ika
+      if (playStatus === "") {
+        setIsPlaying(true);
+        playIka();
+        setPlayStatus("ika");
+      } else if (playStatus === "ika") {
+        setIsPlaying(false);
+        pauseIka();
+        setPlayStatus("");
+      } else if (playStatus === "abi") {
+        pauseAbi();
         playIka();
         setPlayStatus("ika");
       }
-      setIsPlaying(true);
-    } else {
-      if (player === "abi") {
-        pauseAbi();
-      } else {
-        pauseIka();
-      }
-      setIsPlaying(false);
-      setPlayStatus("");
     }
   };
 
@@ -255,6 +269,8 @@ const Homepage = () => {
         nav: "h-[50px] md:h-[60px] bg-white text-black",
         logo: "text-xl md:text-2xl",
         btnSong: "h-8 px-2 text-black",
+        btnLang: "border-black",
+        btnLangHover: "border-black bg-white text-black",
       };
     }
 
@@ -262,6 +278,8 @@ const Homepage = () => {
       nav: "h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent",
       logo: "text-2xl md:text-3xl",
       btnSong: "h-8 px-2 text-white",
+      btnLang: "border-white",
+      btnLangHover: "border-white bg-transparent text-white",
     };
   }, [headerExpand]);
 
@@ -393,25 +411,35 @@ const Homepage = () => {
               )}
               <span className="tracking-wide">Her song</span>
             </button>
-            <button className="flex items-center justify-center h-6 md:h-8 px-2 md:px-3 bg-transparent border border-white rounded-sm focus:outline-none transition-all md:ml-2">
-              <img src={IDFlag} alt="Indonesia Flag" className="w-4" />
-
-              <span className="ml-3 text-sm md:text-md tracking-wide">
-                Bahasa
-              </span>
-              <svg
-                className="w-4 h-4 mt-px ml-2"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+            <div className="group">
+              <button
+                className={`${headerStyle.btnLang} flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none transition-all md:ml-1`}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+                <span className="ml-1 text-sm md:text-md tracking-widest">
+                  ID
+                </span>
+                <svg
+                  className="h-4 mt-px ml-1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              <div
+                className={`${headerStyle.btnLangHover} hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-sm items-center justify-center cursor-pointer`}
+              >
+                <span className="ml-1 text-sm md:text-md tracking-widest">
+                  EN
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* righht item nav mobile */}
@@ -448,7 +476,7 @@ const Homepage = () => {
       </div>
 
       {/* Welcome text */}
-      <div className="w-full flex flex-col lg:flex-row items-center lg:items-stretch container gap-4 py-20 lg:py-24  px-5 sm:px-24 lg:px-0 relative">
+      <div className="w-full flex flex-col lg:flex-row items-center lg:items-stretch container gap-4 py-20 lg:py-28  px-5 sm:px-24 lg:px-0 relative">
         <div className="w-full lg:w-3/4 p-8 xl:p-10 bg-white z-10">
           <p className="m-0 text-xl xl:text-2xl tracking-wide">
             ¡Hola! Together with our families, we invite you to our wedding
@@ -469,21 +497,39 @@ const Homepage = () => {
             </div> */}
           </div>
         </div>
-        <img
-          src={FloatingFlower1}
-          alt="Floating Flower at Top"
-          className="absolute -top-10 left-0 md:-left-20"
-        />
-        <img
-          src={FloatingFlower2}
-          alt="Floating Flower at Bottom"
-          className="hidden sm:flex absolute -bottom-5 -right-10 md:-right-24"
-        />
+        <AnimatePresence>
+          <motion.img
+            src={FloatingFlower1}
+            alt="Floating Flower at Top"
+            className="absolute -top-10 left-0 md:-left-20"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.3 }}
+            variants={{
+              visible: { opacity: 1, scale: 1 },
+              hidden: { opacity: 0, scale: 0 },
+            }}
+          />
+          <motion.img
+            src={FloatingFlower2}
+            alt="Floating Flower at Bottom"
+            className="hidden sm:flex absolute -bottom-5 -right-10 md:-right-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.3 }}
+            variants={{
+              visible: { opacity: 1, scale: 1 },
+              hidden: { opacity: 0, scale: 0 },
+            }}
+          />
+        </AnimatePresence>
       </div>
 
       {/* Our Story */}
       <div className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container">
-        <Heading title="Our Drama" subtitle="Dance, Dance, Dance" />
+        <Heading title="Our Drama" subtitle="She Said Yes" />
 
         <p className="text-xl xl:text-2xl text-center px-2 sm:px-0">
           As a pair of determined designers, Daniela and Moe first got to know
@@ -526,78 +572,89 @@ const Homepage = () => {
       </div>
 
       {/* Big day When/Where/How + maps */}
-      <div className="w-full py-20 flex flex-col relative items-center container">
-        <Heading title="The Big Day" subtitle="When & Where ?" />
+      <div className="w-full  mt-20 py-20 relative bg-gradient-to-b from-[#FBF1F2] to-main">
+        <img
+          src={ElementFlowers}
+          alt="Flowers"
+          className="absolute top-0 object-cover"
+        />
+        <div className="flex flex-col items-center container">
+          <Heading title="The Big Day" subtitle="When & Where ?" />
 
-        <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
-          <div className="w-[400px] h-[400px] rounded-md flex flex-col items-center justify-center shadow-md">
-            <div className="w-full h-3/5 rounded-t-md">
-              <img
-                src={BaniUmarImg}
-                alt="Masjid Raya Bani Umar"
-                className="object-cover w-full h-full rounded-t-md"
-              />
+          <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
+            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md">
+              <div className="w-full h-3/5 rounded-t-md">
+                <img
+                  src={BaniUmarImg}
+                  alt="Masjid Raya Bani Umar"
+                  className="object-cover w-full h-full rounded-t-md"
+                />
+              </div>
+              <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
+                <span className="text-2xl font-Oswald font-light tracking-wide">
+                  The Venue
+                </span>
+                <div className="inline-flex flex-col">
+                  <span className="font-Italiana font-bold mb-1">
+                    Masjid Raya Bani Umar
+                  </span>
+                  <span className="font-Italiana text-gray-500">
+                    Bintaro, Tangerang Selatan
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-              <span className="text-2xl font-Oswald font-light tracking-wide">
-                The Venue
-              </span>
-              <div className="inline-flex flex-col">
-                <span className="font-Italiana font-bold mb-1">
-                  Masjid Raya Bani Umar
+            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md">
+              <div className="w-full h-3/5 rounded-t-md">
+                <img
+                  src={AkadNikahImg}
+                  alt="Akad Nikah"
+                  className="object-cover w-full h-full rounded-t-md"
+                />
+              </div>
+              <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
+                <span className="text-2xl font-Oswald font-light tracking-wide">
+                  Akad Nikah
                 </span>
-                <span className="font-Italiana text-gray-500">
-                  Bintaro, Tangerang Selatan
+                <div className="inline-flex flex-col">
+                  <span className="font-Italiana font-bold mb-1">
+                    08.00 - 10.00 WIB
+                  </span>
+                  <span className="font-Italiana text-gray-500">
+                    20 May 2023
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md">
+              <div className="w-full h-3/5 rounded-t-md">
+                <img
+                  src={ResepsiNikahImg}
+                  alt="Resepsi Pernikahan"
+                  className="object-cover w-full h-full rounded-t-md"
+                />
+              </div>
+              <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
+                <span className="text-2xl font-Oswald font-light tracking-wide">
+                  Resepsi Pernikahan
                 </span>
+                <div className="inline-flex flex-col">
+                  <span className="font-Italiana font-bold mb-1">
+                    11.00 - 13.00 WIB
+                  </span>
+                  <span className="font-Italiana text-gray-500">
+                    20 May 2023
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="w-[400px] h-[400px] rounded-md flex flex-col items-center justify-center shadow-md">
-            <div className="w-full h-3/5 rounded-t-md">
-              <img
-                src={AkadNikahImg}
-                alt="Akad Nikah"
-                className="object-cover w-full h-full rounded-t-md"
-              />
+          <div className="w-full h-[400px] relative mt-16">
+            <div className="w-full h-full relative bg-slate-100 z-10 flex justify-center items-center">
+              Hover to view map
             </div>
-            <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-              <span className="text-2xl font-Oswald font-light tracking-wide">
-                Akad Nikah
-              </span>
-              <div className="inline-flex flex-col">
-                <span className="font-Italiana font-bold mb-1">
-                  08.00 - 10.00 WIB
-                </span>
-                <span className="font-Italiana text-gray-500">20 May 2023</span>
-              </div>
-            </div>
+            <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
           </div>
-          <div className="w-[400px] h-[400px] rounded-md flex flex-col items-center justify-center shadow-md">
-            <div className="w-full h-3/5 rounded-t-md">
-              <img
-                src={ResepsiNikahImg}
-                alt="Resepsi Pernikahan"
-                className="object-cover w-full h-full rounded-t-md"
-              />
-            </div>
-            <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-              <span className="text-2xl font-Oswald font-light tracking-wide">
-                Resepsi Pernikahan
-              </span>
-              <div className="inline-flex flex-col">
-                <span className="font-Italiana font-bold mb-1">
-                  11.00 - 13.00 WIB
-                </span>
-                <span className="font-Italiana text-gray-500">20 May 2023</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="w-full h-[400px] relative mt-16">
-          <div className="w-full h-full relative bg-slate-100 z-10 flex justify-center items-center">
-            Hover to view map
-          </div>
-          <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
         </div>
       </div>
 
@@ -667,10 +724,18 @@ const Homepage = () => {
       {/* RSVP section */}
       <div className="w-full pt-32 pb-48 flex flex-col relative container">
         <div className="w-full shadow-2xl flex flex-col items-center relative">
-          <img
+          <motion.img
             src={FlowerTop}
             alt="Flower Top"
             className="relative -mt-20 sm:-mt-24 object-cover"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0, y: -200 },
+            }}
           />
 
           <h2 className="w-full text-3xl sm:text-4xl text-center font-Italiana py-6 sm:py-10 px-10">
@@ -774,10 +839,18 @@ const Homepage = () => {
             </button>
           </form>
 
-          <img
+          <motion.img
             src={FlowerBottom}
             alt="Flower Bottom"
             className="relative -mb-20 sm:-mb-32 object-cover"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 1 }}
+            variants={{
+              visible: { opacity: 1, y: 0 },
+              hidden: { opacity: 0, y: -100 },
+            }}
           />
         </div>
       </div>
