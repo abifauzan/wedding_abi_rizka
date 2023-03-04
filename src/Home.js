@@ -369,7 +369,7 @@ const Homepage = () => {
         <div className="container w-full h-full flex justify-center items-center relative">
           <Link
             to="/"
-            className={`${headerStyle.logo} w-full text-center lg:text-left uppercase font-Playfair-Display tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0`}
+            className={`${headerStyle.logo} text-center lg:text-left uppercase font-Playfair-Display tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0`}
           >
             Abi & Rizka
           </Link>
@@ -380,9 +380,11 @@ const Homepage = () => {
               <Link
                 key={item.slug}
                 to={item.slug}
-                className="h-full px-4 inline-flex justify-center items-center tracking-wide"
+                className="h-full px-4 inline-flex justify-center items-center tracking-wide group transition-all duration-300 ease-in-out"
               >
-                {item.title}
+                <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                  {item.title}
+                </span>
               </Link>
             ))}
           </nav>
@@ -499,6 +501,7 @@ const Homepage = () => {
         </div>
         <AnimatePresence>
           <motion.img
+            key="flower-top"
             src={FloatingFlower1}
             alt="Floating Flower at Top"
             className="absolute -top-10 left-0 md:-left-20"
@@ -512,6 +515,7 @@ const Homepage = () => {
             }}
           />
           <motion.img
+            key="flower-bottom"
             src={FloatingFlower2}
             alt="Floating Flower at Bottom"
             className="hidden sm:flex absolute -bottom-5 -right-10 md:-right-24"
@@ -569,10 +573,12 @@ const Homepage = () => {
             </div>
           ))}
         </CollectionList>
+
+        <div className="w-full h-10 mt-20 bg-gradient-to-b from-main to-[#FBF1F2]" />
       </div>
 
       {/* Big day When/Where/How + maps */}
-      <div className="w-full  mt-20 py-20 relative bg-gradient-to-b from-[#FBF1F2] to-main">
+      <div className="w-full py-20 relative bg-gradient-to-b from-[#FBF1F2] to-main">
         <img
           src={ElementFlowers}
           alt="Flowers"
@@ -650,9 +656,12 @@ const Homepage = () => {
             </div>
           </div>
           <div className="w-full h-[400px] relative mt-16">
-            <div className="w-full h-full relative bg-slate-100 z-10 flex justify-center items-center">
-              Hover to view map
-            </div>
+            <GoogleMapReact>
+              <div lat={59.955413} lng={30.337844}>
+                {" "}
+                Bani Umar
+              </div>
+            </GoogleMapReact>
             <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
           </div>
         </div>
