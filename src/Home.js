@@ -655,15 +655,28 @@ const Homepage = () => {
               </div>
             </div>
           </div>
-          <div className="w-full h-[400px] relative mt-16">
-            <GoogleMapReact>
-              <div lat={59.955413} lng={30.337844}>
-                {" "}
-                Bani Umar
-              </div>
-            </GoogleMapReact>
+          <div className="w-full h-[600px] relative mt-16 bg-red-50">
+            <iframe
+              title="Masjid Raya Bani Umar"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.94860760171!2d106.6872217150636!3d-6.27048919546145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69faf062460ed5%3A0xc46eba6617b311d6!2sBani%20Umar%20Grand%20Mosque!5e0!3m2!1sen!2sid!4v1678093707333!5m2!1sen!2sid"
+              // width="800"
+              // height="600"
+              className="w-full h-full relative z-10"
+              style={{ border: 0 }}
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            />
             <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
           </div>
+          <Link
+            to="/"
+            className="h-full mt-16 text-xl inline-flex justify-center items-center tracking-wide group transition-all duration-300 ease-in-out"
+          >
+            <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-black bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out border-b">
+              View Location
+            </span>
+          </Link>
         </div>
       </div>
 
