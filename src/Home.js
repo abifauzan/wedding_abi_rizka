@@ -177,11 +177,84 @@ const listMenu = [
 ];
 
 const listGallery = [
-  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp",
-  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(71).webp",
-  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp",
-  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp",
-  "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp",
+  {
+    id: "one",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp",
+  },
+  {
+    id: "two",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(71).webp",
+  },
+  {
+    id: "three",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp",
+  },
+  {
+    id: "four",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp",
+  },
+  {
+    id: "five",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp",
+  },
+  {
+    id: "eleven",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(80).webp",
+  },
+  {
+    id: "twelve",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(81).webp",
+  },
+  {
+    id: "thirteen",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(82).webp",
+  },
+  {
+    id: "fourteen",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(83).webp",
+  },
+  {
+    id: "fiftheen",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(84).webp",
+  },
+];
+
+const listGallery2 = [
+  {
+    id: "six",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp",
+  },
+  {
+    id: "seven",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(76).webp",
+  },
+  {
+    id: "eight",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(77).webp",
+  },
+  {
+    id: "nine",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(78).webp",
+  },
+  {
+    id: "ten",
+    image:
+      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(79).webp",
+  },
 ];
 
 const Homepage = () => {
@@ -192,6 +265,8 @@ const Homepage = () => {
   const [headerExpand, setHeaderExpand] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playStatus, setPlayStatus] = useState("");
+
+  const [selectedPicture, setSelectedPicture] = useState(null);
 
   const [playAbi, { pause: pauseAbi, duration: durationAbi, sound: soundAbi }] =
     useSound(abiSong);
@@ -269,8 +344,9 @@ const Homepage = () => {
         nav: "h-[50px] md:h-[60px] bg-white text-black",
         logo: "text-xl md:text-2xl",
         btnSong: "h-8 px-2 text-black",
-        btnLang: "border-black",
-        btnLangHover: "border-black bg-white text-black",
+        btnLang: "border-black hover:bg-black hover:text-white",
+        btnLangHover:
+          "border-black bg-white text-black hover:bg-black hover:text-white",
       };
     }
 
@@ -278,8 +354,9 @@ const Homepage = () => {
       nav: "h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent",
       logo: "text-2xl md:text-3xl",
       btnSong: "h-8 px-2 text-white",
-      btnLang: "border-white",
-      btnLangHover: "border-white bg-transparent text-white",
+      btnLang: "border-white hover:bg-white hover:text-black",
+      btnLangHover:
+        "border-white bg-transparent text-white hover:bg-white hover:text-black",
     };
   }, [headerExpand]);
 
@@ -296,25 +373,25 @@ const Homepage = () => {
             <span className="font-Oswald tracking-wide text-lg font-light">
               days
             </span>
-            <span className="font-Oswald font-light text-3xl">{days}</span>
+            <span className="font-normal text-3xl">{days}</span>
           </div>
           <div className="flex flex-col text-center items-center justify-between gap-2">
             <span className="font-Oswald tracking-wide text-lg font-light">
               hours
             </span>
-            <span className="font-Oswald font-light text-3xl">{hours}</span>
+            <span className="font-normal text-3xl">{hours}</span>
           </div>
           <div className="flex flex-col text-center items-center justify-between gap-2">
             <span className="font-Oswald tracking-wide text-lg font-light">
               minutes
             </span>
-            <span className="font-Oswald font-light text-3xl">{minutes}</span>
+            <span className="font-normal text-3xl">{minutes}</span>
           </div>
           <div className="flex flex-col text-center items-center justify-between gap-2">
             <span className="font-Oswald tracking-wide text-lg font-light">
               seconds
             </span>
-            <span className="font-Oswald font-light text-3xl">{seconds}</span>
+            <span className="font-normal text-3xl">{seconds}</span>
           </div>
         </div>
       );
@@ -326,7 +403,7 @@ const Homepage = () => {
       <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-home relative">
         <div className="w-full h-full flex flex-col bg-black/30">
           <div className="w-full flex items-center justify-between text-white p-6">
-            <Link to="/" className="text-xl font-Playfair-Display uppercase">
+            <Link to="/" className="text-xl font-Alex-Brush uppercase">
               Abi & Rizka
             </Link>
             <div
@@ -341,26 +418,30 @@ const Homepage = () => {
             <span className="uppercase tracking-widest border-b-2 cursor-pointer">
               ID
             </span>
-            <span className="uppercase tracking-widest cursor-pointer">EN</span>
+            <span className="uppercase tracking-widest cursor-pointer bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+              EN
+            </span>
           </div>
-          <nav className="w-full px-6 mt-10 flex flex-col justify-start text-white gap-3">
-            <Link to="/" className="text-4xl">
-              Welcome
-            </Link>
-            <Link to="/" className="text-4xl">
-              Our Drama
-            </Link>
-            <Link to="/" className="text-4xl">
-              The Big Day
-            </Link>
-            <Link to="/" className="text-4xl">
-              Galery
-            </Link>
+          <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
+            {listMenu.map((item) => (
+              <Link
+                key={item.slug}
+                to="/"
+                className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
+              >
+                {item.title}
+              </Link>
+            ))}
           </nav>
         </div>
       </div>
     );
   }
+
+  const item = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1 },
+  };
 
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
@@ -369,18 +450,20 @@ const Homepage = () => {
         <div className="container w-full h-full flex justify-center items-center relative">
           <Link
             to="/"
-            className={`${headerStyle.logo} text-center lg:text-left uppercase font-Playfair-Display tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0`}
+            className={`${headerStyle.logo} text-center lg:text-left tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0`}
           >
             Abi & Rizka
           </Link>
 
           {/* nav desktop */}
-          <nav className="hidden lg:flex h-full items-center justify-center text-lg">
+          <nav
+            className={`hidden lg:flex h-full items-center justify-center text-md tracking-wide transition-all`}
+          >
             {listMenu.map((item) => (
               <Link
                 key={item.slug}
                 to={item.slug}
-                className="h-full px-4 inline-flex justify-center items-center tracking-wide group transition-all duration-300 ease-in-out"
+                className="h-full px-4 inline-flex justify-center items-center group transition-all duration-300 ease-in-out"
               >
                 <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
                   {item.title}
@@ -392,7 +475,7 @@ const Homepage = () => {
           {/* right item nav desktop */}
           <div className="hidden absolute right-0 xl:flex justify-center items-center">
             <button
-              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 bg-transparent rounded-sm hover:bg-gradient-to-r from-cyan-500 to-blue-500`}
+              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 tracking-wide bg-transparent rounded-sm transition-all duration-500 ease-in-out hover:bg-cyan-600`}
               onClick={() => playingButton("abi")}
             >
               {isPlaying && playStatus === "abi" ? (
@@ -400,10 +483,10 @@ const Homepage = () => {
               ) : (
                 <BsMusicNote size="1.1em" />
               )}
-              <span className="tracking-wide">His song</span>
+              <span>His song</span>
             </button>
             <button
-              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 bg-transparent rounded-sm hover:bg-gradient-to-r from-rose-400 to-red-500`}
+              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 tracking-wide bg-transparent rounded-sm transition-all duration-500 ease-in-out hover:bg-red-500 mr-1`}
               onClick={() => playingButton("ika")}
             >
               {isPlaying && playStatus === "ika" ? (
@@ -411,11 +494,11 @@ const Homepage = () => {
               ) : (
                 <BsMusicNote size="1.1em" />
               )}
-              <span className="tracking-wide">Her song</span>
+              <span className="">Her song</span>
             </button>
             <div className="group">
               <button
-                className={`${headerStyle.btnLang} flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none transition-all md:ml-1`}
+                className={`${headerStyle.btnLang} flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500`}
               >
                 <span className="ml-1 text-sm md:text-md tracking-widest">
                   ID
@@ -435,7 +518,7 @@ const Homepage = () => {
               </button>
 
               <div
-                className={`${headerStyle.btnLangHover} hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-sm items-center justify-center cursor-pointer`}
+                className={`${headerStyle.btnLangHover} hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer`}
               >
                 <span className="ml-1 text-sm md:text-md tracking-widest">
                   EN
@@ -467,11 +550,11 @@ const Homepage = () => {
       <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed flex justify-center items-center">
         <Parallax speed={-20}>
           <div className="flex flex-col items-center justify-center text-center relative text-white">
-            <h2 className="text-5xl md:text-9xl tracking-widest font-Alex-Brush relative">
+            <h2 className="text-5xl md:text-9xl tracking-widest font-script relative">
               Abi & Rizka
             </h2>
-            <h2 className=" text-2xl md:text-4xl tracking-widest italic mt-2 md:mt-4">
-              Are getting married
+            <h2 className="font-heading font-normal text-xl md:text-3xl tracking-widest mt-2 md:mt-4">
+              are getting married
             </h2>
           </div>
         </Parallax>
@@ -480,7 +563,7 @@ const Homepage = () => {
       {/* Welcome text */}
       <div className="w-full flex flex-col lg:flex-row items-center lg:items-stretch container gap-4 py-20 lg:py-28  px-5 sm:px-24 lg:px-0 relative">
         <div className="w-full lg:w-3/4 p-8 xl:p-10 bg-white z-10">
-          <p className="m-0 text-xl xl:text-2xl tracking-wide">
+          <p className="font-light m-0 text-xl xl:text-2xl tracking-wider">
             ¡Hola! Together with our families, we invite you to our wedding
             ceremony and celebration. Our wedding will begin at 8am until 1pm on
             May 20th 2023 at Masjid Raya Bani Umar, Bintaro, Tangerang Selatan.
@@ -507,8 +590,7 @@ const Homepage = () => {
             className="absolute -top-10 left-0 md:-left-20"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
             variants={{
               visible: { opacity: 1, scale: 1 },
               hidden: { opacity: 0, scale: 0 },
@@ -521,8 +603,7 @@ const Homepage = () => {
             className="hidden sm:flex absolute -bottom-5 -right-10 md:-right-24"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
             variants={{
               visible: { opacity: 1, scale: 1 },
               hidden: { opacity: 0, scale: 0 },
@@ -535,7 +616,7 @@ const Homepage = () => {
       <div className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container">
         <Heading title="Our Drama" subtitle="She Said Yes" />
 
-        <p className="text-xl xl:text-2xl text-center px-2 sm:px-0">
+        <p className="font-light text-xl xl:text-2xl text-center px-2 sm:px-0 tracking-wider">
           As a pair of determined designers, Daniela and Moe first got to know
           each other working late nights in design studio during grad school—
           brewing that third pot of coffee, sharing tasty treats, and exchanging
@@ -573,22 +654,15 @@ const Homepage = () => {
             </div>
           ))}
         </CollectionList>
-
-        <div className="w-full h-10 mt-20 bg-gradient-to-b from-main to-[#FBF1F2]" />
       </div>
 
       {/* Big day When/Where/How + maps */}
-      <div className="w-full py-20 relative bg-gradient-to-b from-[#FBF1F2] to-main">
-        <img
-          src={ElementFlowers}
-          alt="Flowers"
-          className="absolute top-0 object-cover"
-        />
+      <div className="w-full py-20 relative">
         <div className="flex flex-col items-center container">
           <Heading title="The Big Day" subtitle="When & Where ?" />
 
           <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
-            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md">
+            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={BaniUmarImg}
@@ -597,20 +671,18 @@ const Homepage = () => {
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-                <span className="text-2xl font-Oswald font-light tracking-wide">
+                <span className="text-2xl font-heading font-light tracking-wide">
                   The Venue
                 </span>
                 <div className="inline-flex flex-col">
-                  <span className="font-Italiana font-bold mb-1">
-                    Masjid Raya Bani Umar
-                  </span>
+                  <span className="font-bold mb-1">Masjid Raya Bani Umar</span>
                   <span className="font-Italiana text-gray-500">
                     Bintaro, Tangerang Selatan
                   </span>
                 </div>
               </div>
             </div>
-            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md">
+            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={AkadNikahImg}
@@ -619,7 +691,7 @@ const Homepage = () => {
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-                <span className="text-2xl font-Oswald font-light tracking-wide">
+                <span className="text-2xl font-heading font-light tracking-wide">
                   Akad Nikah
                 </span>
                 <div className="inline-flex flex-col">
@@ -632,7 +704,7 @@ const Homepage = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md">
+            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={ResepsiNikahImg}
@@ -641,7 +713,7 @@ const Homepage = () => {
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-                <span className="text-2xl font-Oswald font-light tracking-wide">
+                <span className="text-2xl font-heading font-light tracking-wide">
                   Resepsi Pernikahan
                 </span>
                 <div className="inline-flex flex-col">
@@ -663,34 +735,50 @@ const Homepage = () => {
               // height="600"
               className="w-full h-full relative z-10"
               style={{ border: 0 }}
-              allowfullscreen=""
+              allowFullScreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
             />
             <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
           </div>
-          <Link
-            to="/"
+          <a
+            href="https://goo.gl/maps/PPkumLGVrqrVX6uD8"
+            target="_blank"
+            title="Masjid Raya Bani Umar"
             className="h-full mt-16 text-xl inline-flex justify-center items-center tracking-wide group transition-all duration-300 ease-in-out"
+            rel="noreferrer"
           >
             <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-black bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out border-b">
               View Location
             </span>
-          </Link>
+          </a>
         </div>
       </div>
 
       {/* Photo Gallery */}
-      <div className="w-full py-20 flex flex-col relative items-center">
+      <div className="w-full py-20 flex flex-col relative items-center bg-gradient-to-b from-[#FBF1F2] to-main">
+        <div className="w-full h-10 bg-gradient-to-b from-main to-[#FBF1F2] absolute top-0 z-0" />
+
+        <img
+          src={ElementFlowers}
+          alt="Flowers"
+          className="absolute top-0 object-cover z-0"
+        />
         <Heading title="Our one of a kind" subtitle="Gallery" />
 
         <div className="w-full mt-10 flex flex-col gap-3">
           <div className="w-full">
             <Swiper
+              key="slide-normal"
               spaceBetween={10}
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
+              speed={1200}
+              freeMode={true}
+              freeModeSticky={false}
+              watchSlidesProgress={true}
+              watchSlidesVisibility={true}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
@@ -700,48 +788,96 @@ const Homepage = () => {
             >
               {listGallery.map((item, index) => (
                 <SwiperSlide
-                  key={index}
-                  className="w-[400px] h-[400px] first:ml-3 last:mr-3"
+                  key={item.id}
+                  className="w-[400px] h-[400px] first:ml-3 last:mr-3 cursor-pointer"
                 >
-                  <img
-                    src={item}
-                    alt={`Item ${index}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <motion.div
+                    layoutId={item.id}
+                    onClick={() => setSelectedPicture(item)}
+                    className="w-full h-full"
+                  >
+                    <img
+                      src={item.image}
+                      alt={`Item ${index}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
           <div className="w-full">
             <Swiper
+              key="slide-reverse"
               spaceBetween={10}
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
+              speed={1200}
+              freeMode={true}
+              freeModeSticky={false}
+              watchSlidesProgress={true}
+              watchSlidesVisibility={true}
               autoplay={{
-                delay: 2500,
+                delay: 3500,
                 disableOnInteraction: false,
-                reverseDirection: true,
-                // pauseOnMouseEnter: true,
+                reverseDirection: false,
               }}
               modules={[Autoplay]}
             >
-              {listGallery.map((item, index) => (
+              {listGallery2.reverse().map((item, index) => (
                 <SwiperSlide
-                  key={index}
-                  className="w-[400px] h-[400px] first:ml-3 last:mr-3"
+                  key={item.id}
+                  className="w-[400px] h-[400px] first:ml-3 last:mr-3 cursor-pointer"
                 >
-                  <img
-                    src={item}
-                    alt={`Item ${index}`}
-                    className="w-full h-full object-cover"
-                  />
+                  <motion.div
+                    layoutId={item.id}
+                    onClick={() => setSelectedPicture(item)}
+                    className="w-full h-full"
+                  >
+                    <img
+                      src={item.image}
+                      alt={`Item ${index}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
                 </SwiperSlide>
               ))}
             </Swiper>
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedPicture && (
+          <motion.div
+            layoutId={selectedPicture?.id}
+            className="w-[100vw] h-[100vh] fixed top-0 z-20 flex justify-center items-center"
+            onClick={() => setSelectedPicture(null)}
+          >
+            <motion.div
+              variants={item}
+              initial="hidden"
+              animate="show"
+              transition={{ delay: 0.5 }}
+              className="w-full h-full absolute top-0 bg-black/40 z-0"
+            />
+            <div className=" h-[85vh] relative">
+              <img
+                src={selectedPicture?.image}
+                alt="foto"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* <motion.button
+              onClick={() => setSelectedPicture(null)}
+              className="bg-white p-6"
+            >
+              Close
+            </motion.button> */}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* RSVP section */}
       <div className="w-full pt-32 pb-48 flex flex-col relative container">
@@ -760,14 +896,14 @@ const Homepage = () => {
             }}
           />
 
-          <h2 className="w-full text-3xl sm:text-4xl text-center font-Italiana py-6 sm:py-10 px-10">
+          <h2 className="w-full text-3xl sm:text-4xl text-center font-heading py-6 sm:py-10 px-10">
             Will you attend to <br className="hidden sm:block" /> our special
             day?
           </h2>
 
           <form className="w-full sm:w-2/3 lg:w-1/2 px-3 md:px-0 flex flex-col gap-6 pb-10 sm:pb-18">
             <label className="flex flex-col gap-2">
-              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
+              <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 Your Name
               </span>
               <input
@@ -778,7 +914,7 @@ const Homepage = () => {
               />
             </label>
             <label className="flex flex-col gap-2">
-              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
+              <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 Your Response
               </span>
               <div className="w-full flex flex-col sm:flex-row gap-3">
@@ -829,7 +965,7 @@ const Homepage = () => {
               </div>
             </label>
             <label className="flex flex-col gap-2">
-              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
+              <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 Number of guests
               </span>
               <select
@@ -844,7 +980,7 @@ const Homepage = () => {
               </select>
             </label>
             <label className="flex flex-col gap-2">
-              <span className="block font-Italiana text-sm font-light tracking-widest uppercase text-slate-700">
+              <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 Your Message to us
               </span>
               <textarea
@@ -880,7 +1016,7 @@ const Homepage = () => {
       {/* Testimonial */}
       <div className="w-full relative bg-banner-testimonial bg-cover bg-no-repeat text-white">
         <div className="w-full h-full bg-black/20 py-16 md:py-20 flex flex-col items-center">
-          <h2 className="w-full md:1/3 lg:w-1/3 !leading-normal text-4xl sm:text-5xl font-Petit-Formal-Script mb-16  text-center px-2 md:px-0">
+          <h2 className="w-full md:1/3 lg:w-1/3 !leading-normal text-4xl sm:text-5xl font-heading mb-16  text-center px-2 md:px-0">
             Happy message from our friends
           </h2>
           <div className="w-full">
@@ -914,59 +1050,16 @@ const Homepage = () => {
               modules={[Autoplay]}
             >
               <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-6 md:p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
-                <span className="text-lg font-Oswald font-light tracking-widest">
+                <span className="text-lg font-normal tracking-widest">
                   Abi Fauzan
                 </span>
-                <span className="text-lg leading-normal">
+                <span className="text-lg leading-normal font-light">
                   We’re lucky enough to have nearly everything we need for our
                   home already. And since neither of us has ever been outside of
                   North America, we want our honeymoon to be extra special!{" "}
                   We’re lucky enough to have nearly everything we need for our
                   home already. And since neither of us has ever been outside of
                   North America, we want our honeymoon to be extra special!{" "}
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                </span>
-              </SwiperSlide>
-              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
-                <span className="text-lg font-Oswald font-light tracking-widest">
-                  Abi Fauzan
-                </span>
-                <span className="text-lg leading-normal">
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                </span>
-              </SwiperSlide>
-              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
-                <span className="text-lg font-Oswald font-light tracking-widest">
-                  Abi Fauzan
-                </span>
-                <span className="text-lg leading-normal">
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                </span>
-              </SwiperSlide>
-              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
-                <span className="text-lg font-Oswald font-light tracking-widest">
-                  Abi Fauzan
-                </span>
-                <span className="text-lg leading-normal">
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                </span>
-              </SwiperSlide>
-              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
-                <span className="text-lg font-Oswald font-light tracking-widest">
-                  Abi Fauzan
-                </span>
-                <span className="text-lg leading-normal">
                   We’re lucky enough to have nearly everything we need for our
                   home already. And since neither of us has ever been outside of
                   North America, we want our honeymoon to be extra special!{" "}
@@ -988,26 +1081,26 @@ const Homepage = () => {
           />
           <span className="text-xl mt-4">We can't wait to see you</span>
           <div className="w-full flex flex-col items-center text-center pt-10 pb-4 border-b-2 ">
-            <span className="text-2xl font-Oswald font-light tracking-widest uppercase">
+            <span className="text-2xl font-Oswald tracking-widest uppercase">
               Follow Us
             </span>
-            <span className="text-xl mt-4">
+            <span className="text-xl mt-4 font-light">
               His Instagram{" "}
               <Link to="/" className="text-red-500">
                 @abifauzn
               </Link>
             </span>
-            <span className="text-xl mt-1">
+            <span className="text-xl mt-1 font-light">
               Her Instagram{" "}
               <Link to="/" className="text-red-500">
                 @rizkajuliant20
               </Link>
             </span>
           </div>
-          <span className="text-xl mt-4">
+          <span className="text-xl mt-4 font-light">
             Want to make your digital invitation looks fancy ?
           </span>
-          <Link to="/tes" className="text-xl mt-1 text-red-500">
+          <Link to="/tes" className="text-xl mt-1 text-red-500 font-light">
             Let's have a chat and brew some coffee
           </Link>
         </div>

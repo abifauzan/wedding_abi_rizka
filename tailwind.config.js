@@ -33,13 +33,16 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Cormorant", ...defaultTheme.fontFamily.sans],
-        "Fjalla-One": ['"Fjalla One"', "sans-serif"],
-        "Petit-Formal-Script": ['"Petit Formal Script"', "cursive"],
-        Italiana: ['"Italiana"', "serif"],
-        "Alex-Brush": ['"Alex Brush"', "cursive"],
-        "Playfair-Display": ['"Playfair Display"', "serif"],
-        Oswald: ['"Oswald"', "sans-serif"],
+        sans: ['"Lato"', ...defaultTheme.fontFamily.sans],
+        script: ['"Alex Brush"', "cursive"],
+        heading: ['"Gilda Display"', "serif"],
+      },
+      backgroundSize: {
+        "size-200": "200% 200%",
+      },
+      backgroundPosition: {
+        "pos-0": "0% 0%",
+        "pos-100": "100% 100%",
       },
     },
   },
