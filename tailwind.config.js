@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         main: "#fefbfa",
+        primary: "#F38BA0",
       },
       backgroundImage: {
         "banner-pattern": "url('./images/banner-pattern.jpg')",
@@ -43,6 +44,10 @@ module.exports = {
       backgroundPosition: {
         "pos-0": "0% 0%",
         "pos-100": "100% 100%",
+      },
+      cursor: {
+        plus: "url('./images/icons8-plus-50.png'), pointer",
+        "zoom-out": "url('./images/icons8-zoom-out-64.png'), pointer",
       },
     },
   },

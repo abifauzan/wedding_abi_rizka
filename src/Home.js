@@ -49,20 +49,6 @@ const Completionist = () => (
   </div>
 );
 
-const cardVariants = {
-  offscreen: {
-    x: 300,
-  },
-  onscreen: {
-    x: 0,
-    transition: {
-      type: "spring",
-      bounce: 0.4,
-      duration: 0.8,
-    },
-  },
-};
-
 const imgCollections = [
   [
     Collection1Img1,
@@ -86,17 +72,6 @@ const imgCollections = [
     Collection3Img5,
   ],
 ];
-
-const Text = styled.h1`
-  font-size: 50px;
-`;
-
-const url = (name, wrap = false) =>
-  `${
-    wrap ? "url(" : ""
-  }https://awv3node-homepage.surge.sh/build/assets/${name}.svg${
-    wrap ? ")" : ""
-  }`;
 
 const moveRightToLeft = keyframes`
   0% {
@@ -341,7 +316,8 @@ const Homepage = () => {
   const headerStyle = useMemo(() => {
     if (headerExpand) {
       return {
-        nav: "h-[50px] md:h-[60px] bg-white text-black",
+        nav: "h-[50px] md:h-[60px] text-black backdrop-blur-md bg-white/50 border-b border-b-white",
+        navLink: "from-main to-black",
         logo: "text-xl md:text-2xl",
         btnSong: "h-8 px-2 text-black",
         btnLang: "border-black hover:bg-black hover:text-white",
@@ -352,6 +328,7 @@ const Homepage = () => {
 
     return {
       nav: "h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent",
+      navLink: "from-main to-pink-100",
       logo: "text-2xl md:text-3xl",
       btnSong: "h-8 px-2 text-white",
       btnLang: "border-white hover:bg-white hover:text-black",
@@ -465,7 +442,9 @@ const Homepage = () => {
                 to={item.slug}
                 className="h-full px-4 inline-flex justify-center items-center group transition-all duration-300 ease-in-out"
               >
-                <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+                <span
+                  className={`${headerStyle.navLink} pb-1 bg-left-bottom bg-gradient-to-r bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out`}
+                >
                   {item.title}
                 </span>
               </Link>
@@ -475,7 +454,7 @@ const Homepage = () => {
           {/* right item nav desktop */}
           <div className="hidden absolute right-0 xl:flex justify-center items-center">
             <button
-              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 tracking-wide bg-transparent rounded-sm transition-all duration-500 ease-in-out hover:bg-cyan-600`}
+              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 tracking-wide bg-transparent rounded-sm transition-all duration-500 ease-in-out hover:bg-cyan-600 hover:text-white`}
               onClick={() => playingButton("abi")}
             >
               {isPlaying && playStatus === "abi" ? (
@@ -486,7 +465,7 @@ const Homepage = () => {
               <span>His song</span>
             </button>
             <button
-              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 tracking-wide bg-transparent rounded-sm transition-all duration-500 ease-in-out hover:bg-red-500 mr-1`}
+              className={`${headerStyle.btnSong} inline-flex justify-center items-center gap-1 tracking-wide bg-transparent rounded-sm transition-all duration-500 ease-in-out hover:bg-red-500 hover:text-white mr-1`}
               onClick={() => playingButton("ika")}
             >
               {isPlaying && playStatus === "ika" ? (
@@ -576,10 +555,6 @@ const Homepage = () => {
           </div>
           <div className="w-full h-full bg-red-500 text-white text-center flex items-center justify-center font-Fjalla-One">
             <Countdown date={new Date("2023/05/20")} renderer={renderer} />
-
-            {/* <div className="flex items-center justify-center">
-              20 . 05 . 2023
-            </div> */}
           </div>
         </div>
         <AnimatePresence>
@@ -766,11 +741,11 @@ const Homepage = () => {
         />
         <Heading title="Our one of a kind" subtitle="Gallery" />
 
-        <div className="w-full mt-10 flex flex-col gap-3">
+        <div className="w-full mt-10 flex flex-col gap-5 cursor-plus">
           <div className="w-full">
             <Swiper
               key="slide-normal"
-              spaceBetween={10}
+              spaceBetween={20}
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
@@ -789,17 +764,17 @@ const Homepage = () => {
               {listGallery.map((item, index) => (
                 <SwiperSlide
                   key={item.id}
-                  className="w-[400px] h-[400px] first:ml-3 last:mr-3 cursor-pointer"
+                  className="w-full sm:w-[550px] h-auto first:ml-3 last:mr-3"
                 >
                   <motion.div
                     layoutId={item.id}
                     onClick={() => setSelectedPicture(item)}
-                    className="w-full h-full"
+                    className="w-full h-full relative overflow-hidden"
                   >
                     <img
                       src={item.image}
                       alt={`Item ${index}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-110"
                     />
                   </motion.div>
                 </SwiperSlide>
@@ -809,7 +784,7 @@ const Homepage = () => {
           <div className="w-full">
             <Swiper
               key="slide-reverse"
-              spaceBetween={10}
+              spaceBetween={20}
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
@@ -828,17 +803,17 @@ const Homepage = () => {
               {listGallery2.reverse().map((item, index) => (
                 <SwiperSlide
                   key={item.id}
-                  className="w-[400px] h-[400px] first:ml-3 last:mr-3 cursor-pointer"
+                  className="w-full sm:w-[550px] h-auto first:ml-3 last:mr-3"
                 >
                   <motion.div
                     layoutId={item.id}
                     onClick={() => setSelectedPicture(item)}
-                    className="w-full h-full"
+                    className="w-full h-full relative overflow-hidden"
                   >
                     <img
                       src={item.image}
                       alt={`Item ${index}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-110"
                     />
                   </motion.div>
                 </SwiperSlide>
@@ -852,7 +827,7 @@ const Homepage = () => {
         {selectedPicture && (
           <motion.div
             layoutId={selectedPicture?.id}
-            className="w-[100vw] h-[100vh] fixed top-0 z-20 flex justify-center items-center"
+            className="w-[100vw] h-[100vh] fixed top-0 z-20 flex justify-center items-center cursor-zoom-out"
             onClick={() => setSelectedPicture(null)}
           >
             <motion.div
@@ -862,7 +837,7 @@ const Homepage = () => {
               transition={{ delay: 0.5 }}
               className="w-full h-full absolute top-0 bg-black/40 z-0"
             />
-            <div className=" h-[85vh] relative">
+            <div className="h-auto md:h-[85vh] relative">
               <img
                 src={selectedPicture?.image}
                 alt="foto"
@@ -909,7 +884,7 @@ const Homepage = () => {
               <input
                 type="text"
                 onChange={() => {}}
-                className="block w-full px-5 py-4 text-md bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                className="block w-full px-5 py-4 text-md bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
                 placeholder="Full Name"
               />
             </label>
@@ -930,14 +905,16 @@ const Homepage = () => {
                     className="hidden"
                   />
                   <label
-                    className={`w-full h-full flex flex-col items-center justify-center text-center border-2 bg-white ${
-                      rsvp.status === "accept" && "border-red-400"
+                    className={`w-full h-full flex flex-col items-center justify-center text-center border-2 bg-white transition-all cursor-pointer ${
+                      rsvp.status === "accept" && "bg-primary text-white"
                     }`}
                     onClick={() => {
                       toggleStatus("accept");
                     }}
                   >
-                    <span className="text-lg">Joyfully Accepts</span>
+                    <span className="text-lg">
+                      Joyfully Accepts <span className="pl-1">🥳</span>
+                    </span>
                   </label>
                 </div>
                 <div className="w-full sm:w-1/2 h-20 flex flex-col items-center justify-center">
@@ -952,14 +929,16 @@ const Homepage = () => {
                     className="hidden"
                   />
                   <label
-                    className={`w-full h-full flex flex-col items-center justify-center text-center border-2 bg-white ${
-                      rsvp.status === "not_accept" && "border-red-400"
+                    className={`w-full h-full flex flex-col items-center justify-center text-center border-2 bg-white transition-all cursor-pointer ${
+                      rsvp.status === "not_accept" && "bg-primary text-white"
                     }`}
                     onClick={() => {
                       toggleStatus("not_accept");
                     }}
                   >
-                    <span className="text-lg">Respecfully Declines</span>
+                    <span className="text-lg">
+                      Respecfully Declines <span className="pl-1">🙏</span>
+                    </span>
                   </label>
                 </div>
               </div>
@@ -971,7 +950,7 @@ const Homepage = () => {
               <select
                 name="guest_number"
                 onChange={() => {}}
-                className="block w-full px-5 py-4 text-lg bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                className="block w-full px-5 py-4 text-lg bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -984,14 +963,14 @@ const Homepage = () => {
                 Your Message to us
               </span>
               <textarea
-                className="block w-full px-5 py-4 bg-white border border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                className="block w-full px-5 py-4 bg-white border border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary"
                 placeholder="Message"
                 rows={5}
               />
             </label>
             <button
               type="submit"
-              className="self-center bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-md px-10 py-3 uppercase tracking-widest text-md"
+              className="self-center bg-white rounded-full px-14 py-3 uppercase tracking-widest text-md shadow-lg border border-primary transition-all hover:bg-primary hover:text-white hover:-translate-y-1 hover:shadow-primary"
             >
               Reply
             </button>
@@ -1104,7 +1083,7 @@ const Homepage = () => {
             Let's have a chat and brew some coffee
           </Link>
         </div>
-        <div className="w-full h-[50vh] bg-banner-home relative">
+        <div className="w-full h-[50vh] bg-banner-home bg-no-repeat bg-cover relative">
           <div className="w-full h-32 bg-gradient-to-b from-main to-transparent absolute top-0" />
         </div>
       </footer>

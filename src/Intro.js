@@ -30,14 +30,13 @@ const ButtonCTA = styled.button`
     border: 1px solid #000;
     background: transparent;
     width: 55px;
-    height: 55px;
+    height: 100%;
     transition: all 0.3s ease;
   }
 
   span {
     position: relative;
     font-size: 20px;
-    font-weight: 600;
     letter-spacing: 0.05em;
   }
 
@@ -57,6 +56,7 @@ const ButtonCTA = styled.button`
   &:hover {
     &::before {
       width: 110%;
+      height: 100%;
       background: #fff;
     }
 
@@ -127,7 +127,7 @@ const Intro = () => {
 
       {/* body */}
       <div className="w-full h-full relative flex justify-center items-center">
-        <div className="w-full md:w-[700px] h-full md:h-[540px] backdrop-blur-md bg-white/20 p-3 md:p-7 md:rounded-md">
+        <div className="w-full md:w-[700px] h-full md:h-[560px] backdrop-blur-md bg-white/20 p-3 md:p-7 md:rounded-md">
           <div className="w-full h-full bg-transparent border-white/50 border-2 flex flex-col rounded-md justify-between items-center px-8 pt-40 pb-24 md:px-24 md:py-14">
             <div className="w-full flex flex-col items-center">
               <img src={TextWeddingInvitation} alt="Wedding Invitation" />
@@ -141,13 +141,13 @@ const Intro = () => {
               <p className="text-md md:text-lg tracking-wider mb-2">
                 Kepada Bapak/Ibu/Saudara/i
               </p>
-              <p className="text-3xl md:text-4xl mb-10">
+              <p className="text-3xl md:text-4xl mb-10 font-light">
                 Rizka Yulianti Pratiwi & Partner
               </p>
             </div>
             <div className="w-full flex flex-col">
               <ButtonCTA>
-                <span>Buka Undangan</span>
+                <span className="font-normal">Buka Undangan</span>
                 <svg viewBox="0 0 13 10" height="10px" width="15px">
                   <path d="M1,5 L11,5"></path>
                   <polyline points="8 1 12 5 8 9"></polyline>
