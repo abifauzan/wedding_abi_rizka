@@ -128,29 +128,6 @@ const initialRsvp = {
   message: "",
 };
 
-const listMenu = [
-  {
-    slug: "#welcome",
-    title: "Welcome",
-  },
-  {
-    slug: "#our-drama",
-    title: "Our Drama",
-  },
-  {
-    slug: "#the-big-day",
-    title: "The Big Day",
-  },
-  {
-    slug: "#gallery",
-    title: "Gallery",
-  },
-  {
-    slug: "#your-reply",
-    title: "Your reply",
-  },
-];
-
 const listGallery = [
   {
     id: "one",
@@ -233,7 +210,39 @@ const listGallery2 = [
 ];
 
 const Homepage = () => {
-  const parallaxRef = useRef(null);
+  const homeRef = useRef(null);
+  const dramaRef = useRef(null);
+  const bigDayRef = useRef(null);
+  const galleryRef = useRef(null);
+  const rsvpRef = useRef(null);
+
+  const listMenu = [
+    {
+      slug: "welcome",
+      title: "Welcome",
+      ref: homeRef,
+    },
+    {
+      slug: "our-drama",
+      title: "Our Drama",
+      ref: dramaRef,
+    },
+    {
+      slug: "the-big-day",
+      title: "The Big Day",
+      ref: bigDayRef,
+    },
+    {
+      slug: "gallery",
+      title: "Gallery",
+      ref: galleryRef,
+    },
+    {
+      slug: "your-reply",
+      title: "Your reply",
+      ref: rsvpRef,
+    },
+  ];
 
   const [rsvp, setRsvp] = useState(initialRsvp);
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -247,6 +256,15 @@ const Homepage = () => {
     useSound(abiSong);
   const [playIka, { pause: pauseIka, duration: durationIka, sound: soundIka }] =
     useSound(ikaSong);
+
+  const handleScrollMenu = (ref) => {
+    console.log(ref);
+    window.scrollTo({
+      top: ref.current.offsetTop,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
 
   const playingButton = (player) => {
     // setPlayStatus(player);
@@ -375,45 +393,50 @@ const Homepage = () => {
     }
   };
 
-  if (mobileMenu) {
-    return (
-      <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-home relative">
-        <div className="w-full h-full flex flex-col bg-black/30">
-          <div className="w-full flex items-center justify-between text-white p-6">
-            <Link to="/" className="text-xl font-Alex-Brush uppercase">
-              Abi & Rizka
-            </Link>
-            <div
-              onClick={toggleMenu}
-              className="inline-flex gap-2 items-center"
-            >
-              <span className="w-5 h-[2px] bg-white" />
-              Back
-            </div>
+  const mobileView = () => (
+    <div
+      className={`${
+        mobileMenu ? "fixed" : "hidden"
+      } w-[100vw] h-[100vh] overflow-hidden bg-banner-home z-30`}
+    >
+      <div className="w-full h-full flex flex-col bg-black/30">
+        <div className="w-full flex items-center justify-between text-white p-6">
+          <Link to="/" className="text-xl font-Alex-Brush uppercase">
+            Abi & Rizka
+          </Link>
+          <div
+            onClick={toggleMenu}
+            className="inline-flex gap-2 items-center cursor-pointer"
+          >
+            <span className="w-5 h-[2px] bg-white" />
+            Back
           </div>
-          <div className="w-full px-6 mt-10 flex items-center gap-4 text-white">
-            <span className="uppercase tracking-widest border-b-2 cursor-pointer">
-              ID
-            </span>
-            <span className="uppercase tracking-widest cursor-pointer bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-              EN
-            </span>
-          </div>
-          <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
-            {listMenu.map((item) => (
-              <Link
-                key={item.slug}
-                to="/"
-                className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
-              >
-                {item.title}
-              </Link>
-            ))}
-          </nav>
         </div>
+        <div className="w-full px-6 mt-10 flex items-center gap-4 text-white">
+          <span className="uppercase tracking-widest border-b-2 cursor-pointer">
+            ID
+          </span>
+          <span className="uppercase tracking-widest cursor-pointer bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+            EN
+          </span>
+        </div>
+        <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
+          {listMenu.map((item) => (
+            <span
+              key={item.slug}
+              onClick={() => {
+                setMobileMenu(false);
+                handleScrollMenu(item.ref);
+              }}
+              className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
+            >
+              {item.title}
+            </span>
+          ))}
+        </nav>
       </div>
-    );
-  }
+    </div>
+  );
 
   const item = {
     hidden: { opacity: 0 },
@@ -422,6 +445,7 @@ const Homepage = () => {
 
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
+      {mobileView()}
       {/* header */}
       <header className={`${headerStyle.nav} w-full fixed z-20`}>
         <div className="container w-full h-full flex justify-center items-center relative">
@@ -437,17 +461,17 @@ const Homepage = () => {
             className={`hidden lg:flex h-full items-center justify-center text-md tracking-wide transition-all`}
           >
             {listMenu.map((item) => (
-              <Link
+              <span
                 key={item.slug}
-                to={item.slug}
-                className="h-full px-4 inline-flex justify-center items-center group transition-all duration-300 ease-in-out"
+                onClick={() => handleScrollMenu(item.ref)}
+                className="h-full px-4 inline-flex justify-center items-center group transition-all duration-300 ease-in-out cursor-pointer"
               >
                 <span
                   className={`${headerStyle.navLink} pb-1 bg-left-bottom bg-gradient-to-r bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out`}
                 >
                   {item.title}
                 </span>
-              </Link>
+              </span>
             ))}
           </nav>
 
@@ -540,7 +564,10 @@ const Homepage = () => {
       </div>
 
       {/* Welcome text */}
-      <div className="w-full flex flex-col lg:flex-row items-center lg:items-stretch container gap-4 py-20 lg:py-28  px-5 sm:px-24 lg:px-0 relative">
+      <div
+        ref={homeRef}
+        className="w-full flex flex-col lg:flex-row items-center lg:items-stretch container gap-4 py-20 lg:py-28  px-5 sm:px-24 lg:px-0 relative"
+      >
         <div className="w-full lg:w-3/4 p-8 xl:p-10 bg-white z-10">
           <p className="font-light m-0 text-xl xl:text-2xl tracking-wider">
             ¡Hola! Together with our families, we invite you to our wedding
@@ -588,7 +615,10 @@ const Homepage = () => {
       </div>
 
       {/* Our Story */}
-      <div className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container">
+      <div
+        ref={dramaRef}
+        className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container"
+      >
         <Heading title="Our Drama" subtitle="She Said Yes" />
 
         <p className="font-light text-xl xl:text-2xl text-center px-2 sm:px-0 tracking-wider">
@@ -632,7 +662,7 @@ const Homepage = () => {
       </div>
 
       {/* Big day When/Where/How + maps */}
-      <div className="w-full py-20 relative">
+      <div ref={bigDayRef} className="w-full py-20 relative">
         <div className="flex flex-col items-center container">
           <Heading title="The Big Day" subtitle="When & Where ?" />
 
@@ -731,7 +761,10 @@ const Homepage = () => {
       </div>
 
       {/* Photo Gallery */}
-      <div className="w-full py-20 flex flex-col relative items-center bg-gradient-to-b from-[#FBF1F2] to-main">
+      <div
+        ref={galleryRef}
+        className="w-full py-20 flex flex-col relative items-center bg-gradient-to-b from-[#FBF1F2] to-main"
+      >
         <div className="w-full h-10 bg-gradient-to-b from-main to-[#FBF1F2] absolute top-0 z-0" />
 
         <img
@@ -746,14 +779,11 @@ const Homepage = () => {
             <Swiper
               key="slide-normal"
               spaceBetween={20}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
+              // onSlideChange={() => console.log("slide change")}
+              // onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
               speed={1200}
               freeMode={true}
-              freeModeSticky={false}
-              watchSlidesProgress={true}
-              watchSlidesVisibility={true}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
@@ -785,14 +815,11 @@ const Homepage = () => {
             <Swiper
               key="slide-reverse"
               spaceBetween={20}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
+              // onSlideChange={() => console.log("slide change")}
+              // onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
               speed={1200}
               freeMode={true}
-              freeModeSticky={false}
-              watchSlidesProgress={true}
-              watchSlidesVisibility={true}
               autoplay={{
                 delay: 3500,
                 disableOnInteraction: false,
@@ -855,7 +882,10 @@ const Homepage = () => {
       </AnimatePresence>
 
       {/* RSVP section */}
-      <div className="w-full pt-32 pb-48 flex flex-col relative container">
+      <div
+        ref={rsvpRef}
+        className="w-full pt-32 pb-48 flex flex-col relative container"
+      >
         <div className="w-full shadow-2xl flex flex-col items-center relative">
           <motion.img
             src={FlowerTop}
@@ -1001,8 +1031,8 @@ const Homepage = () => {
           <div className="w-full">
             <Swiper
               spaceBetween={10}
-              onSlideChange={() => console.log("slide change")}
-              onSwiper={(swiper) => console.log(swiper)}
+              // onSlideChange={() => console.log("slide change")}
+              // onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={1.3}
               breakpoints={{
                 640: {

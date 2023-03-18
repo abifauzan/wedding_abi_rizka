@@ -6,7 +6,8 @@ import ImgLittleFlower from "./images/little-flower-image.png";
 import IDFlag from "./images/indonesia.svg";
 import USFlag from "./images/united.svg";
 import JPNFlag from "./images/japan.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import useLang from "./hooks/useLang";
 
 const ButtonCTA = styled.button`
   position: relative;
@@ -72,11 +73,10 @@ const ButtonCTA = styled.button`
 
 const ToggleLang = (
   <div className="absolute bottom-3 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
-    <button className="flex items-center justify-center h-6 md:h-8 px-2 md:px-3 bg-white border border-black rounded-sm focus:outline-none transition-all">
-      <img src={IDFlag} alt="Indonesia Flag" className="w-4" />
-      <span className="ml-3 text-sm md:text-md tracking-wide">Bahasa</span>
+    <button className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500 border-white hover:bg-white hover:text-black">
+      <span className="ml-1 text-sm md:text-md tracking-widest">ID</span>
       <svg
-        className="w-4 h-4 mt-px ml-2"
+        className="h-4 mt-px ml-1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
@@ -89,30 +89,18 @@ const ToggleLang = (
       </svg>
     </button>
 
-    <div className="hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] right-0 flex-col w-36 md:w-40 bg-white border border-black shadow-lg rounded-sm">
-      <Link
-        className="flex items-center h-8 px-3 text-md hover:bg-gray-200 cursor-pointer"
-        to="/"
-      >
-        <img src={USFlag} alt="US Flag" className="w-4" />
-        <span className="ml-3 leading-none tracking-wide text-sm md:text-md">
-          English
-        </span>
-      </Link>
-      <Link
-        className="flex items-center h-8 px-3 text-md hover:bg-gray-200 cursor-pointer"
-        to="/"
-      >
-        <img src={JPNFlag} alt="Japan Flag" className="w-4" />
-        <span className="ml-3 leading-none tracking-wide text-sm md:text-md">
-          Japan
-        </span>
-      </Link>
+    <div className="hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-white hover:bg-white hover:text-black">
+      <span className="ml-1 text-sm md:text-md tracking-widest">EN</span>
     </div>
   </div>
 );
 
 const Intro = () => {
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { lang } = useLang(searchParams.get("lang"));
+  console.log(lang);
   return (
     <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-invitation bg-cover bg-bottom md:bg-center relative">
       {/* header */}
