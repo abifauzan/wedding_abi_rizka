@@ -1,9 +1,14 @@
 import { ParallaxProvider } from "react-scroll-parallax";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useSearchParams,
+} from "react-router-dom";
 import Intro from "./Intro";
 import Homepage from "./Home";
 

@@ -1,16 +1,19 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { UserContext } from "../App";
+import { useParams, useSearchParams } from "react-router-dom";
 
-const useLang = (languageID) => {
+const useLang = () => {
   const { lang, setLang } = useContext(UserContext);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentLang = useMemo(() => searchParams.get("lang"), [searchParams]);
+
   useEffect(() => {
-    if (languageID === null) {
-      setLang("id");
-    } else {
-      setLang(languageID);
+    if (currentLang) {
+      setLang(currentLang);
     }
-  }, [languageID, setLang]);
+  }, [currentLang, setLang]);
 
   return {
     lang,

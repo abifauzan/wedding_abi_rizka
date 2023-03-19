@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import styled from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
 import TextWeddingInvitation from "./images/text-wedding-invitation.png";
@@ -6,8 +6,15 @@ import ImgLittleFlower from "./images/little-flower-image.png";
 import IDFlag from "./images/indonesia.svg";
 import USFlag from "./images/united.svg";
 import JPNFlag from "./images/japan.svg";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import useLang from "./hooks/useLang";
+import { langList } from "./App";
 
 const ButtonCTA = styled.button`
   position: relative;
@@ -71,36 +78,70 @@ const ButtonCTA = styled.button`
   }
 `;
 
-const ToggleLang = (
-  <div className="absolute bottom-3 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
-    <button className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500 border-white hover:bg-white hover:text-black">
-      <span className="ml-1 text-sm md:text-md tracking-widest">ID</span>
-      <svg
-        className="h-4 mt-px ml-1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fillRule="evenodd"
-          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-          clipRule="evenodd"
-        />
-      </svg>
-    </button>
-
-    <div className="hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-white hover:bg-white hover:text-black">
-      <span className="ml-1 text-sm md:text-md tracking-widest">EN</span>
-    </div>
-  </div>
-);
-
 const Intro = () => {
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const { lang } = useLang(searchParams.get("lang"));
-  console.log(lang);
+  const { lang } = useLang();
+
+  const handleSwitchLang = (lang) => {
+    const searchQueryString = `?${createSearchParams({
+      ...Object.fromEntries([...Array.from(searchParams)]),
+      lang,
+    })}`;
+
+    navigate({
+      search: searchQueryString,
+    });
+  };
+
+  const toggleLang = useMemo(() => {
+    return (
+      <div className="absolute bottom-3 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
+        {langList
+          .filter((item) => item === lang)
+          .map((item) => (
+            <button
+              key={item}
+              onClick={() => handleSwitchLang(item)}
+              className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500 border-white hover:bg-white hover:text-black"
+            >
+              <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
+                {item}
+              </span>
+              <svg
+                className="h-4 mt-px ml-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          ))}
+
+        {langList
+          .filter((item) => item !== lang)
+          .map((item) => (
+            <div
+              key={item}
+              onClick={() => handleSwitchLang(item)}
+              className="hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-black hover:bg-white"
+            >
+              <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
+                {item}
+              </span>
+            </div>
+          ))}
+      </div>
+    );
+  }, [lang]);
+
   return (
     <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-invitation bg-cover bg-bottom md:bg-center relative">
       {/* header */}
@@ -111,7 +152,7 @@ const Intro = () => {
           className="mt-10 w-42 md:w-50 z-10"
         />
       </div>
-      {ToggleLang}
+      {toggleLang}
 
       {/* body */}
       <div className="w-full h-full relative flex justify-center items-center">
