@@ -44,10 +44,11 @@ import ElementFlowers from "./images/element_flowers.png";
 import Heading from "./components/heading";
 import { langList } from "./App";
 import useLang from "./hooks/useLang";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
+import useIsMobile from "./hooks/useIsMobile";
 
 const popupMotion = {
   hidden: { opacity: 0 },
@@ -84,40 +85,46 @@ const imgCollections = [
   ],
 ];
 
-const moveRightToLeft = keyframes`
-  0% {
-    transform: translateX(-15%);
-  }
-  50% {
-    transform: translateX(15%);
-  }
-  100% {
-    transform: translateX(-15%);
-  }
-`;
+const moveMotions = (isMobile, direction = "right") => {
+  const percentage = isMobile ? 42 : 30;
 
-const moveLeftToRight = keyframes`
-  0% {
-    transform: translateX(15%);
-  }
-
-  50% {
-    transform: translateX(-15%);
+  if (direction === "left") {
+    return keyframes`
+      0% {
+      transform: translateX(${percentage}%);
+      }
+      50% {
+        transform: translateX(-${percentage}%);
+      }
+      100% {
+        transform: translateX(${percentage}%);
+      }
+    `;
   }
 
-  100% {
-    transform: translateX(15%);
-  }
-`;
+  return keyframes`
+    0% {
+    transform: translateX(-${percentage}%);
+    }
+    50% {
+      transform: translateX(${percentage}%);
+    }
+    100% {
+      transform: translateX(-${percentage}%);
+    }
+  `;
+};
 
 const CollectionList = styled.div`
   white-space: nowrap;
-  animation: ${moveRightToLeft} 15s ease-in-out infinite;
+  animation: ${({ isMobile }) => moveMotions(isMobile, "left")} 40s ease-in-out
+    infinite;
   position: relative;
   display: flex;
 
   &.reverse {
-    animation: ${moveLeftToRight} 15s ease-in-out infinite;
+    animation: ${({ isMobile }) => moveMotions(isMobile, "right")} 30s
+      ease-in-out infinite;
   }
 
   & .card {
@@ -259,14 +266,15 @@ const Homepage = () => {
 
   const [rsvp, setRsvp] = useState(initialRsvp);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [mobileMenuSong, setMobileMenuSong] = useState(false);
   const [headerExpand, setHeaderExpand] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playStatus, setPlayStatus] = useState("");
-  const [modalSuccess, setModalSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [rsvpList, setRsvpList] = useState([]);
 
-  const [selectedPicture, setSelectedPicture] = useState(null);
+  const [selectedGallery, setSelectedGallery] = useState(null);
+  const [selectedArt, setSelectedArt] = useState(null);
 
   const [playAbi, { pause: pauseAbi, duration: durationAbi, sound: soundAbi }] =
     useSound(abiSong);
@@ -274,6 +282,7 @@ const Homepage = () => {
     useSound(ikaSong);
 
   const { lang, handleSwitchLang } = useLang();
+  const isMobile = useIsMobile();
 
   const handleScrollMenu = (ref) => {
     console.log(ref);
@@ -333,8 +342,9 @@ const Homepage = () => {
     });
   };
 
-  const toggleMenu = () => {
-    setMobileMenu(!mobileMenu);
+  const toggleMenu = (isSong = true) => {
+    if (isSong) setMobileMenu(!mobileMenu);
+    else setMobileMenuSong(!mobileMenuSong);
   };
 
   const triggerHeaderScroll = () => {
@@ -350,8 +360,10 @@ const Homepage = () => {
       const docRef = await addDoc(collection(db, "guestlists"), {
         rsvp,
       });
+      message.success("Thank you for your response!");
       setIsLoading(false);
-      console.log("Document ref: ", docRef);
+      fetchRsvp();
+      setRsvp(initialRsvp);
     } catch (e) {
       console.error("Error adding document: ", e);
       setIsLoading(false);
@@ -364,10 +376,12 @@ const Homepage = () => {
     const res = [];
 
     rsvpRes.forEach((rsvp) => {
-      res.push({
-        id: rsvp.id,
-        ...rsvp.data(),
-      });
+      if (rsvp.data().rsvp.message !== "") {
+        res.push({
+          id: rsvp.id,
+          ...rsvp.data(),
+        });
+      }
     });
 
     setRsvpList(res);
@@ -501,9 +515,43 @@ const Homepage = () => {
     </div>
   );
 
+  const mobileSongView = () => (
+    <div
+      className={`${
+        mobileMenuSong ? "fixed" : "hidden"
+      } w-[100vw] h-[100vh] overflow-hidden bg-banner-home z-30`}
+    >
+      <div className="w-full h-full flex flex-col bg-black/30">
+        <div className="w-full flex items-center justify-between text-white p-6">
+          <Link to="/" className="text-xl font-Alex-Brush uppercase">
+            Abi & Rizka
+          </Link>
+          <div
+            onClick={() => toggleMenu(false)}
+            className="inline-flex gap-2 items-center cursor-pointer"
+          >
+            <span className="w-5 h-[2px] bg-white" />
+            Back
+          </div>
+        </div>
+        <div className="w-full px-6 mt-10 flex items-center gap-4 text-white"></div>
+        <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
+          <span className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+            Play his song
+          </span>
+          <span className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
+            Play her song
+          </span>
+        </nav>
+      </div>
+    </div>
+  );
+
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
       {mobileView()}
+      {mobileSongView()}
+
       {/* header */}
       <header className={`${headerStyle.nav} w-full fixed z-20`}>
         <div className="container w-full h-full flex justify-center items-center relative">
@@ -616,7 +664,11 @@ const Homepage = () => {
 
           {/* righht item nav mobile */}
           <div className="absolute right-[1rem] md:right-0 flex xl:hidden">
-            <BsMusicNote size="1.2em" className="cursor-pointer lg:mr-5" />
+            <BsMusicNote
+              size="1.2em"
+              className="cursor-pointer lg:mr-5"
+              onClick={() => toggleMenu(false)}
+            />
             <VscMenu
               size="1.2em"
               className="cursor-pointer hidden lg:block"
@@ -722,27 +774,61 @@ const Homepage = () => {
 
       {/* Digital looks */}
       <div className="w-full flex flex-col relative items-center">
-        <CollectionList className="mt-5 md:mt-8 gap-5 md:gap-8">
-          {imgCollections[0].map((item, index) => (
-            <div key={index} className="card w-[40vw] md:w-[25vw]">
-              <img src={item} alt="nft" />
-            </div>
+        <CollectionList
+          isMobile={isMobile}
+          className="mt-5 md:mt-8 gap-5 md:gap-8"
+        >
+          {listGallery.map((item, index) => (
+            <motion.div
+              layoutId={item.id}
+              key={item.id}
+              onClick={() => setSelectedArt(item)}
+              className="card w-[200px] h-[200px] md:w-[400px] md:h-[400px]"
+            >
+              <img src={item.image} alt={`Abi & Ika ${item.id}`} />
+            </motion.div>
           ))}
         </CollectionList>
-        <CollectionList className="reverse mt-5 md:mt-8 gap-5 md:gap-8">
-          {imgCollections[1].map((item, index) => (
-            <div key={index} className="card w-[40vw] md:w-[25vw]">
-              <img src={item} alt="nft" />
-            </div>
+        <CollectionList
+          isMobile={isMobile}
+          className="reverse mt-5 md:mt-8 gap-5 md:gap-8"
+        >
+          {listGallery2.map((item, index) => (
+            <motion.div
+              layoutId={item.id}
+              key={item.id}
+              onClick={() => setSelectedArt(item)}
+              className="card w-[200px] h-[200px] md:w-[400px] md:h-[400px]"
+            >
+              <img src={item.image} alt={`Abi & Ika ${item.id}`} />
+            </motion.div>
           ))}
         </CollectionList>
-        <CollectionList className="mt-5 md:mt-8 gap-5 md:gap-8">
-          {imgCollections[2].map((item, index) => (
-            <div key={index} className="card w-[40vw] md:w-[25vw]">
-              <img src={item} alt="nft" />
-            </div>
-          ))}
-        </CollectionList>
+
+        <AnimatePresence>
+          {selectedArt && (
+            <motion.div
+              layoutId={selectedArt?.id}
+              className="w-[100vw] h-[100vh] fixed top-0 z-20 flex justify-center items-center cursor-zoom-out"
+              onClick={() => setSelectedArt(null)}
+            >
+              <motion.div
+                variants={popupMotion}
+                initial="hidden"
+                animate="show"
+                transition={{ delay: 0.5 }}
+                className="w-full h-full absolute top-0 bg-black/40 z-0"
+              />
+              <div className="h-auto md:h-[85vh] relative">
+                <img
+                  src={selectedArt?.image}
+                  alt="foto"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Big day When/Where/How + maps */}
@@ -882,7 +968,7 @@ const Homepage = () => {
                 >
                   <motion.div
                     layoutId={item.id}
-                    onClick={() => setSelectedPicture(item)}
+                    onClick={() => setSelectedGallery(item)}
                     className="w-full h-full relative overflow-hidden"
                   >
                     <img
@@ -918,7 +1004,7 @@ const Homepage = () => {
                 >
                   <motion.div
                     layoutId={item.id}
-                    onClick={() => setSelectedPicture(item)}
+                    onClick={() => setSelectedGallery(item)}
                     className="w-full h-full relative overflow-hidden"
                   >
                     <img
@@ -935,11 +1021,11 @@ const Homepage = () => {
       </div>
 
       <AnimatePresence>
-        {selectedPicture && (
+        {selectedGallery && (
           <motion.div
-            layoutId={selectedPicture?.id}
+            layoutId={selectedGallery?.id}
             className="w-[100vw] h-[100vh] fixed top-0 z-20 flex justify-center items-center cursor-zoom-out"
-            onClick={() => setSelectedPicture(null)}
+            onClick={() => setSelectedGallery(null)}
           >
             <motion.div
               variants={popupMotion}
@@ -950,17 +1036,11 @@ const Homepage = () => {
             />
             <div className="h-auto md:h-[85vh] relative">
               <img
-                src={selectedPicture?.image}
+                src={selectedGallery?.image}
                 alt="foto"
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* <motion.button
-              onClick={() => setSelectedPicture(null)}
-              className="bg-white p-6"
-            >
-              Close
-            </motion.button> */}
           </motion.div>
         )}
       </AnimatePresence>
@@ -1006,6 +1086,7 @@ const Homepage = () => {
                 value={rsvp.name}
                 className="block w-full px-5 py-4 text-md bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
                 placeholder="Full Name"
+                required
               />
             </label>
             <label className="flex flex-col gap-2">
@@ -1135,8 +1216,6 @@ const Homepage = () => {
           <div className="w-full">
             <Swiper
               spaceBetween={10}
-              // onSlideChange={() => console.log("slide change")}
-              // onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={1.3}
               breakpoints={{
                 640: {
@@ -1218,17 +1297,6 @@ const Homepage = () => {
           <div className="w-full h-32 bg-gradient-to-b from-main to-transparent absolute top-0" />
         </div>
       </footer>
-      {/* </Parallax> */}
-
-      <Modal
-        title="Vertically centered modal dialog"
-        centered
-        open={modalSuccess}
-      >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
-      </Modal>
     </div>
   );
 };
