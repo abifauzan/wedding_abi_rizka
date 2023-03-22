@@ -3,18 +3,9 @@ import styled from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
 import TextWeddingInvitation from "./images/text-wedding-invitation.png";
 import ImgLittleFlower from "./images/little-flower-image.png";
-import IDFlag from "./images/indonesia.svg";
-import USFlag from "./images/united.svg";
-import JPNFlag from "./images/japan.svg";
-import {
-  Link,
-  createSearchParams,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
 import useLang from "./hooks/useLang";
 import { langList } from "./App";
+import { useTranslation } from "react-i18next";
 
 const ButtonCTA = styled.button`
   position: relative;
@@ -79,22 +70,8 @@ const ButtonCTA = styled.button`
 `;
 
 const Intro = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const { lang } = useLang();
-
-  const handleSwitchLang = (lang) => {
-    const searchQueryString = `?${createSearchParams({
-      ...Object.fromEntries([...Array.from(searchParams)]),
-      lang,
-    })}`;
-
-    navigate({
-      search: searchQueryString,
-    });
-  };
+  const { lang, handleSwitchLang } = useLang();
+  const { t } = useTranslation();
 
   const toggleLang = useMemo(() => {
     return (
@@ -140,7 +117,7 @@ const Intro = () => {
           ))}
       </div>
     );
-  }, [lang]);
+  }, [handleSwitchLang, lang]);
 
   return (
     <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-invitation bg-cover bg-bottom md:bg-center relative">
@@ -169,6 +146,7 @@ const Intro = () => {
               />
               <p className="text-md md:text-lg tracking-wider mb-2">
                 Kepada Bapak/Ibu/Saudara/i
+                {/* {t("Welcome to React")} */}
               </p>
               <p className="text-3xl md:text-4xl mb-10 font-light">
                 Rizka Yulianti Pratiwi & Partner

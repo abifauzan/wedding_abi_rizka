@@ -42,6 +42,17 @@ import Collection3Img4 from "./images/collection-3-img-4.png";
 import Collection3Img5 from "./images/collection-3-img-5.png";
 import ElementFlowers from "./images/element_flowers.png";
 import Heading from "./components/heading";
+import { langList } from "./App";
+import useLang from "./hooks/useLang";
+import { Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "./firebase";
+
+const popupMotion = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+};
 
 const Completionist = () => (
   <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
@@ -216,6 +227,8 @@ const Homepage = () => {
   const galleryRef = useRef(null);
   const rsvpRef = useRef(null);
 
+  const rsvpName = useRef(null);
+
   const listMenu = [
     {
       slug: "welcome",
@@ -249,6 +262,9 @@ const Homepage = () => {
   const [headerExpand, setHeaderExpand] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playStatus, setPlayStatus] = useState("");
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [rsvpList, setRsvpList] = useState([]);
 
   const [selectedPicture, setSelectedPicture] = useState(null);
 
@@ -256,6 +272,8 @@ const Homepage = () => {
     useSound(abiSong);
   const [playIka, { pause: pauseIka, duration: durationIka, sound: soundIka }] =
     useSound(ikaSong);
+
+  const { lang, handleSwitchLang } = useLang();
 
   const handleScrollMenu = (ref) => {
     console.log(ref);
@@ -308,19 +326,51 @@ const Homepage = () => {
     });
   };
 
-  const toggleMenu = () => {
-    setMobileMenu(!mobileMenu);
+  const handleInputRsvp = (key, value) => {
+    setRsvp({
+      ...rsvp,
+      [key]: value,
+    });
   };
 
-  const activeStatusClass = (status) => {
-    // console.log(status);
-    if (rsvp.status === status) return "border-red-400";
-    else return "border-gray-400";
+  const toggleMenu = () => {
+    setMobileMenu(!mobileMenu);
   };
 
   const triggerHeaderScroll = () => {
     const triggered = window.scrollY > 600 ? true : false;
     setHeaderExpand(triggered);
+  };
+
+  const submitRsvp = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      const docRef = await addDoc(collection(db, "guestlists"), {
+        rsvp,
+      });
+      setIsLoading(false);
+      console.log("Document ref: ", docRef);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      setIsLoading(false);
+    }
+  };
+
+  const fetchRsvp = async () => {
+    const rsvpRes = await getDocs(collection(db, "guestlists"));
+
+    const res = [];
+
+    rsvpRes.forEach((rsvp) => {
+      res.push({
+        id: rsvp.id,
+        ...rsvp.data(),
+      });
+    });
+
+    setRsvpList(res);
   };
 
   useEffect(() => {
@@ -329,6 +379,10 @@ const Homepage = () => {
     return () => {
       window.removeEventListener("scroll", triggerHeaderScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    fetchRsvp();
   }, []);
 
   const headerStyle = useMemo(() => {
@@ -413,12 +467,21 @@ const Homepage = () => {
           </div>
         </div>
         <div className="w-full px-6 mt-10 flex items-center gap-4 text-white">
-          <span className="uppercase tracking-widest border-b-2 cursor-pointer">
-            ID
-          </span>
-          <span className="uppercase tracking-widest cursor-pointer bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-            EN
-          </span>
+          {langList.map((item) => (
+            <span
+              key={item}
+              onClick={() => {
+                handleSwitchLang(item);
+              }}
+              className={`uppercase tracking-widest cursor-pointer ${
+                item === lang
+                  ? "border-b-2"
+                  : "bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
+              }`}
+            >
+              {item}
+            </span>
+          ))}
         </div>
         <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
           {listMenu.map((item) => (
@@ -437,11 +500,6 @@ const Homepage = () => {
       </div>
     </div>
   );
-
-  const item = {
-    hidden: { opacity: 0 },
-    show: { opacity: 1 },
-  };
 
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
@@ -500,33 +558,59 @@ const Homepage = () => {
               <span className="">Her song</span>
             </button>
             <div className="group">
-              <button
-                className={`${headerStyle.btnLang} flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500`}
-              >
-                <span className="ml-1 text-sm md:text-md tracking-widest">
-                  ID
-                </span>
-                <svg
-                  className="h-4 mt-px ml-1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
+              {langList
+                .filter((item) => item === lang)
+                .map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => handleSwitchLang(item)}
+                    className={`${headerStyle.btnLang} flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500`}
+                  >
+                    <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
+                      {item}
+                    </span>
+                    <svg
+                      className="h-4 mt-px ml-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                ))}
 
-              <div
-                className={`${headerStyle.btnLangHover} hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer`}
-              >
-                <span className="ml-1 text-sm md:text-md tracking-widest">
-                  EN
-                </span>
-              </div>
+              {langList
+                .filter((item) => item !== lang)
+                .map((item) => (
+                  <div
+                    key={item}
+                    onClick={() => handleSwitchLang(item)}
+                    className="hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-black hover:bg-white"
+                  >
+                    <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
+                      {item}
+                    </span>
+                  </div>
+                ))}
+
+              {langList
+                .filter((item) => item !== lang)
+                .map((item) => (
+                  <div
+                    key={item}
+                    onClick={() => handleSwitchLang(item)}
+                    className={`${headerStyle.btnLangHover} hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer`}
+                  >
+                    <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
+                      {item}
+                    </span>
+                  </div>
+                ))}
             </div>
           </div>
 
@@ -858,7 +942,7 @@ const Homepage = () => {
             onClick={() => setSelectedPicture(null)}
           >
             <motion.div
-              variants={item}
+              variants={popupMotion}
               initial="hidden"
               animate="show"
               transition={{ delay: 0.5 }}
@@ -906,14 +990,20 @@ const Homepage = () => {
             day?
           </h2>
 
-          <form className="w-full sm:w-2/3 lg:w-1/2 px-3 md:px-0 flex flex-col gap-6 pb-10 sm:pb-18">
+          <form
+            className="w-full sm:w-2/3 lg:w-1/2 px-3 md:px-0 flex flex-col gap-6 pb-10 sm:pb-18"
+            onSubmit={submitRsvp}
+          >
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 Your Name
               </span>
               <input
                 type="text"
-                onChange={() => {}}
+                onChange={(e) => {
+                  handleInputRsvp("name", e.target.value);
+                }}
+                value={rsvp.name}
                 className="block w-full px-5 py-4 text-md bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
                 placeholder="Full Name"
               />
@@ -929,7 +1019,7 @@ const Homepage = () => {
                     name="your_response"
                     value="accept"
                     checked={rsvp.status === "accept"}
-                    onChange={(event) => {
+                    onChange={() => {
                       toggleStatus("accept");
                     }}
                     className="hidden"
@@ -978,8 +1068,11 @@ const Homepage = () => {
                 Number of guests
               </span>
               <select
-                name="guest_number"
-                onChange={() => {}}
+                name="personCount"
+                onChange={(e) => {
+                  handleInputRsvp("personCount", e.target.value);
+                }}
+                value={rsvp.personCount}
                 className="block w-full px-5 py-4 text-lg bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
               >
                 <option value="1">1</option>
@@ -993,6 +1086,10 @@ const Homepage = () => {
                 Your Message to us
               </span>
               <textarea
+                onChange={(e) => {
+                  handleInputRsvp("message", e.target.value);
+                }}
+                value={rsvp.message}
                 className="block w-full px-5 py-4 bg-white border border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary"
                 placeholder="Message"
                 rows={5}
@@ -1000,9 +1097,11 @@ const Homepage = () => {
             </label>
             <button
               type="submit"
-              className="self-center bg-white rounded-full px-14 py-3 uppercase tracking-widest text-md shadow-lg border border-primary transition-all hover:bg-primary hover:text-white hover:-translate-y-1 hover:shadow-primary"
+              disabled={isLoading}
+              className="self-center bg-white rounded-full px-14 py-3 uppercase tracking-widest text-md shadow-lg border border-primary transition-all hover:bg-primary hover:text-white hover:-translate-y-1 hover:shadow-primary inline-flex justify-center items-center gap-2 disabled:bg-black/10 disabled:cursor-not-allowed"
             >
               Reply
+              {isLoading && <LoadingOutlined />}
             </button>
           </form>
 
@@ -1028,6 +1127,11 @@ const Homepage = () => {
           <h2 className="w-full md:1/3 lg:w-1/3 !leading-normal text-4xl sm:text-5xl font-heading mb-16  text-center px-2 md:px-0">
             Happy message from our friends
           </h2>
+          {rsvpList.length === 0 && (
+            <div className="inline-flex w-full items-center justify-center">
+              <LoadingOutlined style={{ fontSize: "3rem" }} />
+            </div>
+          )}
           <div className="w-full">
             <Swiper
               spaceBetween={10}
@@ -1058,22 +1162,19 @@ const Homepage = () => {
               }}
               modules={[Autoplay]}
             >
-              <SwiperSlide className="w-[450px] first:ml-3 last:mr-3 p-6 md:p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg">
-                <span className="text-lg font-normal tracking-widest">
-                  Abi Fauzan
-                </span>
-                <span className="text-lg leading-normal font-light">
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                  We’re lucky enough to have nearly everything we need for our
-                  home already. And since neither of us has ever been outside of
-                  North America, we want our honeymoon to be extra special!{" "}
-                </span>
-              </SwiperSlide>
+              {rsvpList.map((item) => (
+                <SwiperSlide
+                  key={item.id}
+                  className="w-[450px] first:ml-3 last:mr-3 p-6 md:p-8 bg-white/30 backdrop-blur-md flex flex-col gap-3 justify-start items-start text-left rounded-lg"
+                >
+                  <span className="text-lg font-normal tracking-widest">
+                    {item.rsvp.name}
+                  </span>
+                  <span className="text-lg leading-normal font-light">
+                    {item.rsvp.message}
+                  </span>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         </div>
@@ -1118,6 +1219,16 @@ const Homepage = () => {
         </div>
       </footer>
       {/* </Parallax> */}
+
+      <Modal
+        title="Vertically centered modal dialog"
+        centered
+        open={modalSuccess}
+      >
+        <p>some contents...</p>
+        <p>some contents...</p>
+        <p>some contents...</p>
+      </Modal>
     </div>
   );
 };
