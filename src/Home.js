@@ -123,7 +123,7 @@ const CollectionList = styled.div`
   display: flex;
 
   &.reverse {
-    animation: ${({ isMobile }) => moveMotions(isMobile, "right")} 30s
+    animation: ${({ isMobile }) => moveMotions(isMobile, "right")} 40s
       ease-in-out infinite;
   }
 
@@ -519,8 +519,8 @@ const Homepage = () => {
         mobileMenuSong ? "fixed" : "hidden"
       } w-[100vw] h-[100vh] overflow-hidden bg-banner-home z-30`}
     >
-      <div className="w-full h-full flex flex-col bg-black/30">
-        <div className="w-full flex items-center justify-between text-white p-6">
+      <div className="w-full h-full flex flex-col justify-center bg-black/30 relative">
+        <div className="w-full flex items-center justify-between text-white p-6 absolute top-0">
           <Link to="/" className="text-xl font-Alex-Brush uppercase">
             Abi & Rizka
           </Link>
@@ -532,13 +532,28 @@ const Homepage = () => {
             Back
           </div>
         </div>
-        <div className="w-full px-6 mt-10 flex items-center gap-4 text-white"></div>
         <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
-          <span className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-            Play his song
+          <span
+            onClick={() => playingButton("abi")}
+            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out inline-flex gap-1"
+          >
+            {isPlaying && playStatus === "abi" ? (
+              <BsFillPauseFill size="1.1em" />
+            ) : (
+              <BsMusicNote size="1.1em" />
+            )}{" "}
+            his song
           </span>
-          <span className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-            Play her song
+          <span
+            onClick={() => playingButton("ika")}
+            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out inline-flex gap-1"
+          >
+            {isPlaying && playStatus === "ika" ? (
+              <BsFillPauseFill size="1.1em" />
+            ) : (
+              <BsMusicNote size="1.1em" />
+            )}{" "}
+            her song
           </span>
         </nav>
       </div>
