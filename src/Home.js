@@ -234,8 +234,6 @@ const Homepage = () => {
   const galleryRef = useRef(null);
   const rsvpRef = useRef(null);
 
-  const rsvpName = useRef(null);
-
   const listMenu = [
     {
       slug: "welcome",

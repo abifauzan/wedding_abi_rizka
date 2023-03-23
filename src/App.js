@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Intro from "./Intro";
 import Homepage from "./Home";
+import Dashboard from "./dashboard";
 
 export const UserContext = createContext();
 
@@ -31,6 +32,7 @@ const App = () => {
           <Routes>
             <Route path="/intro" element={<Intro />} />
             <Route path="/" element={<Homepage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </Router>
       </ParallaxProvider>
