@@ -12,7 +12,6 @@ module.exports = {
       },
       backgroundImage: {
         "banner-invitation": "url('./images/banner-invitation.jpg')",
-        "banner-home": "url('./images/home_hero.jpg')",
         "banner-testimonial": "url('./images/bg-testimonial.jpg')",
         "banner-footer-desktop": "url('./images/bg-footer-desktop.jpg')",
         "banner-footer-mobile": "url('./images/bg-footer-mobile.jpg')",

@@ -20,7 +20,7 @@ import FloatingFlower1 from "./images/floating_image-1.png";
 import FloatingFlower2 from "./images/floating_image-2.png";
 import BaniUmarImg from "./images/masjid-bani-umar-bintaro.jpg";
 import AkadNikahImg from "./images/akad-nikah.jpg";
-import BgHome from "./images/home_hero.jpg";
+import BgHome from "./images/home_hero.webp";
 import ResepsiNikahImg from "./images/resepsi-nikah.jpg";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
