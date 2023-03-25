@@ -652,7 +652,7 @@ const Homepage = () => {
           alt="Banner Home"
           className="w-full h-full object-cover"
         />
-        <ArrowDownAnimation className="absolute bottom-14 md:bottom-0">
+        <ArrowDownAnimation className="absolute bottom-16 md:bottom-0">
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
