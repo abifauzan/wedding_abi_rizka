@@ -12,6 +12,7 @@ import { message, Table } from "antd";
 import Chips from "./components/chips/Chips";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
+import LogoCouple from "./images/logo-couple.png";
 
 const BASE_URL = "http://localhost:3000/";
 const initialRsvp = {
@@ -25,12 +26,17 @@ const Dashboard = () => {
   const [result, setResult] = useState("");
   const [page, setPage] = useState("dashboard");
   const [rsvpList, setRsvpList] = useState([]);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   const Completionist = () => (
     <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
       <div className="flex items-center justify-center">20 . 05 . 2023</div>
     </div>
   );
+
+  const toggleMenu = () => {
+    setMobileMenu(!mobileMenu);
+  };
 
   // Renderer callback with condition
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -98,6 +104,55 @@ const Dashboard = () => {
     setResult(result);
     setIsLoading(false);
   };
+
+  const variantsMenu = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "-100%" },
+  };
+
+  const mobileView = () => (
+    <motion.div
+      animate={mobileMenu ? "open" : "closed"}
+      variants={variantsMenu}
+      transition={{ type: "spring", stiffness: 90 }}
+      className={`fixed w-[100vw] h-[100vh] overflow-hidden bg-banner-menu z-30 bg-cover bg-center`}
+    >
+      <div className="w-full h-full flex flex-col bg-black/40">
+        <div className="w-full flex items-center justify-between text-white p-6">
+          <Link to="/" className="text-xl font-Alex-Brush uppercase">
+            <img src={LogoCouple} alt="Logo Abi & Rizka" className={"w-24"} />
+          </Link>
+          <div
+            onClick={toggleMenu}
+            className="inline-flex gap-2 items-center cursor-pointer"
+          >
+            <span className="w-5 h-[2px] bg-white" />
+            Back
+          </div>
+        </div>
+        <nav className="w-full px-6 mt-10 flex flex-col justify-center items-start text-white gap-5 font-light text-5xl">
+          <span
+            onClick={() => {
+              setMobileMenu(false);
+              setPage("dashboard");
+            }}
+            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
+          >
+            Dashboard
+          </span>
+          <span
+            onClick={() => {
+              setMobileMenu(false);
+              setPage("guest");
+            }}
+            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
+          >
+            Guest List
+          </span>
+        </nav>
+      </div>
+    </motion.div>
+  );
 
   const handleCopy = () => {
     message.success("Copied");
@@ -171,6 +226,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
+      {mobileView()}
       {/* header */}
       <header
         className={`h-[80px] md:h-[100px] text-black bg-white w-full border-b`}
@@ -227,14 +283,18 @@ const Dashboard = () => {
             <VscMenu
               size="1.2em"
               className="cursor-pointer hidden lg:block"
-              onClick={() => {}}
+              onClick={() => {
+                setMobileMenu(true);
+              }}
             />
           </div>
           <div className="absolute left-[1rem] md:left-0 flex lg:hidden">
             <VscMenu
               size="1.2em"
               className="cursor-pointer"
-              onClick={() => {}}
+              onClick={() => {
+                setMobileMenu(true);
+              }}
             />
           </div>
         </div>
