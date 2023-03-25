@@ -6,6 +6,7 @@ import ImgLittleFlower from "./images/little-flower-image.png";
 import useLang from "./hooks/useLang";
 import { langList } from "./App";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 const ButtonCTA = styled.button`
   position: relative;
@@ -26,7 +27,7 @@ const ButtonCTA = styled.button`
     left: -10px;
     display: block;
     border-radius: 50px;
-    border: 1px solid #000;
+    border: 1px solid #fefbfa;
     background: transparent;
     width: 55px;
     height: 100%;
@@ -37,6 +38,7 @@ const ButtonCTA = styled.button`
     position: relative;
     font-size: 20px;
     letter-spacing: 0.05em;
+    transition: all 0.3s ease;
   }
 
   svg {
@@ -46,13 +48,17 @@ const ButtonCTA = styled.button`
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke: #000;
+    stroke: #fefbfa;
     stroke-width: 2;
     transform: translateX(-5px);
     transition: all 0.3s ease;
   }
 
   &:hover {
+    span {
+      color: #000;
+      transition: all 0.3s ease;
+    }
     &::before {
       width: 110%;
       height: 100%;
@@ -61,6 +67,7 @@ const ButtonCTA = styled.button`
 
     svg {
       transform: translateX(0);
+      stroke: #000;
     }
   }
 
@@ -72,6 +79,26 @@ const ButtonCTA = styled.button`
 const Intro = () => {
   const { lang, handleSwitchLang } = useLang();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const location = useLocation();
+
+  const guestName = useMemo(() => {
+    const getSearchTo = searchParams.get("to");
+
+    if (getSearchTo === null) return t("guestinfo");
+
+    const guest = searchParams.get("to").replaceAll("%20", "");
+    return guest;
+  }, [searchParams, t]);
+
+  const goToWelcomePage = () => {
+    navigate({
+      pathname: "/welcome",
+      search: location.search,
+    });
+  };
 
   const toggleLang = useMemo(() => {
     return (
@@ -82,7 +109,7 @@ const Intro = () => {
             <button
               key={item}
               onClick={() => handleSwitchLang(item)}
-              className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500 border-white hover:bg-white hover:text-black"
+              className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500 border-white text-white hover:bg-white hover:text-black"
             >
               <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
                 {item}
@@ -108,7 +135,7 @@ const Intro = () => {
             <div
               key={item}
               onClick={() => handleSwitchLang(item)}
-              className="hidden group-hover:flex transition-all absolute -top-16 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-black hover:bg-white"
+              className="hidden group-hover:flex transition-all absolute -top-6 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-white hover:bg-white hover:text-black"
             >
               <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
                 {item}
@@ -136,7 +163,11 @@ const Intro = () => {
         <div className="w-full md:w-[700px] h-full md:h-[560px] backdrop-blur-md bg-white/20 p-3 md:p-7 md:rounded-md">
           <div className="w-full h-full bg-transparent border-white/50 border-2 flex flex-col rounded-md justify-between items-center px-8 pt-40 pb-24 md:px-24 md:py-14">
             <div className="w-full flex flex-col items-center">
-              <img src={TextWeddingInvitation} alt="Wedding Invitation" />
+              <img
+                src={TextWeddingInvitation}
+                alt="Wedding Invitation"
+                style={{ filter: "brightness(0) invert(1)" }}
+              />
             </div>
             <div className="w-full flex flex-col items-center text-center">
               <img
@@ -144,17 +175,19 @@ const Intro = () => {
                 alt="Little Flower"
                 className="w-[60px] mb-4"
               />
-              <p className="text-md md:text-lg tracking-wider mb-2">
-                Kepada Bapak/Ibu/Saudara/i
-                {/* {t("Welcome to React")} */}
+              <p className="text-md md:text-lg tracking-wider mb-2 text-main">
+                {t("intro")}
               </p>
-              <p className="text-3xl md:text-4xl mb-10 font-light">
-                Rizka Yulianti Pratiwi & Partner
+              <p className="text-3xl md:text-4xl mb-10 font-light text-main">
+                {guestName}
               </p>
             </div>
             <div className="w-full flex flex-col">
-              <ButtonCTA>
-                <span className="font-normal">Buka Undangan</span>
+              <ButtonCTA onClick={goToWelcomePage}>
+                <span className="font-normal text-main">
+                  {" "}
+                  {t("openInvitation")}
+                </span>
                 <svg viewBox="0 0 13 10" height="10px" width="15px">
                   <path d="M1,5 L11,5"></path>
                   <polyline points="8 1 12 5 8 9"></polyline>

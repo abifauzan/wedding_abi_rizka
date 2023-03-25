@@ -1,9 +1,8 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Autoplay, Pagination, Navigation } from "swiper";
-import { Parallax } from "react-scroll-parallax";
+import { Autoplay } from "swiper";
 import Countdown from "react-countdown";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
 
 import abiSong from "./sounds/youre_the_inspiration.mp3";
@@ -17,39 +16,24 @@ import LogoCoupleBlack from "./images/logo-couple-black.png";
 import FlowerTop from "./images/flower-top.png";
 import FlowerBottom from "./images/flower-bottom.png";
 import LoveArt from "./images/love-art.png";
-import CopyHero from "./images/copytext-banner-hero.png";
 import FloatingFlower1 from "./images/floating_image-1.png";
 import FloatingFlower2 from "./images/floating_image-2.png";
-import IDFlag from "./images/indonesia.svg";
 import BaniUmarImg from "./images/masjid-bani-umar-bintaro.jpg";
 import AkadNikahImg from "./images/akad-nikah.jpg";
 import ResepsiNikahImg from "./images/resepsi-nikah.jpg";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
-import Collection1Img1 from "./images/collection-1-img-1.png";
-import Collection1Img2 from "./images/collection-1-img-2.png";
-import Collection1Img3 from "./images/collection-1-img-3.png";
-import Collection1Img4 from "./images/collection-1-img-4.png";
-import Collection1Img5 from "./images/collection-1-img-5.png";
-import Collection2Img1 from "./images/collection-2-img-1.png";
-import Collection2Img2 from "./images/collection-2-img-2.png";
-import Collection2Img3 from "./images/collection-2-img-3.png";
-import Collection2Img4 from "./images/collection-2-img-4.png";
-import Collection2Img5 from "./images/collection-2-img-5.png";
-import Collection3Img1 from "./images/collection-3-img-1.png";
-import Collection3Img2 from "./images/collection-3-img-2.png";
-import Collection3Img3 from "./images/collection-3-img-3.png";
-import Collection3Img4 from "./images/collection-3-img-4.png";
-import Collection3Img5 from "./images/collection-3-img-5.png";
 import ElementFlowers from "./images/element_flowers.png";
 import Heading from "./components/heading";
 import { langList } from "./App";
 import useLang from "./hooks/useLang";
-import { Modal, message } from "antd";
+import { message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import useIsMobile from "./hooks/useIsMobile";
+import galleries from "./galleryCollection";
+import { Trans, useTranslation } from "react-i18next";
 
 const popupMotion = {
   hidden: { opacity: 0 },
@@ -96,30 +80,6 @@ const ArrowDownAnimation = styled.div`
     }
   }
 `;
-
-const imgCollections = [
-  [
-    Collection1Img1,
-    Collection1Img2,
-    Collection1Img3,
-    Collection1Img4,
-    Collection1Img5,
-  ],
-  [
-    Collection2Img1,
-    Collection2Img2,
-    Collection2Img3,
-    Collection2Img4,
-    Collection2Img5,
-  ],
-  [
-    Collection3Img1,
-    Collection3Img2,
-    Collection3Img3,
-    Collection3Img4,
-    Collection3Img5,
-  ],
-];
 
 const moveMotions = (isMobile, direction = "right") => {
   const percentage = isMobile ? 42 : 30;
@@ -270,6 +230,8 @@ const Homepage = () => {
   const galleryRef = useRef(null);
   const rsvpRef = useRef(null);
 
+  const { t } = useTranslation();
+
   const listMenu = [
     {
       slug: "welcome",
@@ -293,7 +255,7 @@ const Homepage = () => {
     },
     {
       slug: "your-reply",
-      title: "Your reply",
+      title: "Your Reply",
       ref: rsvpRef,
     },
   ];
@@ -319,7 +281,6 @@ const Homepage = () => {
   const isMobile = useIsMobile();
 
   const handleScrollMenu = (ref) => {
-    console.log(ref);
     window.scrollTo({
       top: ref.current.offsetTop,
       left: 0,
@@ -759,9 +720,9 @@ const Homepage = () => {
       {/* Banner */}
       <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed flex justify-center items-end">
         <ArrowDownAnimation>
-          <div class="scroll-arrow"></div>
-          <div class="scroll-arrow"></div>
-          <div class="scroll-arrow"></div>
+          <div className="scroll-arrow"></div>
+          <div className="scroll-arrow"></div>
+          <div className="scroll-arrow"></div>
         </ArrowDownAnimation>
         {/* <Parallax speed={-20}>
           <div className="w-full h-full backdrop-blur-md bg-white/30 py-10 px-14 rounded-md mt-10">
@@ -784,10 +745,7 @@ const Homepage = () => {
       >
         <div className="w-full lg:w-3/4 p-8 xl:p-10 bg-white z-10">
           <p className="font-light m-0 text-xl xl:text-2xl tracking-wider">
-            ¡Hola! Together with our families, we invite you to our wedding
-            ceremony and celebration. Our wedding will begin at 8am until 1pm on
-            May 20th 2023 at Masjid Raya Bani Umar, Bintaro, Tangerang Selatan.
-            — A & R
+            {t("welcomeText")}
           </p>
         </div>
         <div className="w-full lg:w-1/4 flex flex-col gap-1 lg:gap-2 z-10">
@@ -833,15 +791,10 @@ const Homepage = () => {
         ref={dramaRef}
         className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container"
       >
-        <Heading title="Our Drama" subtitle="She Said Yes" />
+        <Heading title="Our Drama" subtitle="History" />
 
-        <p className="font-light text-xl xl:text-2xl text-center px-2 sm:px-0 tracking-wider">
-          As a pair of determined designers, Daniela and Moe first got to know
-          each other working late nights in design studio during grad school—
-          brewing that third pot of coffee, sharing tasty treats, and exchanging
-          upbeat bops. Yet it wasn’t until a group outing where they were left
-          alone on the dance floor, grooving to funky soul beats, when they knew
-          they were meant to be together.
+        <p className="font-light text-xl xl:text-2xl text-center px-2 sm:px-0 tracking-wider whitespace-pre-line">
+          {t("ourDrama")}
         </p>
 
         {/* <div className="w-[90%] md:w-full h-[400px] relative mt-16">
@@ -851,12 +804,12 @@ const Homepage = () => {
       </div>
 
       {/* Digital looks */}
-      <div className="w-full flex flex-col relative items-center">
+      {/* <div className="w-full flex flex-col relative items-center">
         <CollectionList
           isMobile={isMobile}
           className="mt-5 md:mt-8 gap-5 md:gap-8"
         >
-          {listGallery.map((item, index) => (
+          {galleries.map((item, index) => (
             <motion.div
               layoutId={item.id}
               key={item.id}
@@ -907,7 +860,7 @@ const Homepage = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </div> */}
 
       {/* Big day When/Where/How + maps */}
       <div ref={bigDayRef} className="w-full py-20 relative">
@@ -925,7 +878,7 @@ const Homepage = () => {
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
                 <span className="text-2xl font-heading font-light tracking-wide">
-                  The Venue
+                  {t("theVenue")}
                 </span>
                 <div className="inline-flex flex-col">
                   <span className="font-bold mb-1">Masjid Raya Bani Umar</span>
@@ -939,13 +892,13 @@ const Homepage = () => {
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={AkadNikahImg}
-                  alt="Akad Nikah"
+                  alt={t("weddingVows")}
                   className="object-cover w-full h-full rounded-t-md"
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
                 <span className="text-2xl font-heading font-light tracking-wide">
-                  Akad Nikah
+                  {t("weddingVows")}
                 </span>
                 <div className="inline-flex flex-col">
                   <span className="font-Italiana font-bold mb-1">
@@ -961,13 +914,13 @@ const Homepage = () => {
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={ResepsiNikahImg}
-                  alt="Resepsi Pernikahan"
-                  className="object-cover w-full h-full rounded-t-md"
+                  alt={t("weddingCelebration")}
+                  className="object-cover object-[0_-250px] md:object-[0_-300px] w-full h-full rounded-t-md"
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
                 <span className="text-2xl font-heading font-light tracking-wide">
-                  Resepsi Pernikahan
+                  {t("weddingCelebration")}
                 </span>
                 <div className="inline-flex flex-col">
                   <span className="font-Italiana font-bold mb-1">
@@ -1002,7 +955,7 @@ const Homepage = () => {
             rel="noreferrer"
           >
             <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-black bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out border-b">
-              View Location
+              {t("viewLocation")}
             </span>
           </a>
         </div>
@@ -1020,15 +973,13 @@ const Homepage = () => {
           alt="Flowers"
           className="absolute top-0 object-cover z-0"
         />
-        <Heading title="Our one of a kind" subtitle="Gallery" />
+        <Heading subtitle={t("ourGallery")} />
 
         <div className="w-full mt-10 flex flex-col gap-5 cursor-plus">
           <div className="w-full">
             <Swiper
               key="slide-normal"
               spaceBetween={20}
-              // onSlideChange={() => console.log("slide change")}
-              // onSwiper={(swiper) => console.log(swiper)}
               slidesPerView={"auto"}
               speed={1200}
               freeMode={true}
@@ -1038,57 +989,22 @@ const Homepage = () => {
                 reverseDirection: false,
               }}
               modules={[Autoplay]}
+              res
             >
-              {listGallery.map((item, index) => (
+              {galleries.map((item, index) => (
                 <SwiperSlide
                   key={item.id}
-                  className="w-full sm:w-[550px] h-auto first:ml-3 last:mr-3"
+                  className="w-[270px] h-[270px] sm:w-[500px] sm:h-[500px] first:ml-3 last:mr-3"
                 >
                   <motion.div
                     layoutId={item.id}
                     onClick={() => setSelectedGallery(item)}
-                    className="w-full h-full relative overflow-hidden"
+                    className="w-full h-full relative overflow-hidden rounded-lg"
                   >
                     <img
                       src={item.image}
                       alt={`Item ${index}`}
-                      className="w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-110"
-                    />
-                  </motion.div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-          <div className="w-full">
-            <Swiper
-              key="slide-reverse"
-              spaceBetween={20}
-              // onSlideChange={() => console.log("slide change")}
-              // onSwiper={(swiper) => console.log(swiper)}
-              slidesPerView={"auto"}
-              speed={1200}
-              freeMode={true}
-              autoplay={{
-                delay: 3500,
-                disableOnInteraction: false,
-                reverseDirection: false,
-              }}
-              modules={[Autoplay]}
-            >
-              {listGallery2.reverse().map((item, index) => (
-                <SwiperSlide
-                  key={item.id}
-                  className="w-full sm:w-[550px] h-auto first:ml-3 last:mr-3"
-                >
-                  <motion.div
-                    layoutId={item.id}
-                    onClick={() => setSelectedGallery(item)}
-                    className="w-full h-full relative overflow-hidden"
-                  >
-                    <img
-                      src={item.image}
-                      alt={`Item ${index}`}
-                      className="w-full h-full object-cover transition-all duration-500 ease-in-out transform hover:scale-110"
+                      className="w-full h-full rounded-lg object-cover transition-all duration-500 ease-in-out transform hover:scale-110"
                     />
                   </motion.div>
                 </SwiperSlide>
@@ -1143,9 +1059,8 @@ const Homepage = () => {
             }}
           />
 
-          <h2 className="w-full text-3xl sm:text-4xl text-center font-heading py-6 sm:py-10 px-10">
-            Will you attend to <br className="hidden sm:block" /> our special
-            day?
+          <h2 className="w-full md:w-1/2 text-3xl sm:text-4xl text-center font-heading py-6 sm:py-10 px-10">
+            {t("introRsvp")}
           </h2>
 
           <form
@@ -1154,7 +1069,7 @@ const Homepage = () => {
           >
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
-                Your Name
+                {t("yourName")}
               </span>
               <input
                 type="text"
@@ -1163,13 +1078,13 @@ const Homepage = () => {
                 }}
                 value={rsvp.name}
                 className="block w-full px-5 py-4 text-md bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
-                placeholder="Full Name"
+                placeholder={t("fullName")}
                 required
               />
             </label>
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
-                Your Response
+                {t("yourFeedback")}
               </span>
               <div className="w-full flex flex-col sm:flex-row gap-3">
                 <div className="w-full sm:w-1/2 h-20 flex flex-col items-center justify-center">
@@ -1192,7 +1107,7 @@ const Homepage = () => {
                     }}
                   >
                     <span className="text-lg">
-                      Joyfully Accepts <span className="pl-1">🥳</span>
+                      {t("accept")} <span className="pl-1">🥳</span>
                     </span>
                   </label>
                 </div>
@@ -1216,7 +1131,7 @@ const Homepage = () => {
                     }}
                   >
                     <span className="text-lg">
-                      Respecfully Declines <span className="pl-1">🙏</span>
+                      {t("not_accept")} <span className="pl-1">🙏</span>
                     </span>
                   </label>
                 </div>
@@ -1224,7 +1139,7 @@ const Homepage = () => {
             </label>
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
-                Number of guests
+                {t("numberGuest")}
               </span>
               <select
                 name="personCount"
@@ -1242,7 +1157,7 @@ const Homepage = () => {
             </label>
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
-                Your Message to us
+                {t("yourMessage")}
               </span>
               <textarea
                 onChange={(e) => {
@@ -1250,7 +1165,7 @@ const Homepage = () => {
                 }}
                 value={rsvp.message}
                 className="block w-full px-5 py-4 bg-white border border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary"
-                placeholder="Message"
+                placeholder={t("happyWedding")}
                 rows={5}
               />
             </label>
@@ -1259,7 +1174,7 @@ const Homepage = () => {
               disabled={isLoading}
               className="self-center bg-white rounded-full px-14 py-3 uppercase tracking-widest text-md shadow-lg border border-primary transition-all hover:bg-primary hover:text-white hover:-translate-y-1 hover:shadow-primary inline-flex justify-center items-center gap-2 disabled:bg-black/10 disabled:cursor-not-allowed"
             >
-              Reply
+              {t("reply")}
               {isLoading && <LoadingOutlined />}
             </button>
           </form>
@@ -1281,10 +1196,10 @@ const Homepage = () => {
       </div>
 
       {/* Testimonial */}
-      <div className="w-full relative bg-banner-testimonial bg-cover bg-no-repeat text-white">
-        <div className="w-full h-full bg-black/20 py-16 md:py-20 flex flex-col items-center">
+      <div className="w-full relative bg-banner-testimonial bg-cover bg-center bg-no-repeat text-white">
+        <div className="w-full h-full bg-black/20 py-16 md:py-24 flex flex-col items-center">
           <h2 className="w-full md:1/3 lg:w-1/3 !leading-normal text-4xl sm:text-5xl font-heading mb-16  text-center px-2 md:px-0">
-            Happy message from our friends
+            {t("happyMessage")}
           </h2>
           {rsvpList.length === 0 && (
             <div className="inline-flex w-full items-center justify-center">
@@ -1346,24 +1261,32 @@ const Homepage = () => {
             alt="Abi & Rizka"
             className="w-36 md:w-60 mt-4"
           />
-          <span className="font-light text-lg mt-4 mb-8">
-            We can't wait to see you!
-          </span>
+          <span className="font-light text-lg mt-4 mb-8">{t("cantwait")}</span>
           <div className="w-full flex flex-col items-center text-center pt-10 pb-4 border-t-2 ">
             <span className="text-2xl font-Oswald tracking-widest uppercase">
-              Follow Us
+              {t("followus")}
             </span>
             <span className="text-xl mt-4 font-light">
               His Instagram{" "}
-              <Link to="/" className="text-red-500">
+              <a
+                href="https://www.instagram.com/abifauzn/"
+                target="_blank"
+                className="text-red-500"
+                rel="noreferrer"
+              >
                 @abifauzn
-              </Link>
+              </a>
             </span>
             <span className="text-xl mt-1 font-light">
               Her Instagram{" "}
-              <Link to="/" className="text-red-500">
+              <a
+                href="https://www.instagram.com/rizkajuliant20/"
+                target="_blank"
+                className="text-red-500"
+                rel="noreferrer"
+              >
                 @rizkajuliant20
-              </Link>
+              </a>
             </span>
           </div>
           {/* <span className="text-xl mt-4 font-light">

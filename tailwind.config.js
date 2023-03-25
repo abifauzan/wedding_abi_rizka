@@ -11,7 +11,6 @@ module.exports = {
         primary: "#F38BA0",
       },
       backgroundImage: {
-        "banner-pattern": "url('./images/banner-pattern.jpg')",
         "banner-invitation": "url('./images/banner-invitation.jpg')",
         "banner-home": "url('./images/home_hero.jpg')",
         "banner-testimonial": "url('./images/bg-testimonial.jpg')",
