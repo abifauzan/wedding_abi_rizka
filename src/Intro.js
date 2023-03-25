@@ -120,13 +120,13 @@ const Intro = () => {
   }, [handleSwitchLang, lang]);
 
   return (
-    <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-invitation bg-cover bg-bottom md:bg-center relative">
+    <div className="w-[100vw] h-[100vh] overflow-hidden bg-banner-invitation bg-cover bg-bottom md:bg-top relative">
       {/* header */}
       <div className="w-full absolute top-0 bg-transparent flex items-center justify-center">
         <img
           src={LogoCouple}
           alt="Abi & Rizka"
-          className="mt-10 w-42 md:w-50 z-10"
+          className="mt-6 w-36 md:w-44 z-10"
         />
       </div>
       {toggleLang}

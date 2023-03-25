@@ -13,6 +13,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import LogoCouple from "./images/logo-couple.png";
+import LogoCoupleBlack from "./images/logo-couple-black.png";
 import FlowerTop from "./images/flower-top.png";
 import FlowerBottom from "./images/flower-bottom.png";
 import LoveArt from "./images/love-art.png";
@@ -60,6 +61,41 @@ const Completionist = () => (
     <div className="flex items-center justify-center">20 . 05 . 2023</div>
   </div>
 );
+
+const arrowDownKeyframe = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const ArrowDownAnimation = styled.div`
+  margin-bottom: 25px;
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    animation: ${arrowDownKeyframe} 1s infinite;
+    animation-direction: alternate;
+
+    .scroll-arrow:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+    .scroll-arrow:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .scroll-arrow:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+  }
+`;
 
 const imgCollections = [
   [
@@ -411,7 +447,7 @@ const Homepage = () => {
     }
 
     return {
-      nav: "h-[80px] md:h-[100px] text-white bg-gradient-to-b from-gray-900 to-transparent",
+      nav: "h-[80px] md:h-[120px] text-white bg-gradient-to-b from-black to-transparent",
       navLink: "from-main to-pink-100",
       logo: "text-2xl md:text-3xl",
       btnSong: "h-8 px-2 text-white",
@@ -459,16 +495,27 @@ const Homepage = () => {
     }
   };
 
+  const variantsMenu = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "-100%" },
+  };
+
+  const variantsMenuSong = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "100%" },
+  };
+
   const mobileView = () => (
-    <div
-      className={`${
-        mobileMenu ? "fixed" : "hidden"
-      } w-[100vw] h-[100vh] overflow-hidden bg-banner-home z-30`}
+    <motion.div
+      animate={mobileMenu ? "open" : "closed"}
+      variants={variantsMenu}
+      transition={{ type: "spring", stiffness: 90 }}
+      className={`fixed w-[100vw] h-[100vh] overflow-hidden bg-banner-menu z-30 bg-cover bg-center`}
     >
-      <div className="w-full h-full flex flex-col bg-black/30">
+      <div className="w-full h-full flex flex-col bg-black/40">
         <div className="w-full flex items-center justify-between text-white p-6">
           <Link to="/" className="text-xl font-Alex-Brush uppercase">
-            Abi & Rizka
+            <img src={LogoCouple} alt="Logo Abi & Rizka" className={"w-24"} />
           </Link>
           <div
             onClick={toggleMenu}
@@ -510,19 +557,20 @@ const Homepage = () => {
           ))}
         </nav>
       </div>
-    </div>
+    </motion.div>
   );
 
   const mobileSongView = () => (
-    <div
-      className={`${
-        mobileMenuSong ? "fixed" : "hidden"
-      } w-[100vw] h-[100vh] overflow-hidden bg-banner-home z-30`}
+    <motion.div
+      animate={mobileMenuSong ? "open" : "closed"}
+      variants={variantsMenuSong}
+      transition={{ type: "spring", stiffness: 90 }}
+      className={`fixed w-[100vw] h-[100vh] overflow-hidden bg-banner-menu z-30 bg-cover bg-center`}
     >
-      <div className="w-full h-full flex flex-col justify-center bg-black/30 relative">
+      <div className="w-full h-full flex flex-col justify-center bg-black/40 relative">
         <div className="w-full flex items-center justify-between text-white p-6 absolute top-0">
           <Link to="/" className="text-xl font-Alex-Brush uppercase">
-            Abi & Rizka
+            <img src={LogoCouple} alt="Logo Abi & Rizka" className={"w-24"} />
           </Link>
           <div
             onClick={() => toggleMenu(false)}
@@ -542,7 +590,7 @@ const Homepage = () => {
             ) : (
               <BsMusicNote size="1.1em" />
             )}{" "}
-            his song
+            His song
           </span>
           <span
             onClick={() => playingButton("ika")}
@@ -553,11 +601,11 @@ const Homepage = () => {
             ) : (
               <BsMusicNote size="1.1em" />
             )}{" "}
-            her song
+            Her song
           </span>
         </nav>
       </div>
-    </div>
+    </motion.div>
   );
 
   return (
@@ -572,7 +620,17 @@ const Homepage = () => {
             to="/"
             className={`${headerStyle.logo} text-center lg:text-left tracking-wider absolute left-1/2 transform lg:transform-[unset] -translate-x-1/2 lg:translate-x-[unset] lg:left-0`}
           >
-            Abi & Rizka
+            <img
+              src={
+                headerExpand
+                  ? LogoCoupleBlack
+                  : isMobile
+                  ? LogoCoupleBlack
+                  : LogoCouple
+              }
+              alt="Logo Abi & Rizka"
+              className={`${headerExpand ? "w-20 md:w-24" : "w-24 md:w-36"}`}
+            />
           </Link>
 
           {/* nav desktop */}
@@ -699,17 +757,24 @@ const Homepage = () => {
       </header>
 
       {/* Banner */}
-      <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed flex justify-center items-center">
-        <Parallax speed={-20}>
-          <div className="flex flex-col items-center justify-center text-center relative text-white">
-            <h2 className="text-5xl md:text-9xl tracking-widest font-script relative">
-              Abi & Rizka
-            </h2>
-            <h2 className="font-heading font-normal text-xl md:text-3xl tracking-widest mt-2 md:mt-4">
-              are getting married
-            </h2>
+      <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed flex justify-center items-end">
+        <ArrowDownAnimation>
+          <div class="scroll-arrow"></div>
+          <div class="scroll-arrow"></div>
+          <div class="scroll-arrow"></div>
+        </ArrowDownAnimation>
+        {/* <Parallax speed={-20}>
+          <div className="w-full h-full backdrop-blur-md bg-white/30 py-10 px-14 rounded-md mt-10">
+            <div className="flex flex-col items-center justify-center text-center relative text-black">
+              <h2 className="text-5xl md:text-9xl tracking-widest font-script relative m-0">
+                Abi & Rizka
+              </h2>
+              <h2 className="font-heading font-normal text-xl md:text-3xl tracking-widest mt-2 md:mt-4">
+                are getting married
+              </h2>
+            </div>
           </div>
-        </Parallax>
+        </Parallax> */}
       </div>
 
       {/* Welcome text */}
@@ -779,10 +844,10 @@ const Homepage = () => {
           they were meant to be together.
         </p>
 
-        <div className="w-[90%] md:w-full h-[400px] relative mt-16">
+        {/* <div className="w-[90%] md:w-full h-[400px] relative mt-16">
           <div className="w-full h-full relative bg-slate-100 z-10"></div>
           <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
-        </div>
+        </div> */}
       </div>
 
       {/* Digital looks */}
@@ -1277,12 +1342,14 @@ const Homepage = () => {
         <div className="w-full h-1/2 flex flex-col py-14 items-center justify-start text-center container">
           <img src={LoveArt} alt="Love Sign" className="w-32" />
           <img
-            src={LogoCouple}
+            src={LogoCoupleBlack}
             alt="Abi & Rizka"
-            className="w-42 md:w-60 mt-4"
+            className="w-36 md:w-60 mt-4"
           />
-          <span className="text-xl mt-4">We can't wait to see you</span>
-          <div className="w-full flex flex-col items-center text-center pt-10 pb-4 border-b-2 ">
+          <span className="font-light text-lg mt-4 mb-8">
+            We can't wait to see you!
+          </span>
+          <div className="w-full flex flex-col items-center text-center pt-10 pb-4 border-t-2 ">
             <span className="text-2xl font-Oswald tracking-widest uppercase">
               Follow Us
             </span>
@@ -1299,15 +1366,15 @@ const Homepage = () => {
               </Link>
             </span>
           </div>
-          <span className="text-xl mt-4 font-light">
+          {/* <span className="text-xl mt-4 font-light">
             Want to make your digital invitation looks fancy ?
           </span>
           <Link to="/tes" className="text-xl mt-1 text-red-500 font-light">
             Let's have a chat and brew some coffee
-          </Link>
+          </Link> */}
         </div>
-        <div className="w-full h-[50vh] bg-banner-home bg-no-repeat bg-cover relative">
-          <div className="w-full h-32 bg-gradient-to-b from-main to-transparent absolute top-0" />
+        <div className="w-full h-[50vh] md:h-[70vh] bg-banner-footer-mobile md:bg-banner-footer-desktop bg-no-repeat bg-cover bg-center relative">
+          <div className="w-full h-16 md:h-40 bg-gradient-to-b from-main to-transparent absolute top-0" />
         </div>
       </footer>
     </div>
