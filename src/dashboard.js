@@ -14,7 +14,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import LogoCouple from "./images/logo-couple.png";
 
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "https://wedding-of-abi-rizka.vercel.app/";
 const initialRsvp = {
   name: "",
   lang: "id",
