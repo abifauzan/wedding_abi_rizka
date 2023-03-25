@@ -20,6 +20,7 @@ import FloatingFlower1 from "./images/floating_image-1.png";
 import FloatingFlower2 from "./images/floating_image-2.png";
 import BaniUmarImg from "./images/masjid-bani-umar-bintaro.jpg";
 import AkadNikahImg from "./images/akad-nikah.jpg";
+import BgHome from "./images/home_hero.jpg";
 import ResepsiNikahImg from "./images/resepsi-nikah.jpg";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
@@ -33,7 +34,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
 import useIsMobile from "./hooks/useIsMobile";
 import galleries from "./galleryCollection";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const popupMotion = {
   hidden: { opacity: 0 },
@@ -141,88 +142,6 @@ const initialRsvp = {
   personCount: 1,
   message: "",
 };
-
-const listGallery = [
-  {
-    id: "one",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(70).webp",
-  },
-  {
-    id: "two",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(71).webp",
-  },
-  {
-    id: "three",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(72).webp",
-  },
-  {
-    id: "four",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(73).webp",
-  },
-  {
-    id: "five",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(74).webp",
-  },
-  {
-    id: "eleven",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(80).webp",
-  },
-  {
-    id: "twelve",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(81).webp",
-  },
-  {
-    id: "thirteen",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(82).webp",
-  },
-  {
-    id: "fourteen",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(83).webp",
-  },
-  {
-    id: "fiftheen",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(84).webp",
-  },
-];
-
-const listGallery2 = [
-  {
-    id: "six",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(75).webp",
-  },
-  {
-    id: "seven",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(76).webp",
-  },
-  {
-    id: "eight",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(77).webp",
-  },
-  {
-    id: "nine",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(78).webp",
-  },
-  {
-    id: "ten",
-    image:
-      "https://mdbcdn.b-cdn.net/img/Photos/Horizontal/Nature/4-col/img%20(79).webp",
-  },
-];
-
 const Homepage = () => {
   const homeRef = useRef(null);
   const dramaRef = useRef(null);
@@ -568,6 +487,15 @@ const Homepage = () => {
       </div>
     </motion.div>
   );
+  /* bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed */
+
+  const BannerWrapper = styled.div`
+    background-image: url(${BgHome});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+  `;
 
   return (
     <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
@@ -718,25 +646,13 @@ const Homepage = () => {
       </header>
 
       {/* Banner */}
-      <div className="w-[100vw] h-[100vh] bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed flex justify-center items-end">
+      <BannerWrapper className="w-[100vw] h-[100vh] flex justify-center items-end">
         <ArrowDownAnimation>
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
         </ArrowDownAnimation>
-        {/* <Parallax speed={-20}>
-          <div className="w-full h-full backdrop-blur-md bg-white/30 py-10 px-14 rounded-md mt-10">
-            <div className="flex flex-col items-center justify-center text-center relative text-black">
-              <h2 className="text-5xl md:text-9xl tracking-widest font-script relative m-0">
-                Abi & Rizka
-              </h2>
-              <h2 className="font-heading font-normal text-xl md:text-3xl tracking-widest mt-2 md:mt-4">
-                are getting married
-              </h2>
-            </div>
-          </div>
-        </Parallax> */}
-      </div>
+      </BannerWrapper>
 
       {/* Welcome text */}
       <div
