@@ -490,11 +490,11 @@ const Homepage = () => {
   /* bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed */
 
   const BannerWrapper = styled.div`
-    background-image: url(${BgHome});
+    /* background-image: url(${BgHome});
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: fixed; */
   `;
 
   return (
@@ -646,8 +646,13 @@ const Homepage = () => {
       </header>
 
       {/* Banner */}
-      <BannerWrapper className="w-[100vw] h-[100vh] flex justify-center items-end">
-        <ArrowDownAnimation>
+      <BannerWrapper className="w-[100vw] h-[100vh] flex justify-center items-end relative">
+        <img
+          src={BgHome}
+          alt="Banner Home"
+          className="w-full h-full object-cover"
+        />
+        <ArrowDownAnimation className="absolute bottom-0">
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
