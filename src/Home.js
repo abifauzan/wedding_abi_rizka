@@ -28,6 +28,8 @@ import IconLocation from "./images/icon-location.png";
 import IconMosque from "./images/icon-mosque.png";
 import IconDate20 from "./images/icon-20.png";
 import IconMusicNote from "./images/music-notes.png";
+import OriginalAbi from "./images/original-abi.webp";
+import OriginalIka from "./images/original-ika.webp";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
 import ElementFlowers from "./images/element_flowers.png";
@@ -789,32 +791,28 @@ const Homepage = () => {
       <section className="w-full flex flex-col md:flex-row items-start justify-evenly container gap-10 pt-8 pb-14 md:pt-8 md:pb-10">
         <div className="w-full md:w-[400px] flex flex-col">
           <img
-            src={AkadNikahImg}
+            src={OriginalAbi}
             alt="Abi Fauzan"
-            className="rounded-lg mb-2 hover:shadow-2xl transition-all ease-in-out"
+            className="w-full h-[270px] object-cover object-bottom rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
           />
           <div className="flex flex-col p-4">
             <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
               Abi Fauzan
             </h2>
-            <span className="text-xl">
-              Putra dari Bapak Budianto & Ibu Kartini
-            </span>
+            <span className="text-xl">{t("firstBoy")}</span>
           </div>
         </div>
         <div className="w-full md:w-[400px] flex flex-col">
           <img
-            src={AkadNikahImg}
-            alt="Abi Fauzan"
-            className="rounded-lg mb-2 hover:shadow-2xl transition-all ease-in-out"
+            src={OriginalIka}
+            alt="Rizka Yulianti Pratiwi"
+            className="w-full h-[270px] object-cover object-bottom rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
           />
           <div className="flex flex-col p-4">
             <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
               Rizka Yulianti Pratiwi
             </h2>
-            <span className="text-xl">
-              Putri dari Bapak Yanuar Fajar Sidiq & Ibu Nirwanasari
-            </span>
+            <span className="text-xl">{t("firstGirl")}</span>
           </div>
         </div>
       </section>
@@ -969,7 +967,7 @@ const Homepage = () => {
               key="slide-normal"
               spaceBetween={20}
               slidesPerView={"auto"}
-              speed={1200}
+              speed={2000}
               freeMode={true}
               autoplay={{
                 delay: 2500,
@@ -1215,7 +1213,7 @@ const Homepage = () => {
                 },
               }}
               autoplay={{
-                delay: 2500,
+                delay: 3000,
                 disableOnInteraction: false,
                 reverseDirection: false,
               }}

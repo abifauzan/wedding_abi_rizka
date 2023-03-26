@@ -58,6 +58,8 @@ const resources = {
       followmarvin: "Our Photographer",
       theHistory: "The History",
       whenWhere: "When & Where ?",
+      firstBoy: "First son of Mr. Budianto & Mrs. Kartini",
+      firstGirl: "First daughter of Mr. Yanuar Fajar Sidiq & Mrs. Nirwanasari",
     },
   },
   id: {
@@ -100,6 +102,9 @@ const resources = {
       followmarvin: "Our Photographer",
       theHistory: "Kala itu",
       whenWhere: "Dimana & Kapan ?",
+      firstBoy: "Putra pertama dari Bapak Budianto & Ibu Kartini",
+      firstGirl:
+        "Putri pertama dari Bapak Yanuar Fajar Sidiq & Ibu Nirwanasari",
     },
   },
 };
