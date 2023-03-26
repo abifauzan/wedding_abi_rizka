@@ -550,7 +550,7 @@ const Homepage = () => {
         behavior: "smooth",
       });
     }
-  }, [imagesLoaded, pauseIka, playIka, songsLoaded]);
+  }, [imagesLoaded, songsLoaded]);
 
   return (
     <div
