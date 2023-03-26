@@ -199,7 +199,6 @@ const Homepage = () => {
   const [rsvpList, setRsvpList] = useState([]);
 
   const [selectedGallery, setSelectedGallery] = useState(null);
-  const [selectedArt, setSelectedArt] = useState(null);
 
   const [
     playAbi,
@@ -581,6 +580,9 @@ const Homepage = () => {
       className="w-full flex flex-col items-start relative overflow-x-hidden bg-main"
       ref={wrapperRef}
     >
+      <div className="w-[100vw] h-[100vh] fixed top-0 flex justify-center items-center bg-main z-30">
+        <HamsterLoading />
+      </div>
       {imagesLoaded === false && songsLoaded === null && (
         <div className="w-[100vw] h-[100vh] fixed top-0 flex justify-center items-center bg-main z-30">
           <HamsterLoading />
@@ -712,14 +714,15 @@ const Homepage = () => {
 
           {/* righht item nav mobile */}
           <div className="absolute right-[1rem] md:right-0 flex xl:hidden">
-            {/* <BsMusicNote
-              size="1.2em"
-              className="cursor-pointer lg:mr-5"
-              onClick={() => toggleMenu(false)}
-            /> */}
-            <img
+            <motion.img
               src={IconMusicNote}
               alt="Music Note"
+              animate={
+                playStatus !== "" && {
+                  rotate: 360,
+                }
+              }
+              transition={{ ease: "linear", duration: 5, repeat: Infinity }}
               className="w-5 lg:mr-3 cursor-pointer"
               onClick={() => toggleMenu(false)}
               style={!headerExpand ? { filter: "brightness(0) invert(1)" } : {}}

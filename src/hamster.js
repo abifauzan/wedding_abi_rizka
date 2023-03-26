@@ -312,6 +312,9 @@ const HamsterLoading = () => {
         </div>
         <div className="spoke"></div>
       </div>
+      <h2 className="mt-3 tracking-wide text-xl uppercase font-medium text-center">
+        Loading stuff...
+      </h2>
     </Hamster>
   );
 };
