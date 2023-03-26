@@ -38,6 +38,7 @@ module.exports = {
         sans: ['"Lato"', ...defaultTheme.fontFamily.sans],
         script: ['"Alex Brush"', "cursive"],
         heading: ['"Gilda Display"', "serif"],
+        playFair: ['"Playfair Display"', "serif"],
       },
       backgroundSize: {
         "size-200": "200% 200%",

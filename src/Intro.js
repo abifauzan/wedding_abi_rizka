@@ -54,7 +54,8 @@ const ButtonCTA = styled.button`
     transition: all 0.3s ease;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     span {
       color: #000;
       transition: all 0.3s ease;
@@ -71,6 +72,7 @@ const ButtonCTA = styled.button`
     }
   }
 
+  ,
   &:active {
     transform: scale(0.95);
   }
@@ -94,22 +96,24 @@ const Intro = () => {
   }, [searchParams, t]);
 
   const goToWelcomePage = () => {
-    navigate({
-      pathname: "/welcome",
-      search: location.search,
-    });
+    setTimeout(() => {
+      navigate({
+        pathname: "/welcome",
+        search: location.search,
+      });
+    }, [1000]);
   };
 
   const toggleLang = useMemo(() => {
     return (
-      <div className="absolute bottom-3 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
+      <div className="absolute top-5 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
         {langList
           .filter((item) => item === lang)
           .map((item) => (
             <button
               key={item}
               onClick={() => handleSwitchLang(item)}
-              className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-sm focus:outline-none md:ml-1 transition-all duration-500 border-white text-white hover:bg-white hover:text-black"
+              className="flex items-center justify-center h-6 md:h-8 w-14 bg-transparent border rounded-md focus:outline-none md:ml-1 transition-all duration-500 border-white/50 text-white hover:bg-white hover:text-black"
             >
               <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
                 {item}
@@ -135,7 +139,7 @@ const Intro = () => {
             <div
               key={item}
               onClick={() => handleSwitchLang(item)}
-              className="hidden group-hover:flex transition-all absolute -top-6 md:top-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-b-sm items-center justify-center cursor-pointer border-white bg-transparent text-white hover:bg-white hover:text-black"
+              className="hidden group-hover:flex transition-all absolute -bottom-6 md:bottom-[unset] w-14 right-0 flex-col h-6 md:h-8 border shadow-lg rounded-md items-center justify-center cursor-pointer border-white/50 bg-transparent text-white hover:bg-white hover:text-black"
             >
               <span className="ml-1 text-sm md:text-md tracking-widest uppercase">
                 {item}
@@ -160,7 +164,7 @@ const Intro = () => {
 
       {/* body */}
       <div className="w-full h-full relative flex justify-center items-center">
-        <div className="w-full md:w-[700px] h-full md:h-[560px] backdrop-blur-md bg-white/20 p-3 md:p-7 md:rounded-md">
+        <div className="w-full md:w-[700px] h-full md:h-[560px] backdrop-blur-md bg-white/20 px-3 py-5 md:p-7 md:rounded-md">
           <div className="w-full h-full bg-transparent border-white/50 border-2 flex flex-col rounded-md justify-between items-center px-8 pt-40 pb-24 md:px-24 md:py-14">
             <div className="w-full flex flex-col items-center">
               <img
@@ -175,16 +179,16 @@ const Intro = () => {
                 alt="Little Flower"
                 className="w-[60px] mb-4"
               />
-              <p className="text-md md:text-lg tracking-wider mb-2 text-main">
+              <p className="text-md md:text-lg tracking-wider mb-2 text-main font-playFair">
                 {t("intro")}
               </p>
-              <p className="text-3xl md:text-4xl mb-10 font-light text-main">
+              <p className="text-3xl md:text-4xl mb-10 tracking-wide text-main font-playFair font-medium">
                 {guestName}
               </p>
             </div>
             <div className="w-full flex flex-col">
               <ButtonCTA onClick={goToWelcomePage}>
-                <span className="font-normal text-main">
+                <span className="font-normal text-main font-playFair">
                   {" "}
                   {t("openInvitation")}
                 </span>

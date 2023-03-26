@@ -21,7 +21,13 @@ import FloatingFlower2 from "./images/floating_image-2.png";
 import BaniUmarImg from "./images/masjid-bani-umar-bintaro.jpg";
 import AkadNikahImg from "./images/akad-nikah.jpg";
 import BgHome from "./images/home_hero.webp";
+import BgMenu from "./images/bg-menu.jpg";
 import ResepsiNikahImg from "./images/resepsi-nikah.jpg";
+import IconClock from "./images/icon-alarm-clock.png";
+import IconLocation from "./images/icon-location.png";
+import IconMosque from "./images/icon-mosque.png";
+import IconDate20 from "./images/icon-20.png";
+import IconMusicNote from "./images/music-notes.png";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
 import ElementFlowers from "./images/element_flowers.png";
@@ -35,6 +41,8 @@ import { db } from "./firebase";
 import useIsMobile from "./hooks/useIsMobile";
 import galleries from "./galleryCollection";
 import { useTranslation } from "react-i18next";
+import { useOnLoadImages } from "./hooks/useOnLoadImages";
+import HamsterLoading from "./hamster";
 
 const popupMotion = {
   hidden: { opacity: 0 },
@@ -149,32 +157,34 @@ const Homepage = () => {
   const galleryRef = useRef(null);
   const rsvpRef = useRef(null);
 
+  const wrapperRef = useRef(null);
+
   const { t } = useTranslation();
 
   const listMenu = [
     {
       slug: "welcome",
-      title: "Welcome",
+      title: t("menu.welcome"),
       ref: homeRef,
     },
     {
       slug: "our-drama",
-      title: "Our Drama",
+      title: t("menu.ourDrama"),
       ref: dramaRef,
     },
     {
       slug: "the-big-day",
-      title: "The Big Day",
+      title: t("menu.bigDay"),
       ref: bigDayRef,
     },
     {
       slug: "gallery",
-      title: "Gallery",
+      title: t("menu.gallery"),
       ref: galleryRef,
     },
     {
       slug: "your-reply",
-      title: "Your Reply",
+      title: t("menu.yourReply"),
       ref: rsvpRef,
     },
   ];
@@ -191,10 +201,25 @@ const Homepage = () => {
   const [selectedGallery, setSelectedGallery] = useState(null);
   const [selectedArt, setSelectedArt] = useState(null);
 
-  const [playAbi, { pause: pauseAbi, duration: durationAbi, sound: soundAbi }] =
-    useSound(abiSong);
-  const [playIka, { pause: pauseIka, duration: durationIka, sound: soundIka }] =
-    useSound(ikaSong);
+  const [
+    playAbi,
+    { pause: pauseAbi, stop: stopAbi, duration: durationAbi, sound: soundAbi },
+  ] = useSound(abiSong);
+  const [
+    playIka,
+    { pause: pauseIka, stop: stopIka, duration: durationIka, sound: soundIka },
+  ] = useSound(ikaSong);
+
+  useEffect(() => {
+    return () => {
+      stopAbi();
+      stopIka();
+    };
+  }, [stopAbi, stopIka]);
+
+  const imagesLoaded = useOnLoadImages(wrapperRef);
+
+  const songsLoaded = durationIka && durationAbi;
 
   const { lang, handleSwitchLang } = useLang();
   const isMobile = useIsMobile();
@@ -327,7 +352,7 @@ const Homepage = () => {
     }
 
     return {
-      nav: "h-[80px] md:h-[120px] text-white bg-gradient-to-b from-black to-transparent",
+      nav: "h-[80px] md:h-[120px] text-white bg-gradient-to-b from-slate-900 md:from-black to-transparent",
       navLink: "from-main to-pink-100",
       logo: "text-2xl md:text-3xl",
       btnSong: "h-8 px-2 text-white",
@@ -384,31 +409,50 @@ const Homepage = () => {
     open: { opacity: 1, x: 0 },
     closed: { opacity: 0, x: "100%" },
   };
-
   const mobileView = () => (
     <motion.div
       animate={mobileMenu ? "open" : "closed"}
       variants={variantsMenu}
+      initial="closed"
       transition={{ type: "spring", stiffness: 90 }}
-      className={`fixed w-[100vw] h-[100vh] overflow-hidden bg-banner-menu z-30 bg-cover bg-center`}
+      className={`fixed w-[100vw] h-full overflow-x-hidden overflow-y-auto z-30`}
     >
-      <div className="w-full h-full flex flex-col bg-black/40">
+      <img
+        src={BgMenu}
+        alt="Background Menu"
+        className="w-full h-full object-cover object-center absolute top-0 z-0"
+      />
+      <div className="w-full h-full flex flex-col bg-black/40 absolute top-0 z-10">
         <div className="w-full flex items-center justify-between text-white p-6">
           <Link to="/" className="text-xl font-Alex-Brush uppercase">
             <img src={LogoCouple} alt="Logo Abi & Rizka" className={"w-24"} />
           </Link>
-          <div
+          <motion.div
+            variants={{
+              open: { opacity: 1, y: 0 },
+              closed: { opacity: 0, y: "-100px" },
+            }}
+            initial="closed"
+            animate={mobileMenu ? "open" : "closed"}
+            transition={{ delay: 0.5 }}
             onClick={toggleMenu}
             className="inline-flex gap-2 items-center cursor-pointer"
           >
             <span className="w-5 h-[2px] bg-white" />
             Back
-          </div>
+          </motion.div>
         </div>
         <div className="w-full px-6 mt-10 flex items-center gap-4 text-white">
           {langList.map((item) => (
-            <span
+            <motion.span
               key={item}
+              variants={{
+                open: { opacity: 1, y: 0 },
+                closed: { opacity: 0, y: "100px" },
+              }}
+              initial="closed"
+              animate={mobileMenu ? "open" : "closed"}
+              transition={{ delay: 0.5 }}
               onClick={() => {
                 handleSwitchLang(item);
               }}
@@ -419,21 +463,28 @@ const Homepage = () => {
               }`}
             >
               {item}
-            </span>
+            </motion.span>
           ))}
         </div>
-        <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
+        <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-4xl">
           {listMenu.map((item) => (
-            <span
+            <motion.span
               key={item.slug}
+              variants={{
+                open: { opacity: 1, y: 0 },
+                closed: { opacity: 0, y: "100px" },
+              }}
+              initial={false}
+              animate={mobileMenu ? "open" : "closed"}
+              transition={{ delay: 0.5 }}
               onClick={() => {
                 setMobileMenu(false);
                 handleScrollMenu(item.ref);
               }}
-              className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
+              className="pb-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out"
             >
               {item.title}
-            </span>
+            </motion.span>
           ))}
         </nav>
       </div>
@@ -444,26 +495,46 @@ const Homepage = () => {
     <motion.div
       animate={mobileMenuSong ? "open" : "closed"}
       variants={variantsMenuSong}
+      initial="closed"
       transition={{ type: "spring", stiffness: 90 }}
-      className={`fixed w-[100vw] h-[100vh] overflow-hidden bg-banner-menu z-30 bg-cover bg-center`}
+      className={`fixed w-[100vw] h-[100vh] overflow-hidden z-30`}
     >
-      <div className="w-full h-full flex flex-col justify-center bg-black/40 relative">
+      <img
+        src={BgMenu}
+        alt="Background Menu"
+        className="w-full h-full object-cover object-center absolute top-0 z-0"
+      />
+      <div className="w-full h-full flex flex-col justify-center bg-black/40 absolute top-0 z-10">
         <div className="w-full flex items-center justify-between text-white p-6 absolute top-0">
           <Link to="/" className="text-xl font-Alex-Brush uppercase">
             <img src={LogoCouple} alt="Logo Abi & Rizka" className={"w-24"} />
           </Link>
-          <div
+          <motion.div
+            variants={{
+              open: { opacity: 1, y: 0 },
+              closed: { opacity: 0, y: "-100px" },
+            }}
+            initial="closed"
+            animate={mobileMenuSong ? "open" : "closed"}
+            transition={{ delay: 0.5 }}
             onClick={() => toggleMenu(false)}
             className="inline-flex gap-2 items-center cursor-pointer"
           >
             <span className="w-5 h-[2px] bg-white" />
             Back
-          </div>
+          </motion.div>
         </div>
         <nav className="w-full px-6 mt-10 flex flex-col justify-start items-start text-white gap-5 font-light text-5xl">
-          <span
+          <motion.span
+            variants={{
+              open: { opacity: 1, y: 0 },
+              closed: { opacity: 0, y: "100px" },
+            }}
+            initial="closed"
+            animate={mobileMenuSong ? "open" : "closed"}
+            transition={{ delay: 0.5 }}
             onClick={() => playingButton("abi")}
-            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out inline-flex gap-1"
+            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out inline-flex gap-1 cursor-pointer"
           >
             {isPlaying && playStatus === "abi" ? (
               <BsFillPauseFill size="1.1em" />
@@ -471,10 +542,17 @@ const Homepage = () => {
               <BsMusicNote size="1.1em" />
             )}{" "}
             His song
-          </span>
-          <span
+          </motion.span>
+          <motion.span
+            variants={{
+              open: { opacity: 1, y: 0 },
+              closed: { opacity: 0, y: "100px" },
+            }}
+            initial="closed"
+            animate={mobileMenuSong ? "open" : "closed"}
+            transition={{ delay: 0.5 }}
             onClick={() => playingButton("ika")}
-            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out inline-flex gap-1"
+            className="pb-3 pr-3 bg-left-bottom bg-gradient-to-r from-main to-pink-100 bg-[length:0%_2px] bg-no-repeat hover:bg-[length:100%_2px] transition-all duration-500 ease-out inline-flex gap-1 cursor-pointer"
           >
             {isPlaying && playStatus === "ika" ? (
               <BsFillPauseFill size="1.1em" />
@@ -482,23 +560,33 @@ const Homepage = () => {
               <BsMusicNote size="1.1em" />
             )}{" "}
             Her song
-          </span>
+          </motion.span>
         </nav>
       </div>
     </motion.div>
   );
-  /* bg-banner-home bg-cover bg-center bg-no-repeat bg-fixed */
 
-  const BannerWrapper = styled.div`
-    /* background-image: url(${BgHome});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed; */
-  `;
+  useEffect(() => {
+    if (imagesLoaded) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [imagesLoaded]);
 
   return (
-    <div className="w-full flex flex-col items-start relative overflow-x-hidden bg-main">
+    <div
+      className="w-full flex flex-col items-start relative overflow-x-hidden bg-main"
+      ref={wrapperRef}
+    >
+      {imagesLoaded === false && songsLoaded === null && (
+        <div className="w-[100vw] h-[100vh] fixed top-0 flex justify-center items-center bg-main z-30">
+          <HamsterLoading />
+        </div>
+      )}
+
       {mobileView()}
       {mobileSongView()}
 
@@ -624,10 +712,17 @@ const Homepage = () => {
 
           {/* righht item nav mobile */}
           <div className="absolute right-[1rem] md:right-0 flex xl:hidden">
-            <BsMusicNote
+            {/* <BsMusicNote
               size="1.2em"
               className="cursor-pointer lg:mr-5"
               onClick={() => toggleMenu(false)}
+            /> */}
+            <img
+              src={IconMusicNote}
+              alt="Music Note"
+              className="w-5 lg:mr-3 cursor-pointer"
+              onClick={() => toggleMenu(false)}
+              style={!headerExpand ? { filter: "brightness(0) invert(1)" } : {}}
             />
             <VscMenu
               size="1.2em"
@@ -646,7 +741,7 @@ const Homepage = () => {
       </header>
 
       {/* Banner */}
-      <BannerWrapper className="w-[100vw] h-[100vh] flex justify-center items-end relative">
+      <div className="w-[100vw] h-[100vh] flex justify-center items-end relative">
         <img
           src={BgHome}
           alt="Banner Home"
@@ -657,7 +752,7 @@ const Homepage = () => {
           <div className="scroll-arrow"></div>
           <div className="scroll-arrow"></div>
         </ArrowDownAnimation>
-      </BannerWrapper>
+      </div>
 
       {/* Welcome text */}
       <div
@@ -717,71 +812,7 @@ const Homepage = () => {
         <p className="font-light text-xl xl:text-2xl text-center px-2 sm:px-0 tracking-wider whitespace-pre-line">
           {t("ourDrama")}
         </p>
-
-        {/* <div className="w-[90%] md:w-full h-[400px] relative mt-16">
-          <div className="w-full h-full relative bg-slate-100 z-10"></div>
-          <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
-        </div> */}
       </div>
-
-      {/* Digital looks */}
-      {/* <div className="w-full flex flex-col relative items-center">
-        <CollectionList
-          isMobile={isMobile}
-          className="mt-5 md:mt-8 gap-5 md:gap-8"
-        >
-          {galleries.map((item, index) => (
-            <motion.div
-              layoutId={item.id}
-              key={item.id}
-              onClick={() => setSelectedArt(item)}
-              className="card w-[200px] h-[200px] md:w-[400px] md:h-[400px]"
-            >
-              <img src={item.image} alt={`Abi & Ika ${item.id}`} />
-            </motion.div>
-          ))}
-        </CollectionList>
-        <CollectionList
-          isMobile={isMobile}
-          className="reverse mt-5 md:mt-8 gap-5 md:gap-8"
-        >
-          {listGallery2.map((item, index) => (
-            <motion.div
-              layoutId={item.id}
-              key={item.id}
-              onClick={() => setSelectedArt(item)}
-              className="card w-[200px] h-[200px] md:w-[400px] md:h-[400px]"
-            >
-              <img src={item.image} alt={`Abi & Ika ${item.id}`} />
-            </motion.div>
-          ))}
-        </CollectionList>
-
-        <AnimatePresence>
-          {selectedArt && (
-            <motion.div
-              layoutId={selectedArt?.id}
-              className="w-[100vw] h-[100vh] fixed top-0 z-20 flex justify-center items-center cursor-zoom-out"
-              onClick={() => setSelectedArt(null)}
-            >
-              <motion.div
-                variants={popupMotion}
-                initial="hidden"
-                animate="show"
-                transition={{ delay: 0.5 }}
-                className="w-full h-full absolute top-0 bg-black/40 z-0"
-              />
-              <div className="h-auto md:h-[85vh] relative">
-                <img
-                  src={selectedArt?.image}
-                  alt="foto"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div> */}
 
       {/* Big day When/Where/How + maps */}
       <div ref={bigDayRef} className="w-full py-20 relative">
@@ -789,7 +820,7 @@ const Homepage = () => {
           <Heading title="The Big Day" subtitle="When & Where ?" />
 
           <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
-            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
+            <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={BaniUmarImg}
@@ -798,56 +829,91 @@ const Homepage = () => {
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-                <span className="text-2xl font-heading font-light tracking-wide">
+                <span className="text-2xl font-playFair font-medium tracking-wide">
                   {t("theVenue")}
                 </span>
+                <div className="w-[40px] h-[3px] rounded-md bg-black/40" />
                 <div className="inline-flex flex-col">
-                  <span className="font-bold mb-1">Masjid Raya Bani Umar</span>
-                  <span className="font-Italiana text-gray-500">
+                  <span className="font-semibold mb-2 text-red-500 inline-flex items-center gap-2">
+                    <img
+                      src={IconMosque}
+                      alt="Masjid Raya Bani Umar"
+                      className="w-5 pb-1"
+                    />
+                    Masjid Raya Bani Umar
+                  </span>
+                  <span className="font-Italiana text-gray-900 inline-flex items-center gap-2">
+                    <img
+                      src={IconLocation}
+                      alt="Bintaro, Tangerang Selatan"
+                      className="w-5 pb-1"
+                    />
                     Bintaro, Tangerang Selatan
                   </span>
                 </div>
               </div>
             </div>
-            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
+            <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={AkadNikahImg}
                   alt={t("weddingVows")}
-                  className="object-cover w-full h-full rounded-t-md"
+                  className="object-cover object-center w-full h-full rounded-t-md"
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-                <span className="text-2xl font-heading font-light tracking-wide">
+                <span className="text-2xl font-playFair font-medium tracking-wide">
                   {t("weddingVows")}
                 </span>
+                <div className="w-[40px] h-[3px] rounded-md bg-black/40" />
                 <div className="inline-flex flex-col">
-                  <span className="font-Italiana font-bold mb-1">
+                  <span className="font-semibold mb-2 text-red-500 inline-flex items-center gap-2">
+                    <img
+                      src={IconClock}
+                      alt="08.00 - 10.00 WIB"
+                      className="w-5 pb-1"
+                    />
                     08.00 - 10.00 WIB
                   </span>
-                  <span className="font-Italiana text-gray-500">
+                  <span className="font-Italiana text-gray-900 inline-flex items-center gap-2">
+                    <img
+                      src={IconDate20}
+                      alt="20 May 2023"
+                      className="w-5 pb-1"
+                    />
                     20 May 2023
                   </span>
                 </div>
               </div>
             </div>
-            <div className="w-[400px] h-[400px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
+            <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={ResepsiNikahImg}
                   alt={t("weddingCelebration")}
-                  className="object-cover object-[0_-250px] md:object-[0_-300px] w-full h-full rounded-t-md"
+                  className="object-cover object-center w-full h-full rounded-t-md"
                 />
               </div>
               <div className="w-full h-2/5 rounded-b-md p-6 flex flex-col justify-between">
-                <span className="text-2xl font-heading font-light tracking-wide">
+                <span className="text-2xl font-playFair font-medium tracking-wide">
                   {t("weddingCelebration")}
                 </span>
+                <div className="w-[40px] h-[3px] rounded-md bg-black/40" />
                 <div className="inline-flex flex-col">
-                  <span className="font-Italiana font-bold mb-1">
+                  <span className="font-semibold mb-2 text-red-500 inline-flex items-center gap-2">
+                    <img
+                      src={IconClock}
+                      alt="11.00 - 13.00 WIB"
+                      className="w-5 pb-1"
+                    />
                     11.00 - 13.00 WIB
                   </span>
-                  <span className="font-Italiana text-gray-500">
+                  <span className="font-Italiana text-gray-900 inline-flex items-center gap-2">
+                    <img
+                      src={IconDate20}
+                      alt="20 May 2023"
+                      className="w-5 pb-1"
+                    />
                     20 May 2023
                   </span>
                 </div>
@@ -858,8 +924,6 @@ const Homepage = () => {
             <iframe
               title="Masjid Raya Bani Umar"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.94860760171!2d106.6872217150636!3d-6.27048919546145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69faf062460ed5%3A0xc46eba6617b311d6!2sBani%20Umar%20Grand%20Mosque!5e0!3m2!1sen!2sid!4v1678093707333!5m2!1sen!2sid"
-              // width="800"
-              // height="600"
               className="w-full h-full relative z-10"
               style={{ border: 0 }}
               allowFullScreen=""
@@ -1038,7 +1102,7 @@ const Homepage = () => {
                     name="your_response"
                     value="not_accept"
                     checked={rsvp.status === "not_accept"}
-                    onChange={(event) => {
+                    onChange={() => {
                       toggleStatus("not_accept");
                     }}
                     className="hidden"
