@@ -452,7 +452,7 @@ const Dashboard = () => {
                         <a
                           href={result}
                           target="_blank"
-                          className=" text-2xl font-normal leading-none tracking-tighter text-neutral-600 lg:text-3xl hover:underline"
+                          className=" text-2xl font-normal leading-none tracking-tighter text-neutral-600 lg:text-3xl hover:underline break-words"
                           rel="noreferrer"
                         >
                           {result}

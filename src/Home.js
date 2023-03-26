@@ -43,6 +43,7 @@ import galleries from "./galleryCollection";
 import { useTranslation } from "react-i18next";
 import { useOnLoadImages } from "./hooks/useOnLoadImages";
 import HamsterLoading from "./hamster";
+import { FancyButton } from "./helper";
 
 const popupMotion = {
   hidden: { opacity: 0 },
@@ -50,7 +51,7 @@ const popupMotion = {
 };
 
 const Completionist = () => (
-  <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
+  <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center py-3 md:py-0">
     <div className="flex items-center justify-center">20 . 05 . 2023</div>
   </div>
 );
@@ -119,30 +120,6 @@ const moveMotions = (isMobile, direction = "right") => {
     }
   `;
 };
-
-const CollectionList = styled.div`
-  white-space: nowrap;
-  animation: ${({ isMobile }) => moveMotions(isMobile, "left")} 40s ease-in-out
-    infinite;
-  position: relative;
-  display: flex;
-
-  &.reverse {
-    animation: ${({ isMobile }) => moveMotions(isMobile, "right")} 40s
-      ease-in-out infinite;
-  }
-
-  & .card {
-    overflow: hidden;
-    border-radius: 15%;
-
-    img {
-      width: 100%;
-      object-fit: cover;
-      height: 100%;
-    }
-  }
-`;
 
 const initialRsvp = {
   name: "",
@@ -565,15 +542,15 @@ const Homepage = () => {
     </motion.div>
   );
 
-  useEffect(() => {
-    if (imagesLoaded) {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
-    }
-  }, [imagesLoaded]);
+  // useEffect(() => {
+  //   if (imagesLoaded && songsLoaded) {
+  //     window.scrollTo({
+  //       top: 0,
+  //       left: 0,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, [imagesLoaded, pauseIka, playIka, songsLoaded]);
 
   return (
     <div
@@ -714,12 +691,18 @@ const Homepage = () => {
             <motion.img
               src={IconMusicNote}
               alt="Music Note"
-              animate={
-                playStatus !== "" && {
+              initial="closed"
+              animate={playStatus !== "" ? "open" : "closed"}
+              variants={{
+                open: {
                   rotate: 360,
-                }
-              }
-              transition={{ ease: "linear", duration: 5, repeat: Infinity }}
+                },
+                closed: {
+                  rotate: 0,
+                },
+              }}
+              exit="closed"
+              transition={{ ease: "linear", duration: 5, repeat: "loop" }}
               className="w-5 lg:mr-3 cursor-pointer"
               onClick={() => toggleMenu(false)}
               style={!headerExpand ? { filter: "brightness(0) invert(1)" } : {}}
@@ -802,12 +785,46 @@ const Homepage = () => {
         </AnimatePresence>
       </div>
 
+      {/* Section Orang Tua */}
+      <section className="w-full flex flex-col md:flex-row items-start justify-evenly container gap-10 pt-8 pb-14 md:pt-8 md:pb-10">
+        <div className="w-full md:w-[400px] flex flex-col">
+          <img
+            src={AkadNikahImg}
+            alt="Abi Fauzan"
+            className="rounded-lg mb-2 hover:shadow-2xl transition-all ease-in-out"
+          />
+          <div className="flex flex-col p-4">
+            <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
+              Abi Fauzan
+            </h2>
+            <span className="text-xl">
+              Putra dari Bapak Budianto & Ibu Kartini
+            </span>
+          </div>
+        </div>
+        <div className="w-full md:w-[400px] flex flex-col">
+          <img
+            src={AkadNikahImg}
+            alt="Abi Fauzan"
+            className="rounded-lg mb-2 hover:shadow-2xl transition-all ease-in-out"
+          />
+          <div className="flex flex-col p-4">
+            <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
+              Rizka Yulianti Pratiwi
+            </h2>
+            <span className="text-xl">
+              Putri dari Bapak Yanuar Fajar Sidiq & Ibu Nirwanasari
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* Our Story */}
       <div
         ref={dramaRef}
         className="w-full pt-0 md:pt-20 pb-20 flex flex-col items-center container"
       >
-        <Heading title="Our Drama" subtitle="History" />
+        <Heading title={t("menu.ourDrama")} subtitle={t("theHistory")} />
 
         <p className="font-light text-xl xl:text-2xl text-center px-2 sm:px-0 tracking-wider whitespace-pre-line">
           {t("ourDrama")}
@@ -817,7 +834,7 @@ const Homepage = () => {
       {/* Big day When/Where/How + maps */}
       <div ref={bigDayRef} className="w-full py-20 relative">
         <div className="flex flex-col items-center container">
-          <Heading title="The Big Day" subtitle="When & Where ?" />
+          <Heading title={t("menu.bigDay")} subtitle={t("whenWhere")} />
 
           <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
             <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
@@ -924,17 +941,11 @@ const Homepage = () => {
             />
             <div className="w-full h-full absolute bg-transparent border-red-400 border-r-2 border-b-2 top-4 left-4 z-0"></div>
           </div>
-          <a
+          <FancyButton
+            title={t("viewLocation")}
             href="https://goo.gl/maps/PPkumLGVrqrVX6uD8"
-            target="_blank"
-            title="Masjid Raya Bani Umar"
-            className="h-full mt-16 text-xl inline-flex justify-center items-center tracking-wide group transition-all duration-300 ease-in-out"
-            rel="noreferrer"
-          >
-            <span className="pb-1 bg-left-bottom bg-gradient-to-r from-main to-black bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out border-b">
-              {t("viewLocation")}
-            </span>
-          </a>
+            className="mt-12"
+          />
         </div>
       </div>
 
@@ -1118,19 +1129,18 @@ const Homepage = () => {
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 {t("numberGuest")}
               </span>
-              <select
+              <input
                 name="personCount"
+                type="number"
+                pattern="[0-9]+([\,|\.][0-9]+)?"
+                step="1"
+                min="1"
                 onChange={(e) => {
                   handleInputRsvp("personCount", e.target.value);
                 }}
                 value={rsvp.personCount}
                 className="block w-full px-5 py-4 text-lg bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-              </select>
+              />
             </label>
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
@@ -1239,39 +1249,62 @@ const Homepage = () => {
             className="w-36 md:w-60 mt-4"
           />
           <span className="font-light text-lg mt-4 mb-8">{t("cantwait")}</span>
-          <div className="w-full flex flex-col items-center text-center pt-10 pb-4 border-t-2 ">
-            <span className="text-2xl font-Oswald tracking-widest uppercase">
-              {t("followus")}
-            </span>
-            <span className="text-xl mt-4 font-light">
-              His Instagram{" "}
-              <a
-                href="https://www.instagram.com/abifauzn/"
-                target="_blank"
-                className="text-red-500"
-                rel="noreferrer"
-              >
-                @abifauzn
-              </a>
-            </span>
-            <span className="text-xl mt-1 font-light">
-              Her Instagram{" "}
-              <a
-                href="https://www.instagram.com/rizkajuliant20/"
-                target="_blank"
-                className="text-red-500"
-                rel="noreferrer"
-              >
-                @rizkajuliant20
-              </a>
-            </span>
+          <div className="w-full flex flex-col md:flex-row items-start text-center pt-10 pb-10 border-t-2 border-b-2 gap-10 md:gap-0">
+            <div className="w-full md:w-1/2 flex flex-col">
+              <span className="text-2xl font-Oswald tracking-widest uppercase">
+                {t("followus")}
+              </span>
+              <span className="text-xl mt-4 font-light">
+                His Instagram{" "}
+                <a
+                  href="https://www.instagram.com/abifauzn/"
+                  target="_blank"
+                  className="text-red-500"
+                  rel="noreferrer"
+                >
+                  @abifauzn
+                </a>
+              </span>
+              <span className="text-xl mt-1 font-light">
+                Her Instagram{" "}
+                <a
+                  href="https://www.instagram.com/rizkajuliant20/"
+                  target="_blank"
+                  className="text-red-500"
+                  rel="noreferrer"
+                >
+                  @rizkajuliant20
+                </a>
+              </span>
+            </div>
+            <div className="w-full md:w-1/2 flex flex-col">
+              <span className="text-2xl font-Oswald tracking-widest uppercase">
+                {t("followmarvin")}
+              </span>
+              <span className="text-xl mt-4 font-light">
+                His Instagram{" "}
+                <a
+                  href="https://www.instagram.com/marvin.art/"
+                  target="_blank"
+                  className="text-red-500"
+                  rel="noreferrer"
+                >
+                  @marvin.art
+                </a>
+              </span>
+            </div>
           </div>
-          {/* <span className="text-xl mt-4 font-light">
-            Want to make your digital invitation looks fancy ?
+          <span className="text-xl mt-5 font-light">
+            Do you wanna make your own fancy website ?
           </span>
-          <Link to="/tes" className="text-xl mt-1 text-red-500 font-light">
-            Let's have a chat and brew some coffee
-          </Link> */}
+          <a
+            href="https://linkedin.com/in/abifauzan"
+            target="_blank"
+            rel="noreferrer"
+            className="text-xl mt-1 text-red-500 font-light hover:underline"
+          >
+            Let's brew some coffee! 😉
+          </a>
         </div>
         <div className="w-full h-[50vh] md:h-[70vh] bg-banner-footer-mobile md:bg-banner-footer-desktop bg-no-repeat bg-cover bg-center relative">
           <div className="w-full h-16 md:h-40 bg-gradient-to-b from-main to-transparent absolute top-0" />
