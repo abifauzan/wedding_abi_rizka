@@ -30,6 +30,7 @@ import IconDate20 from "./images/icon-20.png";
 import IconMusicNote from "./images/music-notes.png";
 import OriginalAbi from "./images/original-abi.webp";
 import OriginalIka from "./images/original-ika.webp";
+import LoveLetter from "./images/love-letter.png";
 import { BsMusicNote, BsFillPauseFill } from "react-icons/bs";
 import { VscMenu } from "react-icons/vsc";
 import ElementFlowers from "./images/element_flowers.png";
@@ -788,27 +789,32 @@ const Homepage = () => {
       </div>
 
       {/* Section Orang Tua */}
-      <section className="w-full flex flex-col md:flex-row items-start justify-evenly container gap-10 pt-8 pb-14 md:pt-8 md:pb-10">
+      <section className="w-full flex flex-col md:flex-row items-center md:items-start justify-center container gap-4 md:gap-14 pt-8 pb-14 md:pt-8 md:pb-10">
         <div className="w-full md:w-[400px] flex flex-col">
           <img
             src={OriginalAbi}
             alt="Abi Fauzan"
             className="w-full h-[270px] object-cover object-bottom rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
           />
-          <div className="flex flex-col p-4">
+          <div className="flex flex-col p-4 text-center">
             <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
               Abi Fauzan
             </h2>
             <span className="text-xl">{t("firstBoy")}</span>
           </div>
         </div>
+        <img
+          src={LoveLetter}
+          alt="Love Letter"
+          className="w-20 mb-5 md:mb-0 md:mt-24 rotate-90 md:rotate-0"
+        />
         <div className="w-full md:w-[400px] flex flex-col">
           <img
             src={OriginalIka}
             alt="Rizka Yulianti Pratiwi"
             className="w-full h-[270px] object-cover object-bottom rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
           />
-          <div className="flex flex-col p-4">
+          <div className="flex flex-col p-4 text-center">
             <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
               Rizka Yulianti Pratiwi
             </h2>
@@ -834,8 +840,8 @@ const Homepage = () => {
         <div className="flex flex-col items-center container">
           <Heading title={t("menu.bigDay")} subtitle={t("whenWhere")} />
 
-          <div className="w-full flex flex-row gap-8 justify-center mt-10 flex-wrap">
-            <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
+          <div className="w-full flex flex-row gap-4 justify-center mt-10 flex-wrap lg:flex-nowrap">
+            <div className="w-[350px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={BaniUmarImg}
@@ -868,7 +874,7 @@ const Homepage = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
+            <div className="w-[350px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={AkadNikahImg}
@@ -897,7 +903,7 @@ const Homepage = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[400px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
+            <div className="w-[350px] h-[450px] bg-white rounded-md flex flex-col items-center justify-center shadow-md transition-all ease-out hover:-translate-y-2">
               <div className="w-full h-3/5 rounded-t-md">
                 <img
                   src={ResepsiNikahImg}
@@ -1127,18 +1133,21 @@ const Homepage = () => {
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">
                 {t("numberGuest")}
               </span>
-              <input
+              <select
                 name="personCount"
-                type="number"
-                pattern="[0-9]+([\,|\.][0-9]+)?"
-                step="1"
-                min="1"
                 onChange={(e) => {
                   handleInputRsvp("personCount", e.target.value);
                 }}
                 value={rsvp.personCount}
                 className="block w-full px-5 py-4 text-lg bg-white border border-slate-300 rounded-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none invalid:border-primary invalid:text-primary focus:invalid:border-primary focus:invalid:ring-primary transition-all"
-              />
+                disabled={rsvp.status === "not_accept"}
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
             </label>
             <label className="flex flex-col gap-2">
               <span className="block text-sm font-normal tracking-widest uppercase text-slate-700">

@@ -1,6 +1,6 @@
 import Countdown from "react-countdown";
 import { VscMenu } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FloatingFlower1 from "./images/floating_image-1.png";
 import FloatingFlower2 from "./images/floating_image-2.png";
 import { AnimatePresence, motion, Variants } from "framer-motion";
@@ -27,6 +27,8 @@ const Dashboard = () => {
   const [page, setPage] = useState("dashboard");
   const [rsvpList, setRsvpList] = useState([]);
   const [mobileMenu, setMobileMenu] = useState(false);
+
+  const navigate = useNavigate();
 
   const Completionist = () => (
     <div className="w-full h-full bg-red-500 text-white text-center text-3xl lg:text-4xl flex items-center justify-center font-Fjalla-One py-3 md:py-0">
@@ -272,6 +274,9 @@ const Dashboard = () => {
           {/* right item nav desktop */}
           <div className="hidden absolute right-0 xl:flex justify-center items-center">
             <button
+              onClick={() => {
+                navigate("/");
+              }}
               className={`px-4 py-2 text-white inline-flex justify-center items-center gap-1 tracking-wide bg-cyan-600 rounded-sm transition-all duration-500 ease-in-out hover:bg-cyan-800`}
             >
               <span>Go to website</span>
