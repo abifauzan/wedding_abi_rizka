@@ -580,9 +580,6 @@ const Homepage = () => {
       className="w-full flex flex-col items-start relative overflow-x-hidden bg-main"
       ref={wrapperRef}
     >
-      <div className="w-[100vw] h-[100vh] fixed top-0 flex justify-center items-center bg-main z-30">
-        <HamsterLoading />
-      </div>
       {imagesLoaded === false && songsLoaded === null && (
         <div className="w-[100vw] h-[100vh] fixed top-0 flex justify-center items-center bg-main z-30">
           <HamsterLoading />
@@ -874,16 +871,12 @@ const Homepage = () => {
                     <img
                       src={IconClock}
                       alt="08.00 - 10.00 WIB"
-                      className="w-5 pb-1"
+                      className="w-5"
                     />
                     08.00 - 10.00 WIB
                   </span>
                   <span className="font-Italiana text-gray-900 inline-flex items-center gap-2">
-                    <img
-                      src={IconDate20}
-                      alt="20 May 2023"
-                      className="w-5 pb-1"
-                    />
+                    <img src={IconDate20} alt="20 May 2023" className="w-5" />
                     20 May 2023
                   </span>
                 </div>
@@ -907,16 +900,12 @@ const Homepage = () => {
                     <img
                       src={IconClock}
                       alt="11.00 - 13.00 WIB"
-                      className="w-5 pb-1"
+                      className="w-5"
                     />
                     11.00 - 13.00 WIB
                   </span>
                   <span className="font-Italiana text-gray-900 inline-flex items-center gap-2">
-                    <img
-                      src={IconDate20}
-                      alt="20 May 2023"
-                      className="w-5 pb-1"
-                    />
+                    <img src={IconDate20} alt="20 May 2023" className="w-5" />
                     20 May 2023
                   </span>
                 </div>
