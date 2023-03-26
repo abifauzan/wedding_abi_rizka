@@ -542,15 +542,15 @@ const Homepage = () => {
     </motion.div>
   );
 
-  // useEffect(() => {
-  //   if (imagesLoaded && songsLoaded) {
-  //     window.scrollTo({
-  //       top: 0,
-  //       left: 0,
-  //       behavior: "smooth",
-  //     });
-  //   }
-  // }, [imagesLoaded, pauseIka, playIka, songsLoaded]);
+  useEffect(() => {
+    if (imagesLoaded && songsLoaded) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+  }, [imagesLoaded, pauseIka, playIka, songsLoaded]);
 
   return (
     <div
