@@ -705,7 +705,7 @@ const Homepage = () => {
                 },
               }}
               exit="closed"
-              transition={{ ease: "linear", duration: 5, repeat: "loop" }}
+              transition={{ ease: "linear", duration: 5, repeat: Infinity }}
               className="w-5 lg:mr-3 cursor-pointer"
               onClick={() => toggleMenu(false)}
               style={!headerExpand ? { filter: "brightness(0) invert(1)" } : {}}
