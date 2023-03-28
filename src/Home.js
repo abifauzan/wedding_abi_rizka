@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
 
 import abiSong from "./sounds/youre_the_inspiration.mp3";
-import ikaSong from "./sounds/you_and_me.mp3";
+import ikaSong from "./sounds/ill_be_there.mp3";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
