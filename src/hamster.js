@@ -49,7 +49,7 @@ const HamsterLoading = () => {
   `;
   const hamsterFRLimb = keyframes`
     from, 25%, 50%, 75%, to {
-    trans form: rotate(50deg) translateZ(-1px);
+    transform: rotate(50deg) translateZ(-1px);
   }
 
   12.5%, 37.5%, 62.5%, 87.5% {
@@ -289,7 +289,7 @@ const HamsterLoading = () => {
   `;
 
   return (
-    <Hamster>
+    <Hamster className="scale-[0.6] md:scale-100">
       <div
         aria-label="Orange and tan hamster running in a metal wheel"
         role="img"
@@ -312,8 +312,8 @@ const HamsterLoading = () => {
         </div>
         <div className="spoke"></div>
       </div>
-      <h2 className="mt-3 tracking-wide text-xl uppercase font-medium text-center">
-        Loading stuff...
+      <h2 className="mt-7 tracking-wide text-xl uppercase font-medium text-center">
+        Loading...
       </h2>
     </Hamster>
   );

@@ -792,33 +792,33 @@ const Homepage = () => {
       <section className="w-full flex flex-col md:flex-row items-center md:items-start justify-center container gap-4 md:gap-14 pt-8 pb-14 md:pt-8 md:pb-10">
         <div className="w-full md:w-[400px] flex flex-col">
           <img
-            src={OriginalAbi}
-            alt="Abi Fauzan"
-            className="w-full h-[270px] object-cover object-bottom rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
+            src={OriginalIka}
+            alt="Rizka Yulianti Pratiwi"
+            className="w-full h-[270px] object-cover object-center rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
           />
           <div className="flex flex-col p-4 text-center">
-            <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
-              Abi Fauzan
+            <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2 md:w-[150%] relative sm:left-[-25%]">
+              Rizka Yulianti Pratiwi, S.Kom
             </h2>
-            <span className="text-xl">{t("firstBoy")}</span>
+            <span className="text-xl">{t("firstGirl")}</span>
           </div>
         </div>
         <img
           src={LoveLetter}
           alt="Love Letter"
-          className="w-20 mb-5 md:mb-0 md:mt-24 rotate-90 md:rotate-0"
+          className="w-20 mb-5 md:mb-0 md:mt-24"
         />
         <div className="w-full md:w-[400px] flex flex-col">
           <img
-            src={OriginalIka}
-            alt="Rizka Yulianti Pratiwi"
-            className="w-full h-[270px] object-cover object-bottom rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
+            src={OriginalAbi}
+            alt="Abi Fauzan"
+            className="w-full h-[270px] object-cover object-center rounded-lg mb-2 shadow-sm hover:shadow-2xl transition-all ease-in-out"
           />
           <div className="flex flex-col p-4 text-center">
             <h2 className="text-3xl font-playFair font-normal m-0 tracking-wider pb-2">
-              Rizka Yulianti Pratiwi
+              Abi Fauzan, S.Kom
             </h2>
-            <span className="text-xl">{t("firstGirl")}</span>
+            <span className="text-xl">{t("firstBoy")}</span>
           </div>
         </div>
       </section>

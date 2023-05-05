@@ -71,7 +71,6 @@ const ButtonCTA = styled.button`
       stroke: #000;
     }
   }
-
   ,
   &:active {
     transform: scale(0.95);
@@ -106,7 +105,7 @@ const Intro = () => {
 
   const toggleLang = useMemo(() => {
     return (
-      <div className="absolute top-5 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
+      <div className="absolute top-3 right-3 md:bottom-[unset] md:top-10 md:right-20 group z-10">
         {langList
           .filter((item) => item === lang)
           .map((item) => (
@@ -164,7 +163,7 @@ const Intro = () => {
 
       {/* body */}
       <div className="w-full h-full relative flex justify-center items-center">
-        <div className="w-full md:w-[700px] h-full md:h-[560px] backdrop-blur-md bg-white/20 px-3 py-5 md:p-7 md:rounded-md">
+        <div className="w-full md:w-[700px] h-full md:h-[560px] backdrop-blur-md bg-white/20 px-3 py-3 md:p-7 md:rounded-md">
           <div className="w-full h-full bg-transparent border-white/50 border-2 flex flex-col rounded-md justify-between items-center px-8 pt-40 pb-24 md:px-24 md:py-14">
             <div className="w-full flex flex-col items-center">
               <img

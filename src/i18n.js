@@ -11,7 +11,7 @@ const resources = {
       guestinfo: "Invited Guest",
       openInvitation: "Open invitation",
       welcomeText:
-        "¡Hola! Together with our families, we invite you to our wedding ceremony and celebration. Our wedding will begin at 8 AM until 1 PM on May 20th 2023 at Masjid Raya Bani Umar, Bintaro, Tangerang Selatan. — A & R",
+        "¡Hola! Together with our families, we invite you to our wedding ceremony and celebration. Our wedding will begin at 8 AM until 1 PM on May 20th 2023 at Masjid Raya Bani Umar, Bintaro, Tangerang Selatan. — R & A",
       ourDrama: `Once upon a time, in a busy city, there were two people, Rizka and
     Abi, who were leading mundane lives. Little did they know that their
     paths were about to cross in the most unexpected way. \n
@@ -25,11 +25,7 @@ const resources = {
     After that fateful meeting, their love grew stronger with each passing
     day, and soon they knew that they were meant to be together forever.
     \n
-    And now, their love story has led them to this moment. Rizka and Abi
-    would like to invite you to celebrate their love and witness them
-    exchange their vows at their wedding day. Join them as they start the
-    next chapter of their lives together filled with love, laughter, and
-    adventure.`,
+    And now, their love story has brought them to this moment. Rizka and Abi would like to invite you to celebrate their love and witness how they continue their marriage live begin filled with love, laughter and adventure.`,
       theVenue: "Venue",
       weddingVows: "Wedding Vows",
       weddingCelebration: "Wedding Party",
@@ -45,7 +41,7 @@ const resources = {
       yourMessage: "Your Message to us",
       happyWedding: "Happy wedding for both of you!!!",
       reply: "Reply",
-      happyMessage: "Happy message from our friends",
+      happyMessage: "Happy Messages from Our Friends",
       cantwait: "We can't wait to see you!",
       followus: "Follow Us",
       menu: {
@@ -58,8 +54,8 @@ const resources = {
       followmarvin: "Our Photographer",
       theHistory: "The History",
       whenWhere: "When & Where ?",
-      firstBoy: "First son of Mr. Budianto & Mrs. Kartini",
-      firstGirl: "First daughter of Mr. Yanuar Fajar Sidiq & Mrs. Nirwanasari",
+      firstBoy: "First son of Mr. Budianto & Mrs. Kartini.",
+      firstGirl: "First daughter of Mr. Yanuar Fajar Sidiq & Mrs. Nirwanasari.",
     },
   },
   id: {
@@ -68,12 +64,12 @@ const resources = {
       guestinfo: "Tamu Undangan",
       openInvitation: "Buka Undangan",
       welcomeText:
-        "¡Halo! Bersama keluarga kami, kami mengundang Anda ke upacara pernikahan dan perayaan kami. Pernikahan kami akan dimulai dari jam 8 pagi sampai jam 1 siang pada tanggal 20 Mei 2023 di Masjid Raya Bani Umar, Bintaro, Tangerang Selatan. —A & R",
+        "¡Halo! Bersama keluarga kami, kami mengundang Anda ke upacara pernikahan dan perayaan kami. Pernikahan kami akan dimulai dari jam 8 pagi sampai jam 1 siang pada tanggal 20 Mei 2023 di Masjid Raya Bani Umar, Bintaro, Tangerang Selatan. — R & A",
       ourDrama: `Alkisah, di sebuah kota yang ramai, ada dua orang, Rizka dan Abi, yang menjalani kehidupan duniawi. Sedikit yang mereka tahu bahwa jalan mereka akan bertemu dengan cara yang paling tidak terduga. \n
       Rizka merupakan karyawan yang bekerja di kantor yang sama dengan Abi. Dimana kantor mereka merupakan kantor pertama bagi mereka berdua. Seperti sudah ditakdirkan, mereka bertemu melalui teman dekat mereka yang sama, dan di sanalah mereka mulai menjelajahi satu sama lain di media sosial. \n
       Ketika mereka mengenal satu sama lain, mereka segera menyadari bahwa mereka memiliki koneksi instan. Mereka menyukai musik dan kopi dan terikat pada keinginan bersama mereka untuk berkeliling dunia. \n
       Setelah pertemuan yang menentukan itu, cinta mereka semakin kuat setiap hari, dan segera mereka tahu bahwa mereka ditakdirkan untuk bersama selamanya.\n
-      Dan kini, kisah cinta mereka telah membawa mereka ke momen ini. Rizka dan Abi ingin mengundang Anda untuk merayakan cinta mereka dan menyaksikan bagaimana mereka bertukar sumpah di hari pernikahan mereka. Bergabunglah dengan mereka saat mereka memulai babak selanjutnya dalam hidup mereka bersama yang dipenuhi dengan cinta, tawa, dan petualangan.`,
+      Dan kini, kisah cinta mereka telah membawa mereka ke momen ini. Rizka dan Abi ingin mengundang Anda untuk merayakan cinta mereka dan menyaksikan bagaimana mereka melanjutkan cerita hidup selamanya yang akan dipenuhi dengan cinta, tawa, dan petualangan.`,
       theVenue: "Lokasi",
       weddingVows: "Akad Nikah",
       weddingCelebration: "Resepsi Pernikahan",
@@ -89,7 +85,7 @@ const resources = {
       yourMessage: "Pesan Anda untuk kami",
       happyWedding: "Selamat menempuh hidup baru ya kalian!!!",
       reply: "Kirim",
-      happyMessage: "Pesan bahagia dari teman-teman kami",
+      happyMessage: "Pesan & Kesan Bahagia dari Kerabat Kami",
       cantwait: "Sampai berjumpa di acara kami!",
       followus: "Follow Us!",
       menu: {
@@ -102,9 +98,9 @@ const resources = {
       followmarvin: "Our Photographer",
       theHistory: "Kala itu",
       whenWhere: "Dimana & Kapan ?",
-      firstBoy: "Putra pertama dari Bapak Budianto & Ibu Kartini",
+      firstBoy: "Putra pertama dari Bapak Budianto & Ibu Kartini.",
       firstGirl:
-        "Putri pertama dari Bapak Yanuar Fajar Sidiq & Ibu Nirwanasari",
+        "Putri pertama dari Bapak Yanuar Fajar Sidiq & Ibu Nirwanasari.",
     },
   },
 };
