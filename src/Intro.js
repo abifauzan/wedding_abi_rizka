@@ -156,7 +156,7 @@ const Intro = () => {
         <img
           src={LogoCouple}
           alt="Abi & Rizka"
-          className="mt-6 w-36 md:w-44 z-10"
+          className="mt-3 xl:mt-6 h-auto md:h-[7vh] lg:h-[8vh] xl:h-[10vh] z-10"
         />
       </div>
       {toggleLang}
